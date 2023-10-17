@@ -19,7 +19,7 @@ public class Engine extends ApplicationAdapter {
 	public void render () {
 		ScreenUtils.clear(1, 0, 0, 1);
 		batch.begin();
-		batch.draw(img, 100, 0);
+		batch.draw(img, 175, 150);
 		batch.end();
 	}
 	
