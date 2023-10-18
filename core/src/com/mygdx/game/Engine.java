@@ -11,6 +11,7 @@ public class Engine extends ApplicationAdapter {
 	
 	@Override
 	public void create () {
+		//cos tam ;)
 		batch = new SpriteBatch();
 		img = new Texture("badlogic.jpg");
 	}
