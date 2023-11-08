@@ -7,9 +7,10 @@ public class Players {
     int budynki[];
     int chances[];
 
-    public void Player(String name, int cash){
-        name = name;
-        cash = cash;
+
+    public Players(String name, int cash){
+        this.name = name;
+        this.cash = cash;
     }
     public String getName(){
         return name;
