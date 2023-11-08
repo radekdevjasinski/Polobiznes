@@ -31,7 +31,7 @@ public class Game {
     }
 
     public void listCard() {
-        List<Card> listCard = new ArrayList<>();
+        List<Card> listCard = new ArrayList<Card>();
         String filePath = "assets/kartyMiast.txt";
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
@@ -49,8 +49,9 @@ public class Game {
                     int costWithTheHouse4 = Integer.parseInt(parts[8]);
                     int costWithTheHotel = Integer.parseInt(parts[9]);
                     int  mortgage = Integer.parseInt(parts[10]);
-                    Card card = new Card("Miasto", 120, 100, 100, 5, 40, 60, 180, 320, 500, 60
+                    Card card = new Card("ŁOMŻA", 120, 100, 100, 5, 40, 60, 180, 320, 500, 60
                     );
+
                     card.setNameCity(nameCity);
                     card.setCostOfPurchase(costOfPurchase);
                     card.setCostPerCottage(costPerCottage);
@@ -63,10 +64,13 @@ public class Game {
                     card.setCostWithTheHotel(costWithTheHotel);
                     card.setMortgage(mortgage);
                     listCard.add(card);
+
                 } else {
                     System.out.println("Nieprawidłowy format danych: " + line);
                 }
-
+                for (Card card : listCard) {
+                    System.out.println(card);
+                }
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
