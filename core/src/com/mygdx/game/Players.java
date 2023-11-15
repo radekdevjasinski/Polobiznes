@@ -6,11 +6,13 @@ public class Players {
     int x,y; //koordynaty gracza
     int budynki[];
     int chances[];
+    String imagePath;
 
 
-    public Players(String name, int cash){
+    public Players(String name, int cash, String imagePath){
         this.name = name;
         this.cash = cash;
+        this.imagePath = imagePath;
     }
     public String getName(){
         return name;
@@ -35,5 +37,12 @@ public class Players {
     }
     public void setY(int y) {
         this.y = y;
+    }
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 }
