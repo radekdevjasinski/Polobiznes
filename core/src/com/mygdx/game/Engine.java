@@ -1,9 +1,15 @@
 package com.mygdx.game;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.DiceRoll;
@@ -20,11 +26,19 @@ public class Engine extends ApplicationAdapter {
 	float diceRoll1Timer;
 	float diceRoll2Timer;
 	float timeSeconds;
+  private Game game;
+	private OrthographicCamera camera;
+	private Viewport viewport;
 	@Override
-	public void create () {
+	public void create() {
 		batch = new SpriteBatch();
-		img = new Texture("board.jpg");
+		img = new Texture("planszaPolo.png");
+		camera = new OrthographicCamera();
+		viewport = new FitViewport(img.getWidth(), img.getHeight(), camera);
+		viewport.apply();
 
+		game = new Game();
+		game.setPlayers();
 		diceRoll1 = new DiceRoll();
 		diceRoll2 = new DiceRoll();
 
@@ -38,15 +52,22 @@ public class Engine extends ApplicationAdapter {
 		pixmap10.drawPixmap(pixmap20,
 				0, 0, pixmap20.getWidth(), pixmap20.getHeight(),
 				0, 0, pixmap10.getWidth(), pixmap10.getHeight()
-		);
+	);
 		return new Texture((pixmap10));
 	}
 	@Override
-	public void render () {
-		ScreenUtils.clear(1, 0, 0, 1);
+	public void render() {
+		if (Gdx.graphics.getWidth() != viewport.getWorldWidth() || Gdx.graphics.getHeight() != viewport.getWorldHeight()) {
+			viewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
+		}
+
+		Gdx.gl.glClearColor(1, 1, 1, 1);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
 		batch.draw(img, 0, 0);
-		//Rolling
+    //Rolling
 		if(timeSeconds < diceRoll1Timer)
 		{
 			timeSeconds += Gdx.graphics.getDeltaTime();
@@ -64,7 +85,26 @@ public class Engine extends ApplicationAdapter {
 		dice2 = resizeTexture(diceRoll2.pngPath(), 100, 100);
 		batch.draw(dice1, 350, 50);
 		batch.draw(dice2, 500, 50);
+/*
+		for (int i = 0; i < game.playerMap.size(); i++) {
+			Players player = game.getPlayer(i);
+
+			String imagePath = player.getImagePath();
+			Texture playerImg = new Texture(imagePath);
+
+			float playerX = (i + 1) * (viewport.getWorldWidth() / (game.playerMap.size() + 1)) - playerImg.getWidth() / 2;
+			float playerY = (viewport.getWorldHeight() - playerImg.getHeight()) / 2;
+
+			batch.draw(playerImg, playerX, playerY);
+
+			playerImg.dispose();
+		}*/
 		batch.end();
+	}
+
+	@Override
+	public void resize(int width, int height) {
+		viewport.update(width, height, true);
 	}
 	public void RollingAnimation()
 	{
@@ -73,10 +113,9 @@ public class Engine extends ApplicationAdapter {
 		diceRoll1Timer = 1 + r.nextFloat(1f);
 		diceRoll2Timer = 1 + r.nextFloat(3f);
 		System.out.println(diceRoll1Timer + " " + diceRoll2Timer);
-
 	}
 	@Override
-	public void dispose () {
+	public void dispose() {
 		batch.dispose();
 		img.dispose();
 	}
