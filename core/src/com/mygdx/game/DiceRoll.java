@@ -1,6 +1,5 @@
 package com.mygdx.game;
 import com.badlogic.gdx.graphics.*;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;

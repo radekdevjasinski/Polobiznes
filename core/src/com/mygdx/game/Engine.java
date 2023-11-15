@@ -1,6 +1,7 @@
 package com.mygdx.game;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -46,12 +47,18 @@ public class Engine extends ApplicationAdapter {
 		batch.begin();
 		batch.draw(img, 0, 0);
 		//Rolling
-		if(timeSeconds < diceRoll1Timer || timeSeconds < diceRoll2Timer)
+		if(timeSeconds < diceRoll1Timer)
 		{
 			timeSeconds += Gdx.graphics.getDeltaTime();
 			diceRoll1.Roll();
+		}
+		if(timeSeconds < diceRoll2Timer)
+		{
+			timeSeconds += Gdx.graphics.getDeltaTime();
 			diceRoll2.Roll();
-			System.out.println("Roll");
+		}
+		if(Gdx.input.isKeyPressed(Input.Keys.SPACE)){
+			RollingAnimation();
 		}
 		dice1 = resizeTexture(diceRoll1.pngPath(), 100, 100);
 		dice2 = resizeTexture(diceRoll2.pngPath(), 100, 100);
@@ -62,8 +69,10 @@ public class Engine extends ApplicationAdapter {
 	public void RollingAnimation()
 	{
 		Random r = new Random();
-		diceRoll1Timer = 1 + r.nextFloat(5f);
-		diceRoll2Timer = 1 + r.nextFloat(5f);
+		timeSeconds = 0;
+		diceRoll1Timer = 1 + r.nextFloat(1f);
+		diceRoll2Timer = 1 + r.nextFloat(3f);
+		System.out.println(diceRoll1Timer + " " + diceRoll2Timer);
 
 	}
 	@Override
