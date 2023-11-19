@@ -64,13 +64,9 @@ public class Engine extends ApplicationAdapter {
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-		batch.setProjectionMatrix(camera.combined);
-		batch.begin();
-		batch.draw(img, 0, 0);
 
 		//rysowanie gracza
 		Texture playerImg = new Texture(player.getImagePath());
-		batch.draw(playerImg, player.getX(), player.getY());
 		//playerImg.dispose();
 		if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
 			player.moveLeft();
@@ -103,6 +99,8 @@ public class Engine extends ApplicationAdapter {
 		batch.begin();
 
 		batch.draw(background, 0, 0);
+		batch.draw(playerImg, player.getX(), player.getY());
+
 
 		batch.draw(diceRoll1.textures[diceRoll1.value], 550, 50);
 		batch.draw(diceRoll1.textures[diceRoll2.value], 700, 50);
@@ -128,6 +126,10 @@ public class Engine extends ApplicationAdapter {
 		Point2D point4 = new Point2D(80, 400);
 		LineSegment lineSegment2 = new LineSegment(point3,point4);
 		primitiveRenderer.drawLine(shapeRenderer,lineSegment2,5);
+
+		primitiveRenderer.drawCircleWithSymmetry(shapeRenderer,new Point2D(x,500),20,8);
+		primitiveRenderer.drawEllipseWithSymmetry(shapeRenderer,new Point2D(x,550),20,10,8);
+
 
 		shapeRenderer.end();
 	}
