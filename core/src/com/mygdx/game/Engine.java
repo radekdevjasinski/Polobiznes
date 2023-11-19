@@ -25,9 +25,10 @@ public class Engine extends ApplicationAdapter {
 	private OrthographicCamera camera;
 	private ShapeRenderer shapeRenderer;
 	private Viewport viewport;
-  private SquareObject square;
+	private CircleObject circleObject;
+	private SquareObject squareObject;
 	private Players player;
-	private PrimitiveRenderer primitiveRenderer;
+	//private PrimitiveRenderer primitiveRenderer;
 	@Override
 	public void create() {
 		batch = new SpriteBatch();
@@ -37,10 +38,12 @@ public class Engine extends ApplicationAdapter {
 		camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		viewport = new FitViewport(background.getWidth(), background.getHeight(), camera);
 		viewport.apply();
-		square = new SquareObject(0, 0, 50);
-		primitiveRenderer = new PrimitiveRenderer();
+
+		//primitiveRenderer = new PrimitiveRenderer();
 		shapeRenderer = new ShapeRenderer();
 		shapeRenderer.setProjectionMatrix(camera.combined);
+		circleObject = new CircleObject(500, 200, 50);
+		squareObject = new SquareObject(400, 200, 50);
 		game = new Game();
 		game.setPlayers();
 		diceRoll1 = new DiceRoll();
@@ -64,13 +67,9 @@ public class Engine extends ApplicationAdapter {
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-		batch.setProjectionMatrix(camera.combined);
-		batch.begin();
-		batch.draw(img, 0, 0);
-
 		//rysowanie gracza
 		Texture playerImg = new Texture(player.getImagePath());
-		batch.draw(playerImg, player.getX(), player.getY());
+
 		//playerImg.dispose();
 		if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
 			player.moveLeft();
@@ -103,7 +102,7 @@ public class Engine extends ApplicationAdapter {
 		batch.begin();
 
 		batch.draw(background, 0, 0);
-
+		batch.draw(playerImg, player.getX(), player.getY());
 		batch.draw(diceRoll1.textures[diceRoll1.value], 550, 50);
 		batch.draw(diceRoll1.textures[diceRoll2.value], 700, 50);
 
@@ -114,20 +113,24 @@ public class Engine extends ApplicationAdapter {
 		shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
 
 		int x = 70;
+		PrimitiveRenderer.drawCircle(shapeRenderer,x,50,20,0, Color.RED);
+		PrimitiveRenderer.drawSquare(shapeRenderer,x,100,40,0, Color.GREEN);
+		PrimitiveRenderer.drawTriangle(shapeRenderer,x,150,40, Color.BLUE);
 
-		primitiveRenderer.drawCircle(shapeRenderer,x,50,20, Color.RED);
-		primitiveRenderer.drawSquare(shapeRenderer,x,100,40, Color.GREEN);
-		primitiveRenderer.drawTriangle(shapeRenderer,x,150,40, Color.BLUE);
+		circleObject.draw(shapeRenderer);
+		squareObject.draw(shapeRenderer);
+		circleObject.translate(1, 1);
+		//squareObject.rotate(1);
 
 		shapeRenderer.setColor(Color.BLACK);
 		Point2D point1 = new Point2D(x+20, 200);
 		Point2D point2 = new Point2D(70, 400);
 		LineSegment lineSegment = new LineSegment(point1,point2);
-		primitiveRenderer.drawLineAlgorithm(shapeRenderer,lineSegment);
+		PrimitiveRenderer.drawLineAlgorithm(shapeRenderer,lineSegment);
 		Point2D point3 = new Point2D(x+30, 200);
 		Point2D point4 = new Point2D(80, 400);
 		LineSegment lineSegment2 = new LineSegment(point3,point4);
-		primitiveRenderer.drawLine(shapeRenderer,lineSegment2,5);
+		PrimitiveRenderer.drawLine(shapeRenderer,lineSegment2,5);
 
 		shapeRenderer.end();
 	}
