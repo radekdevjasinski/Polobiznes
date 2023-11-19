@@ -45,4 +45,20 @@ public class Players {
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
     }
+
+    public void moveLeft() {
+        x -= 5;
+    }
+
+    public void moveRight() {
+        x += 5;
+    }
+
+    public void moveUp() {
+        y += 5;
+    }
+
+    public void moveDown() {
+        y -= 5;
+    }
 }

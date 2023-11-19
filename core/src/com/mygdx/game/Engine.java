@@ -25,19 +25,22 @@ public class Engine extends ApplicationAdapter {
 	private OrthographicCamera camera;
 	private ShapeRenderer shapeRenderer;
 	private Viewport viewport;
+  private SquareObject square;
+	private Players player;
 	private PrimitiveRenderer primitiveRenderer;
 	@Override
 	public void create() {
 		batch = new SpriteBatch();
 		background = new Texture("planszaPoloTlo.png");
+    player = new Players("Player1", 1000, "pawn3.png");
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		viewport = new FitViewport(background.getWidth(), background.getHeight(), camera);
 		viewport.apply();
+		square = new SquareObject(0, 0, 50);
 		primitiveRenderer = new PrimitiveRenderer();
 		shapeRenderer = new ShapeRenderer();
 		shapeRenderer.setProjectionMatrix(camera.combined);
-
 		game = new Game();
 		game.setPlayers();
 		diceRoll1 = new DiceRoll();
@@ -61,6 +64,27 @@ public class Engine extends ApplicationAdapter {
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+		batch.setProjectionMatrix(camera.combined);
+		batch.begin();
+		batch.draw(img, 0, 0);
+
+		//rysowanie gracza
+		Texture playerImg = new Texture(player.getImagePath());
+		batch.draw(playerImg, player.getX(), player.getY());
+		//playerImg.dispose();
+		if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+			player.moveLeft();
+		}
+		if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+			player.moveRight();
+		}
+		if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+			player.moveUp();
+		}
+		if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+			player.moveDown();
+		}
+    //Rolling
 		if(timeSeconds < diceRoll1Timer)
 		{
 			timeSeconds += Gdx.graphics.getDeltaTime();
@@ -84,6 +108,7 @@ public class Engine extends ApplicationAdapter {
 		batch.draw(diceRoll1.textures[diceRoll2.value], 700, 50);
 
 		batch.end();
+
 
 		shapeRenderer.setProjectionMatrix(camera.combined);
 		shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
