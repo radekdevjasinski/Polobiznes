@@ -29,14 +29,17 @@ public class Engine extends ApplicationAdapter {
   private Game game;
 	private OrthographicCamera camera;
 	private Viewport viewport;
+	private SquareObject square;
+	private Players player;
 	@Override
 	public void create() {
 		batch = new SpriteBatch();
 		img = new Texture("planszaPolo.png");
+		player = new Players("Player1", 1000, "D:\\Polobiznes\\assets\\pawn3.png");
 		camera = new OrthographicCamera();
 		viewport = new FitViewport(img.getWidth(), img.getHeight(), camera);
 		viewport.apply();
-
+		square = new SquareObject(0, 0, 50);
 		game = new Game();
 		game.setPlayers();
 		diceRoll1 = new DiceRoll();
@@ -67,6 +70,12 @@ public class Engine extends ApplicationAdapter {
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
 		batch.draw(img, 0, 0);
+
+		//rysowanie gracza
+		Texture playerImg = new Texture(player.getImagePath());
+		batch.draw(playerImg, player.getX(), player.getY());
+		//playerImg.dispose();
+
     //Rolling
 		if(timeSeconds < diceRoll1Timer)
 		{
@@ -100,6 +109,18 @@ public class Engine extends ApplicationAdapter {
 			playerImg.dispose();
 		}*/
 		batch.end();
+		if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+			player.moveLeft();
+		}
+		if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+			player.moveRight();
+		}
+		if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+			player.moveUp();
+		}
+		if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+			player.moveDown();
+		}
 	}
 
 	@Override
