@@ -87,7 +87,7 @@ public class BitmapHandler {
         frame.pack();
         frame.setVisible(true);
     }
-
+/*
     public static void main(String[] args) {
 
         BitmapHandler[] pionki = new BitmapHandler[10];
@@ -108,5 +108,5 @@ public class BitmapHandler {
 
 
         pionki[1].displayBitmap();
-    }
+    }*/
 }

@@ -1,6 +1,6 @@
-package com.mygdx.game;
+/*package com.mygdx.game;
 
-public class Players {
+public class Players extends SpriteObject{
     String name;
     int cash;
     int x,y; //koordynaty gracza
@@ -10,6 +10,7 @@ public class Players {
 
 
     public Players(String name, int cash, String imagePath){
+        //super(new BitmapHandler(100, 100));
         this.name = name;
         this.cash = cash;
         this.imagePath = imagePath;
@@ -61,4 +62,4 @@ public class Players {
     public void moveDown() {
         y -= 5;
     }
-}
+}*/
