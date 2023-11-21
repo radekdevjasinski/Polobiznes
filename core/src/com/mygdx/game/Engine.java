@@ -33,7 +33,7 @@ public class Engine extends ApplicationAdapter {
 	public void create() {
 		batch = new SpriteBatch();
 		background = new Texture("planszaPoloTlo.png");
-    player = new Players("Player1", 1000, "pawn3.png");
+    	player = new Players("Player1", 1000, "pawn3.png");
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		viewport = new FitViewport(background.getWidth(), background.getHeight(), camera);
@@ -42,8 +42,9 @@ public class Engine extends ApplicationAdapter {
 		//primitiveRenderer = new PrimitiveRenderer();
 		shapeRenderer = new ShapeRenderer();
 		shapeRenderer.setProjectionMatrix(camera.combined);
+
 		circleObject = new CircleObject(500, 200, 50);
-		squareObject = new SquareObject(400, 200, 50);
+		squareObject = new SquareObject(100, 100, 50);
 		game = new Game();
 		game.setPlayers();
 		diceRoll1 = new DiceRoll();
@@ -67,10 +68,8 @@ public class Engine extends ApplicationAdapter {
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-		//rysowanie gracza
 		Texture playerImg = new Texture(player.getImagePath());
 
-		//playerImg.dispose();
 		if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
 			player.moveLeft();
 		}
@@ -83,7 +82,6 @@ public class Engine extends ApplicationAdapter {
 		if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
 			player.moveDown();
 		}
-    //Rolling
 		if(timeSeconds < diceRoll1Timer)
 		{
 			timeSeconds += Gdx.graphics.getDeltaTime();
@@ -117,10 +115,13 @@ public class Engine extends ApplicationAdapter {
 		PrimitiveRenderer.drawSquare(shapeRenderer,x,100,40,0, Color.GREEN);
 		PrimitiveRenderer.drawTriangle(shapeRenderer,x,150,40, Color.BLUE);
 
-		circleObject.draw(shapeRenderer);
-		squareObject.draw(shapeRenderer);
-		circleObject.translate(1, 1);
-		//squareObject.rotate(1);
+		circleObject.draw();
+		squareObject.draw();
+		//circleObject.translate(1, 1);
+		circleObject.scale(1.1f);
+		squareObject.scale(1.1f);
+		squareObject.rotate(1);
+		circleObject.rotate(1);
 
 		shapeRenderer.setColor(Color.BLACK);
 		Point2D point1 = new Point2D(x+20, 200);

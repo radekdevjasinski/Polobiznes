@@ -13,8 +13,13 @@ public class SquareObject extends ShapeObject {
     }
 
     @Override
-    public void draw(ShapeRenderer shapeRenderer) {
-        PrimitiveRenderer.drawSquare(shapeRenderer, x, y, sideLength, rotation, Color.BLUE);
+    public void draw() {
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        shapeRenderer.identity();
+        shapeRenderer.translate(x, y, 0);
+        shapeRenderer.rotate(0, 0, 1, rotation);
+        PrimitiveRenderer.drawSquare(shapeRenderer, -sideLength / 100, -sideLength / 100, sideLength, 0, Color.BLUE);
+        shapeRenderer.end();
     }
 
     @Override
