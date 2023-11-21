@@ -27,24 +27,27 @@ public class Engine extends ApplicationAdapter {
 	private Viewport viewport;
 	private CircleObject circleObject;
 	private SquareObject squareObject;
-	private Players player;
+	//private Players player;
 	//private PrimitiveRenderer primitiveRenderer;
+	private SpriteObject pionek;
 	@Override
 	public void create() {
 		batch = new SpriteBatch();
 		background = new Texture("planszaPoloTlo.png");
-    	player = new Players("Player1", 1000, "pawn3.png");
+    	//player = new Players("Player1", 1000, "pawn3.png");
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		viewport = new FitViewport(background.getWidth(), background.getHeight(), camera);
 		viewport.apply();
+
+		initPionek();
 
 		//primitiveRenderer = new PrimitiveRenderer();
 		shapeRenderer = new ShapeRenderer();
 		shapeRenderer.setProjectionMatrix(camera.combined);
 
 		circleObject = new CircleObject(500, 200, 50);
-		squareObject = new SquareObject(100, 100, 50);
+		squareObject = new SquareObject(300, 100, 50);
 		game = new Game();
 		game.setPlayers();
 		diceRoll1 = new DiceRoll();
@@ -53,6 +56,12 @@ public class Engine extends ApplicationAdapter {
 		RollingAnimation();
 		timeSeconds = 0f;
 	}
+
+	private void initPionek() {
+		pionek = new SpriteObject("pionek", 4); // 4 to przykładowa liczba klatek animacji
+		pionek.setPosition(50, 50); // Ustawienie pozycji pionka
+	}
+
 	public static Texture resizeTexture(String path, int width, int height)
 	{
 		Pixmap pixmap20 = new Pixmap(Gdx.files.internal(path));
@@ -68,18 +77,18 @@ public class Engine extends ApplicationAdapter {
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-		Texture playerImg = new Texture(player.getImagePath());
+		//Texture playerImg = new Texture(player.getImagePath());
 		if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-			player.moveLeft();
+			//player.moveLeft();
 		}
 		if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-			player.moveRight();
+			//player.moveRight();
 		}
 		if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-			player.moveUp();
+			//player.moveUp();
 		}
 		if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-			player.moveDown();
+			//player.moveDown();
 		}
 		if(timeSeconds < diceRoll1Timer)
 		{
@@ -99,9 +108,18 @@ public class Engine extends ApplicationAdapter {
 		batch.begin();
 
 		batch.draw(background, 0, 0);
-		batch.draw(playerImg, player.getX(), player.getY());
+		//batch.draw(playerImg, player.getX(), player.getY());
 		batch.draw(diceRoll1.textures[diceRoll1.value], 550, 50);
 		batch.draw(diceRoll1.textures[diceRoll2.value], 700, 50);
+
+		pionek.animate();
+		Texture tempTexture = createTextureFromBitmapHandler(pionek.getBitmap());
+
+		// Narysuj obiekt na ekranie
+		batch.draw(tempTexture, pionek.getX(), pionek.getY());
+
+		// Zwolnij zasoby tekstury
+		//tempTexture.dispose();
 
 		batch.end();
 
@@ -132,11 +150,24 @@ public class Engine extends ApplicationAdapter {
 		LineSegment lineSegment2 = new LineSegment(point3,point4);
 		PrimitiveRenderer.drawLine(shapeRenderer,lineSegment2,5);
 
-		primitiveRenderer.drawCircleWithSymmetry(shapeRenderer,new Point2D(x,500),20,8);
-		primitiveRenderer.drawEllipseWithSymmetry(shapeRenderer,new Point2D(x,550),20,10,8);
+		PrimitiveRenderer.drawCircleWithSymmetry(shapeRenderer,new Point2D(x,500),20,8);
+		PrimitiveRenderer.drawEllipseWithSymmetry(shapeRenderer,new Point2D(x,550),20,10,8);
 
 
 		shapeRenderer.end();
+	}
+
+	private Texture createTextureFromBitmapHandler(BitmapHandler bitmapHandler) {
+		Pixmap pixmap = new Pixmap(bitmapHandler.getWidth(), bitmapHandler.getHeight(), Pixmap.Format.RGBA8888);
+		for (int y = 0; y < bitmapHandler.getHeight(); y++) {
+			for (int x = 0; x < bitmapHandler.getWidth(); x++) {
+				int color = bitmapHandler.getPixel(x, y);
+				pixmap.drawPixel(x, y, color);
+			}
+		}
+		Texture texture = new Texture(pixmap);
+		pixmap.dispose();
+		return texture;
 	}
 
 	@Override
