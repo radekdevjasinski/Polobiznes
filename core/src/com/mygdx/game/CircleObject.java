@@ -15,8 +15,12 @@ public class CircleObject extends ShapeObject {
     }
 
     @Override
-    public void draw(ShapeRenderer shapeRenderer) {
-        PrimitiveRenderer.drawCircle(shapeRenderer,x,y,radius,rotation, Color.BLACK);
+    public void draw() {
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        shapeRenderer.identity();
+        shapeRenderer.translate(x, y, 0);
+        PrimitiveRenderer.drawCircle(shapeRenderer, 0, 0, radius, rotation, Color.BLACK);
+        shapeRenderer.end();
     }
 
     @Override
@@ -27,7 +31,7 @@ public class CircleObject extends ShapeObject {
 
     @Override
     public void rotate(float degrees) {
-        System.out.println("Obrót koła o " + degrees + " stopni");
+        rotation += degrees;
     }
 
     @Override
