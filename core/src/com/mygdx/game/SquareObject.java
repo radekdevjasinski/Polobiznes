@@ -3,17 +3,22 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 public class SquareObject extends ShapeObject {
-    private float x, y;
+    private float x, y, rotation;
     private float sideLength;
-
     public SquareObject(float x, float y,float sideLength) {
         this.x = x;
         this.y = y;
         this.sideLength = sideLength;
+        this.rotation = 0;
     }
 
     @Override
     public void draw() {
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        shapeRenderer.identity();
+        shapeRenderer.translate(x, y, 0);
+        PrimitiveRenderer.drawSquare(shapeRenderer, -sideLength / 100, -sideLength / 100, sideLength, rotation, Color.BLUE);
+        shapeRenderer.end();
     }
 
     @Override
@@ -24,6 +29,7 @@ public class SquareObject extends ShapeObject {
 
     @Override
     public void rotate(float degrees) {
+        rotation += degrees;
     }
 
     @Override

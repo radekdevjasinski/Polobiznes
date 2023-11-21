@@ -1,30 +1,41 @@
 package com.mygdx.game;
 
-public class CircleObject extends ShapeObject {
-    private float radius;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
-    public CircleObject(float radius) {
+public class CircleObject extends ShapeObject {
+    private float x, y;
+    private float radius;
+    private float rotation;
+    public CircleObject( float x, float y, float radius) {
+        this.x = x;
+        this.y = y;
         this.radius = radius;
+        this.rotation = 0;
     }
 
     @Override
     public void draw() {
-        System.out.println("Rysowanie koła o promieniu " + radius);
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        shapeRenderer.identity();
+        shapeRenderer.translate(x, y, 0);
+        PrimitiveRenderer.drawCircle(shapeRenderer, 0, 0, radius, rotation, Color.BLACK);
+        shapeRenderer.end();
     }
 
     @Override
     public void translate(float deltaX, float deltaY) {
-        System.out.println("Przesunięcie koła o (" + deltaX + ", " + deltaY + ")");
+        x += deltaX;
+        y += deltaY;
     }
 
     @Override
     public void rotate(float degrees) {
-        System.out.println("Obrót koła o " + degrees + " stopni");
+        rotation += degrees;
     }
 
     @Override
     public void scale(float factor) {
         radius *= factor;
-        System.out.println("Skalowanie koła o czynnik " + factor);
     }
 }
