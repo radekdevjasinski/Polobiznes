@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -52,6 +53,8 @@ public class Engine extends ApplicationAdapter {
 
 		RollingAnimation();
 		timeSeconds = 0f;
+
+
 	}
 	public static Texture resizeTexture(String path, int width, int height)
 	{
@@ -132,9 +135,32 @@ public class Engine extends ApplicationAdapter {
 		LineSegment lineSegment2 = new LineSegment(point3,point4);
 		PrimitiveRenderer.drawLine(shapeRenderer,lineSegment2,5);
 
-		primitiveRenderer.drawCircleWithSymmetry(shapeRenderer,new Point2D(x,500),20,8);
-		primitiveRenderer.drawEllipseWithSymmetry(shapeRenderer,new Point2D(x,550),20,10,8);
+		PrimitiveRenderer.drawCircleWithSymmetry(shapeRenderer,new Point2D(x,500),20,8);
+		PrimitiveRenderer.drawEllipseWithSymmetry(shapeRenderer,new Point2D(x,550),20,10,8);
 
+		shapeRenderer.setAutoShapeType(true);
+		Array<Point2D> point2Ds = new Array<>();
+		point2Ds.add(new Point2D(14, 100));
+		point2Ds.add(new Point2D(14, 25));
+		point2Ds.add(new Point2D(50, 75));
+		point2Ds.add(new Point2D(94, 25));
+		point2Ds.add(new Point2D(94, 100));
+
+		PrimitiveRenderer.drawPolygon(shapeRenderer, point2Ds);
+
+		point2Ds.clear();
+		point2Ds.add(new Point2D(10, 180));
+		point2Ds.add(new Point2D(10, 110));
+		point2Ds.add(new Point2D(100, 110));
+		point2Ds.add(new Point2D(70, 180));
+		point2Ds.add(new Point2D(45, 200));
+
+		PrimitiveRenderer.drawPolygon(shapeRenderer, point2Ds);
+
+
+
+		// Flood Fill - Ustaw kolor docelowy i kolor wypełnienia
+		//PrimitiveRenderer.floodFill(shapeRenderer, 220, Color.WHITE, Color.BLUE);
 
 		shapeRenderer.end();
 	}

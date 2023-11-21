@@ -11,7 +11,7 @@ public class DesktopLauncher {
 		config.setForegroundFPS(60);
 		config.setTitle("Polobiznes");
 		config.setWindowedMode(1000,600);
-		config.setResizable(false);
+		//config.setResizable(false);
 		new Lwjgl3Application(new Engine(), config);
 	}
 }
