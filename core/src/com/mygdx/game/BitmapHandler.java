@@ -20,7 +20,7 @@ public class BitmapHandler {
     // Wczytywanie bitmapy z pliku w folderze "assets"
     public void loadFromFile(String fileName) {
         try {
-            // Uwaga: Tutaj zakłada się, że folder "assets" znajduje się w katalogu roboczym projektu
+
             this.bitmap = ImageIO.read(new File("assets/" + fileName));
         } catch (IOException e) {
             e.printStackTrace();
@@ -89,7 +89,7 @@ public class BitmapHandler {
     }
 
     public static void main(String[] args) {
-        // Przykładowe użycie klasy BitmapHandler
+
         BitmapHandler[] pionki = new BitmapHandler[10];
 
         for (int i = 0; i < 10; i++) {
@@ -97,16 +97,16 @@ public class BitmapHandler {
             pionki[i] = new BitmapHandler(100, 100);
             pionki[i].loadFromFile(fileName);
 
-            // Możesz tutaj wykonywać operacje na wczytanych bitmapach, jeśli to konieczne
+
         }
 
-        // Przykładowe operacje, np. kopiowanie pionka_0 do pionka_1
+
         pionki[0].copyTo(pionki[1]);
 
-        // Zapisz zmienioną bitmapę pionka_1 do pliku
+
         pionki[1].saveToFile("pionek_1_modified.bmp", "bmp");
 
-        // Wyświetl zmienioną bitmapę pionka_1
+
         pionki[1].displayBitmap();
     }
 }
