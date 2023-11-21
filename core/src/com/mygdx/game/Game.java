@@ -13,7 +13,6 @@ public class Game {
             String fileContent = readFile(filePath);
             ;
             System.out.println(fileContent);
-            System.out.println("Zawartość" + filePath);
         } catch (IOException e) {
             System.err.println("Wystąpił błąd podczas odczytu pliku: " + e.getMessage());
         }
