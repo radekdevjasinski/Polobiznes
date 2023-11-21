@@ -118,8 +118,8 @@ public class Engine extends ApplicationAdapter {
 		circleObject.draw();
 		squareObject.draw();
 		//circleObject.translate(1, 1);
-		circleObject.scale(1.1f);
-		squareObject.scale(1.1f);
+		//circleObject.scale(1.1f);
+		//squareObject.scale(1.1f);
 		squareObject.rotate(1);
 		circleObject.rotate(1);
 

@@ -17,8 +17,7 @@ public class SquareObject extends ShapeObject {
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         shapeRenderer.identity();
         shapeRenderer.translate(x, y, 0);
-        shapeRenderer.rotate(0, 0, 1, rotation);
-        PrimitiveRenderer.drawSquare(shapeRenderer, -sideLength / 100, -sideLength / 100, sideLength, 0, Color.BLUE);
+        PrimitiveRenderer.drawSquare(shapeRenderer, -sideLength / 100, -sideLength / 100, sideLength, rotation, Color.BLUE);
         shapeRenderer.end();
     }
 
