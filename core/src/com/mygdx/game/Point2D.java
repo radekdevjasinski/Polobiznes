@@ -1,6 +1,6 @@
 package com.mygdx.game;
 
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Vector2;
 
 public class Point2D {
     private float x;
@@ -24,11 +24,6 @@ public class Point2D {
     }
 
     public void setY(float y) {
-        this.y = y;
-    }
-
-    public void set(float x, float y) {
-        this.x = x;
         this.y = y;
     }
 
