@@ -21,7 +21,6 @@ public class Engine extends ApplicationAdapter {
 	DiceRoll diceRoll2;
 	float diceRoll1Timer;
 	float diceRoll2Timer;
-	float timeSeconds;
     private Game game;
 	private OrthographicCamera camera;
 	private ShapeRenderer shapeRenderer;
@@ -29,8 +28,7 @@ public class Engine extends ApplicationAdapter {
 	private CircleObject circleObject;
 	private SquareObject squareObject;
 	//private Players player;
-	//private PrimitiveRenderer primitiveRenderer;
-	private SpriteObject pionek;
+	private Player player;
 	@Override
 	public void create() {
 		batch = new SpriteBatch();
@@ -41,7 +39,8 @@ public class Engine extends ApplicationAdapter {
 		viewport = new FitViewport(background.getWidth(), background.getHeight(), camera);
 		viewport.apply();
 
-		initPionek();
+		player = new Player("pionek");
+		player.setPosition(500, 400); // Ustawienie pozycji pionka
 
 		//primitiveRenderer = new PrimitiveRenderer();
 		shapeRenderer = new ShapeRenderer();
@@ -54,26 +53,6 @@ public class Engine extends ApplicationAdapter {
 		diceRoll1 = new DiceRoll();
 		diceRoll2 = new DiceRoll();
 
-		RollingAnimation();
-		timeSeconds = 0f;
-
-
-	}
-
-	private void initPionek() {
-		pionek = new SpriteObject("pionek", 4); // 4 to przykładowa liczba klatek animacji
-		pionek.setPosition(50, 50); // Ustawienie pozycji pionka
-	}
-
-	public static Texture resizeTexture(String path, int width, int height)
-	{
-		Pixmap pixmap20 = new Pixmap(Gdx.files.internal(path));
-		Pixmap pixmap10 = new Pixmap(width, height, pixmap20.getFormat());
-		pixmap10.drawPixmap(pixmap20,
-				0, 0, pixmap20.getWidth(), pixmap20.getHeight(),
-				0, 0, pixmap10.getWidth(), pixmap10.getHeight()
-	);
-		return new Texture((pixmap10));
 	}
 	@Override
 	public void render() {
@@ -82,47 +61,34 @@ public class Engine extends ApplicationAdapter {
 
 		//Texture playerImg = new Texture(player.getImagePath());
 		if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-			//player.moveLeft();
+			player.moveLeft();
 		}
 		if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-			//player.moveRight();
+			player.moveRight();
 		}
 		if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-			//player.moveUp();
+			player.moveUp();
 		}
 		if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-			//player.moveDown();
+			player.moveDown();
 		}
-		if(timeSeconds < diceRoll1Timer)
-		{
-			timeSeconds += Gdx.graphics.getDeltaTime();
-			diceRoll1.Roll();
-		}
-		if(timeSeconds < diceRoll2Timer)
-		{
-			timeSeconds += Gdx.graphics.getDeltaTime();
-			diceRoll2.Roll();
-		}
+
 		if(Gdx.input.isKeyPressed(Input.Keys.SPACE)){
-			RollingAnimation();
+			diceRoll1.RollingAnimation();
+			diceRoll2.RollingAnimation();
 		}
+
+		diceRoll1.animate();
+		diceRoll2.animate();
+		player.animate();
 
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
 
 		batch.draw(background, 0, 0);
-		//batch.draw(playerImg, player.getX(), player.getY());
+		batch.draw(player.getBitmap(),player.getX(), player.getY());
 		batch.draw(diceRoll1.textures[diceRoll1.value], 550, 50);
 		batch.draw(diceRoll1.textures[diceRoll2.value], 700, 50);
-
-		pionek.animate();
-		Texture tempTexture = createTextureFromBitmapHandler(pionek.getBitmap());
-
-		// Narysuj obiekt na ekranie
-		batch.draw(tempTexture, pionek.getX(), pionek.getY());
-
-		// Zwolnij zasoby tekstury
-		//tempTexture.dispose();
 
 		batch.end();
 
@@ -130,11 +96,11 @@ public class Engine extends ApplicationAdapter {
 		shapeRenderer.setProjectionMatrix(camera.combined);
 		shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
 
+		//<editor-fold desc="Prymitywy">
 		int x = 70;
 		PrimitiveRenderer.drawCircle(shapeRenderer,x,50,20,0, Color.RED);
 		PrimitiveRenderer.drawSquare(shapeRenderer,x,100,40,0, Color.GREEN);
 		PrimitiveRenderer.drawTriangle(shapeRenderer,x,150,40, Color.BLUE);
-
 		circleObject.draw();
 		squareObject.draw();
 		//circleObject.translate(1, 1);
@@ -142,7 +108,9 @@ public class Engine extends ApplicationAdapter {
 		//squareObject.scale(1.1f);
 		squareObject.rotate(1);
 		circleObject.rotate(1);
+		//</editor-fold>
 
+		//<editor-fold desc="Rysowanie linii">
 		shapeRenderer.setColor(Color.BLACK);
 		Point2D point1 = new Point2D(x+20, 200);
 		Point2D point2 = new Point2D(70, 400);
@@ -152,10 +120,14 @@ public class Engine extends ApplicationAdapter {
 		Point2D point4 = new Point2D(80, 400);
 		LineSegment lineSegment2 = new LineSegment(point3,point4);
 		PrimitiveRenderer.drawLine(shapeRenderer,lineSegment2,5);
+		//</editor-fold>
 
+		//<editor-fold desc="Okrąg i elipsa">
 		PrimitiveRenderer.drawCircleWithSymmetry(shapeRenderer,new Point2D(x,500),20,8);
 		PrimitiveRenderer.drawEllipseWithSymmetry(shapeRenderer,new Point2D(x,550),20,10,8);
+		//</editor-fold>
 
+		//<editor-fold desc="Rysowanie wielokątów">
 		shapeRenderer.setAutoShapeType(true);
 		Array<Point2D> point2Ds = new Array<>();
 		point2Ds.add(new Point2D(14, 100));
@@ -174,39 +146,20 @@ public class Engine extends ApplicationAdapter {
 		point2Ds.add(new Point2D(45, 200));
 
 		PrimitiveRenderer.drawPolygon(shapeRenderer, point2Ds);
+		//</editor-fold>
 
-
-
-		// Flood Fill - Ustaw kolor docelowy i kolor wypełnienia
 		//PrimitiveRenderer.floodFill(shapeRenderer, 220, Color.WHITE, Color.BLUE);
 
 		shapeRenderer.end();
 	}
 
-	private Texture createTextureFromBitmapHandler(BitmapHandler bitmapHandler) {
-		Pixmap pixmap = new Pixmap(bitmapHandler.getWidth(), bitmapHandler.getHeight(), Pixmap.Format.RGBA8888);
-		for (int y = 0; y < bitmapHandler.getHeight(); y++) {
-			for (int x = 0; x < bitmapHandler.getWidth(); x++) {
-				int color = bitmapHandler.getPixel(x, y);
-				pixmap.drawPixel(x, y, color);
-			}
-		}
-		Texture texture = new Texture(pixmap);
-		pixmap.dispose();
-		return texture;
-	}
+
 
 	@Override
 	public void resize(int width, int height) {
 		viewport.update(width, height, true);
 	}
-	public void RollingAnimation()
-	{
-		Random r = new Random();
-		timeSeconds = 0;
-		diceRoll1Timer = 1 + r.nextFloat(1f);
-		diceRoll2Timer = 1 + r.nextFloat(3f);
-	}
+
 	@Override
 	public void dispose() {
 		batch.dispose();

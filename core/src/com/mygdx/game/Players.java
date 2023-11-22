@@ -1,6 +1,6 @@
-/*package com.mygdx.game;
+package com.mygdx.game;
 
-public class Players extends SpriteObject{
+public class Players{
     String name;
     int cash;
     int x,y; //koordynaty gracza
@@ -62,4 +62,4 @@ public class Players extends SpriteObject{
     public void moveDown() {
         y -= 5;
     }
-}*/
+}

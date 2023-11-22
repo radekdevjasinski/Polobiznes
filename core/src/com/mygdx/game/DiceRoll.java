@@ -6,9 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import static com.mygdx.game.Engine.resizeTexture;
-
-public class DiceRoll {
+public class DiceRoll extends AnimatedObject {
     public int posX;
     public int posY;
     public int value;
@@ -16,6 +14,7 @@ public class DiceRoll {
     public Texture[] textures;
     public DiceRoll()
     {
+        super();
         posX = 0;
         posY = 0;
         active = true;
@@ -24,7 +23,7 @@ public class DiceRoll {
         {
             value = i+1;
             String path = "dice_" + Integer.toString(value) + ".png";
-            textures[i] = resizeTexture(path, 100, 100);
+            textures[i] = BitmapHandler.resizeTexture(path, 100, 100);
         }
         Roll();
     }
@@ -32,5 +31,18 @@ public class DiceRoll {
     {
         Random rand = new Random();
         value = 1 + rand.nextInt(5);
+    }
+    public void RollingAnimation()
+    {
+        Random r = new Random();
+        timeSeconds = 0;
+        animationTimer = 1 + r.nextFloat(1f);
+    }
+    public void animate(){
+        if(timeSeconds < animationTimer)
+        {
+            timeSeconds += Gdx.graphics.getDeltaTime();
+            Roll();
+        }
     }
 }

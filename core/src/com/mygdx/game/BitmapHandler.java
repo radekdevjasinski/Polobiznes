@@ -1,5 +1,12 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.PixmapIO;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.TextureData;
+import com.badlogic.gdx.utils.ScreenUtils;
+
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -10,103 +17,55 @@ import javax.swing.JLabel;
 
 public class BitmapHandler {
 
-    private BufferedImage bitmap;
+    private Texture bitmap;
+    private String fileName;
 
-    // Konstruktor - tworzy nową bitmapę o zadanych wymiarach
-    public BitmapHandler(int width, int height) {
-        this.bitmap = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+    BitmapHandler(String fileName) {
+        this.fileName = fileName;
+        loadFromFile();
+        bitmap = resizeTexture(bitmap,40,40);
     }
 
-    // Wczytywanie bitmapy z pliku w folderze "assets"
-    public void loadFromFile(String fileName) {
-        try {
+    public Texture getBitmap() {
+        return bitmap;
+    }
 
-            this.bitmap = ImageIO.read(new File("assets/" + fileName));
-        } catch (IOException e) {
-            e.printStackTrace();
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setBitmap(Texture bitmap) {
+        this.bitmap = bitmap;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
+    public void loadFromFile() {
+        this.bitmap = new Texture(fileName);
+    }
+
+    public static Texture resizeTexture(String path, int width, int height) {
+        Pixmap pixmap20 = new Pixmap(Gdx.files.internal(path));
+        Pixmap pixmap10 = new Pixmap(width, height, pixmap20.getFormat());
+        pixmap10.drawPixmap(pixmap20,
+                0, 0, pixmap20.getWidth(), pixmap20.getHeight(),
+                0, 0, pixmap10.getWidth(), pixmap10.getHeight()
+        );
+        return new Texture((pixmap10));
+    }
+    public static Texture resizeTexture(Texture texture, int width, int height) {
+        TextureData textureData = texture.getTextureData();
+        if (!textureData.isPrepared()) {
+            textureData.prepare();
         }
+        Pixmap pixmap20 = texture.getTextureData().consumePixmap();
+        Pixmap pixmap10 = new Pixmap(width, height, pixmap20.getFormat());
+        pixmap10.drawPixmap(pixmap20,
+                0, 0, pixmap20.getWidth(), pixmap20.getHeight(),
+                0, 0, pixmap10.getWidth(), pixmap10.getHeight()
+        );
+        return new Texture((pixmap10));
     }
-
-    // Zapisywanie bitmapy do pliku
-    public void saveToFile(String filePath, String format) {
-        try {
-            ImageIO.write(bitmap, format, new File(filePath));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    // Kopiowanie zawartości jednej bitmapy do drugiej
-    public void copyTo(BitmapHandler destination) {
-        int width = this.bitmap.getWidth();
-        int height = this.bitmap.getHeight();
-
-        // Sprawdzanie, czy bitmapy mają takie same wymiary
-        if (width != destination.getWidth() || height != destination.getHeight()) {
-            throw new IllegalArgumentException("Bitmapy muszą mieć takie same wymiary.");
-        }
-
-        // Kopiowanie piksel po pikselu
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
-                int pixelColor = this.bitmap.getRGB(x, y);
-                destination.setPixel(x, y, pixelColor);
-            }
-        }
-    }
-
-    // Ustawianie koloru piksela na danej pozycji
-    public void setPixel(int x, int y, int color) {
-        this.bitmap.setRGB(x, y, color);
-    }
-
-    // Pobieranie koloru piksela z danej pozycji
-    public int getPixel(int x, int y) {
-        return this.bitmap.getRGB(x, y);
-    }
-
-    // Pobieranie szerokości bitmapy
-    public int getWidth() {
-        return this.bitmap.getWidth();
-    }
-
-    // Pobieranie wysokości bitmapy
-    public int getHeight() {
-        return this.bitmap.getHeight();
-    }
-
-    // Wyświetlanie bitmapy w nowym oknie
-    public void displayBitmap() {
-        JFrame frame = new JFrame("Bitmap Display");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        ImageIcon icon = new ImageIcon(bitmap);
-        JLabel label = new JLabel(icon);
-        frame.add(label);
-
-        frame.pack();
-        frame.setVisible(true);
-    }
-/*
-    public static void main(String[] args) {
-
-        BitmapHandler[] pionki = new BitmapHandler[10];
-
-        for (int i = 0; i < 10; i++) {
-            String fileName = "pionek_" + i + ".bmp";
-            pionki[i] = new BitmapHandler(100, 100);
-            pionki[i].loadFromFile(fileName);
-
-
-        }
-
-
-        pionki[0].copyTo(pionki[1]);
-
-
-        pionki[1].saveToFile("pionek_1_modified.bmp", "bmp");
-
-
-        pionki[1].displayBitmap();
-    }*/
 }

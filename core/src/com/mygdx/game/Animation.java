@@ -1,5 +1,5 @@
 package com.mygdx.game;
 
 public interface Animation {
-    void animate();
+    public void animate();
 }
