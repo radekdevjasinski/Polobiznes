@@ -14,6 +14,10 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.DiceRoll;
 import java.util.Random;
 
+
+/**
+ * Klasa Engine reprezentuje główny silnik gry.
+ */
 public class Engine extends ApplicationAdapter {
 	SpriteBatch batch;
 	Texture background;
@@ -29,6 +33,10 @@ public class Engine extends ApplicationAdapter {
 	private SquareObject squareObject;
 	//private Players player;
 	private Player player;
+
+	/**
+	 * Metoda inicjalizująca obiekty i parametry gry.
+	 */
 	@Override
 	public void create() {
 		batch = new SpriteBatch();
@@ -54,6 +62,10 @@ public class Engine extends ApplicationAdapter {
 		diceRoll2 = new DiceRoll();
 
 	}
+
+	/**
+	 * Metoda odpowiedzialna za rysowanie klatek gry.
+	 */
 	@Override
 	public void render() {
 		Gdx.gl.glClearColor(1, 1, 1, 1);
@@ -154,12 +166,20 @@ public class Engine extends ApplicationAdapter {
 	}
 
 
-
+	/**
+	 * Metoda odpowiedzialna za dostosowanie widoku do zmiany rozmiaru ekranu.
+	 *
+	 * @param width  Nowa szerokość ekranu.
+	 * @param height Nowa wysokość ekranu.
+	 */
 	@Override
 	public void resize(int width, int height) {
 		viewport.update(width, height, true);
 	}
 
+	/**
+	 * Metoda zwalniająca zasoby po zakończeniu działania gry.
+	 */
 	@Override
 	public void dispose() {
 		batch.dispose();
