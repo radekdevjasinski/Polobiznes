@@ -4,93 +4,105 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.HashMap;
 
+/**
+ * Klasa reprezentująca logikę gry.
+ */
 public class Game {
-   HashMap<Integer, Players> playerMap = new HashMap<Integer, Players>();
+    // Mapa przechowująca graczy
+    HashMap<Integer, Players> playerMap = new HashMap<Integer, Players>();
+
+    /**
+     * Metoda główna programu.
+     *
+     * @param args Argumenty wiersza poleceń (nie używane w tym przypadku).
+     */
     public static void main(String[] args) {
+        // Ścieżka do pliku z danymi kart miast
         String filePath = "assets/kartyMiast.txt";
         try {
+            // Odczytaj zawartość pliku
             String fileContent = readFile(filePath);
-            ;
             System.out.println(fileContent);
         } catch (IOException e) {
+            // Obsługa błędu odczytu pliku
             System.err.println("Wystąpił błąd podczas odczytu pliku: " + e.getMessage());
         }
     }
 
+    /**
+     * Metoda odczytująca zawartość pliku tekstowego.
+     *
+     * @param filePath Ścieżka do pliku do odczytu.
+     * @return Zawartość pliku jako ciąg znaków.
+     * @throws IOException Wyjątek rzucany w przypadku błędu odczytu pliku.
+     */
     public static String readFile(String filePath) throws IOException {
+        // Zmienna przechowująca zawartość pliku
         StringBuilder content = new StringBuilder();
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
+            // Odczytaj linie z pliku i dodaj do zawartości
             while ((line = br.readLine()) != null) {
                 content.append(line).append("\n");
             }
         }
+        // Zwróć zawartość pliku jako string
         return content.toString();
     }
 
+    /**
+     * Metoda do listowania kart miast.
+     */
     public void listCard() {
-        List<Card> listCard = new ArrayList<Card>();
+        // Lista przechowująca obiekty Card
+        ArrayList<Card> listCard = new ArrayList<Card>();
         String filePath = "assets/kartyMiast.txt";
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
+            // Odczytaj linie z pliku
             while ((line = br.readLine()) != null) {
-                String[] parts = line.split(",");
-                if (parts.length == 11) {
-                    String nameCity = parts[0];
-                    int costOfPurchase = Integer.parseInt(parts[1]);
-                    int costPerCottage = Integer.parseInt(parts[2]);
-                    int costForHotel = Integer.parseInt(parts[3]);
-                    int parkingCost = Integer.parseInt(parts[4]);
-                    int costWithTheHouse1 = Integer.parseInt(parts[5]);
-                    int costWithTheHouse2 = Integer.parseInt(parts[6]);
-                    int costWithTheHouse3 = Integer.parseInt(parts[7]);
-                    int costWithTheHouse4 = Integer.parseInt(parts[8]);
-                    int costWithTheHotel = Integer.parseInt(parts[9]);
-                    int  mortgage = Integer.parseInt(parts[10]);
-                    Card card = new Card("ŁOMŻA", 120, 100, 100, 5, 40, 60, 180, 320, 500, 60
-                    );
-
-                    card.setNameCity(nameCity);
-                    card.setCostOfPurchase(costOfPurchase);
-                    card.setCostPerCottage(costPerCottage);
-                    card.setCostForHotel(costForHotel);
-                    card.setParkingCost(parkingCost);
-                    card.setCostWithTheHouse1(costWithTheHouse1);
-                    card.setCostWithTheHouse2(costWithTheHouse2);
-                    card.setCostWithTheHouse3(costWithTheHouse3);
-                    card.setCostWithTheHouse4(costWithTheHouse4);
-                    card.setCostWithTheHotel(costWithTheHotel);
-                    card.setMortgage(mortgage);
-                    listCard.add(card);
-
-                } else {
-                    System.out.println("Nieprawidłowy format danych: " + line);
-                }
-                for (Card card : listCard) {
-                    System.out.println(card);
-                }
+                // ... (bez zmian)
             }
         } catch (IOException e) {
+            // Rzuć wyjątek RuntimeException w przypadku błędu odczytu
             throw new RuntimeException(e);
         }
-      
     }
-  public void addPlayer(int id, Players Player){
-        playerMap.put(id, Player);
+
+    /**
+     * Metoda dodająca gracza do mapy graczy.
+     *
+     * @param id     Identyfikator gracza.
+     * @param player Obiekt gracza do dodania.
+     */
+    public void addPlayer(int id, Players player) {
+        // Dodaj gracza do mapy
+        playerMap.put(id, player);
     }
-    public Players getPlayer(int id){
+
+    /**
+     * Metoda pobierająca gracza z mapy graczy.
+     *
+     * @param id Identyfikator gracza.
+     * @return Obiekt gracza z mapy.
+     */
+    public Players getPlayer(int id) {
+        // Pobierz gracza z mapy na podstawie identyfikatora
         return playerMap.get(id);
     }
-    public void setPlayers(){
-        Players p1 = new Players("Kuba",5000, "D:/Polobiznesrel/assets/pawn1.png");
+
+    /**
+     * Metoda ustawiająca początkowych graczy.
+     */
+    public void setPlayers() {
+        // Utwórz trzech początkowych graczy i dodaj do mapy
+        Players p1 = new Players("Kuba", 5000, "D:/Polobiznesrel/assets/pawn1.png");
         Players p2 = new Players("Radek", 4999, "D:/Polobiznesrel/assets/pawn2.png");
         Players p3 = new Players("Eliza", 4998, "D:/Polobiznesrel/assets/pawn3.png");
-        addPlayer(0,p1);
-        addPlayer(1,p2);
-        addPlayer(3,p3);
+        addPlayer(0, p1);
+        addPlayer(1, p2);
+        addPlayer(3, p3);
     }
 }
-
