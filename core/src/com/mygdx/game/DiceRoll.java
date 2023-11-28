@@ -52,7 +52,7 @@ public class DiceRoll extends AnimatedObject {
      */
     public void Roll() {
         Random rand = new Random();
-        value = 1 + rand.nextInt(6);
+        value = 1 + rand.nextInt(5);
     }
 
     /**

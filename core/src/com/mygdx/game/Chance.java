@@ -3,7 +3,9 @@ package com.mygdx.game;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-
+/**
+ * Klasa Chance reprezentuje objekt szans w grze.
+ */
 public class Chance {
 
     public static void main(String[] args) {
