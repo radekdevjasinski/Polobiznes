@@ -1,6 +1,8 @@
 package com.mygdx.game;
 
-// Klasa reprezentująca kartę miasta
+/**
+ * Klasa Card reprezentuje objekt kard miast w grze.
+ */
 public class Card {
     // Atrybuty karty miasta
     String nameCity;
