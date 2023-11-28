@@ -2,6 +2,7 @@ package com.mygdx.game;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.*;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.Array;
@@ -29,6 +30,8 @@ public class Engine extends ApplicationAdapter {
 	private SquareObject squareObject;
 	//private Players player;
 	private Player player;
+	private Card card;
+	private CardDisplay cardDisplay;
 	@Override
 	public void create() {
 		batch = new SpriteBatch();
@@ -52,6 +55,9 @@ public class Engine extends ApplicationAdapter {
 		game.setPlayers();
 		diceRoll1 = new DiceRoll();
 		diceRoll2 = new DiceRoll();
+
+		card = new Card("Bialystok", 200, 50, 100, 20, 150, 200, 250, 300, 400, 50);
+		cardDisplay = new CardDisplay(batch, new BitmapFont(), card);
 
 	}
 	@Override
@@ -105,9 +111,9 @@ public class Engine extends ApplicationAdapter {
 		squareObject.draw();
 		//circleObject.translate(1, 1);
 		//circleObject.scale(1.1f);
-		//squareObject.scale(1.1f);
-		squareObject.rotate(1);
-		circleObject.rotate(1);
+		//squareObject.scale(1.1001f);
+		squareObject.rotate(1.1001f);
+		//circleObject.rotate(1);
 		//</editor-fold>
 
 		//<editor-fold desc="Rysowanie linii">
@@ -149,6 +155,9 @@ public class Engine extends ApplicationAdapter {
 		//</editor-fold>
 
 		//PrimitiveRenderer.floodFill(shapeRenderer, 220, Color.WHITE, Color.BLUE);
+
+		cardDisplay.displayCardInfo();
+
 
 		shapeRenderer.end();
 	}
