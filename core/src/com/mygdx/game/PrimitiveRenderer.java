@@ -29,6 +29,12 @@ public class PrimitiveRenderer {
         shapeRenderer.rotate(0, 0, 1, rotation);
         shapeRenderer.rect(x - size / 2, y - size / 2, size, size);
     }
+    public static void drawRectangle(ShapeRenderer shapeRenderer, float x, float y, float sizeX, float sizeY, float rotation, Color color) {
+        shapeRenderer.setColor(color);
+        shapeRenderer.rotate(0, 0, 1, rotation);
+        shapeRenderer.rect(x - sizeX / 2, y - sizeY / 2, sizeX, sizeY);
+    }
+
 
     /**
      * Rysuje trójkąt przy użyciu ShapeRenderer.
