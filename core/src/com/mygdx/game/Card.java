@@ -1,5 +1,9 @@
 package com.mygdx.game;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
 // Klasa reprezentująca kartę miasta
 public class Card {
     // Atrybuty karty miasta
@@ -14,20 +18,21 @@ public class Card {
     int costWithTheHouse4;
     int costWithTheHotel;
     int mortgage;
+
     /**
      * Konstruktor klasy Card, inicjalizuje atrybuty karty na podstawie przekazanych wartości.
      *
-     * @param nameCity           Nazwa miasta na karcie.
-     * @param costOfPurchase     Koszt zakupu karty.
-     * @param costPerCottage     Koszt za jedno domek.
-     * @param costForHotel       Koszt za hotel.
-     * @param parkingCost        Koszt parkowania.
-     * @param costWithTheHouse1  Koszt z jednym domkiem.
-     * @param costWithTheHouse2  Koszt z dwoma domkami.
-     * @param costWithTheHouse3  Koszt z trzema domkami.
-     * @param costWithTheHouse4  Koszt z czterema domkami.
-     * @param costWithTheHotel   Koszt z hotelem.
-     * @param mortgage           Wartość hipoteki.
+     * @param nameCity          Nazwa miasta na karcie.
+     * @param costOfPurchase    Koszt zakupu karty.
+     * @param costPerCottage    Koszt za jedno domek.
+     * @param costForHotel      Koszt za hotel.
+     * @param parkingCost       Koszt parkowania.
+     * @param costWithTheHouse1 Koszt z jednym domkiem.
+     * @param costWithTheHouse2 Koszt z dwoma domkami.
+     * @param costWithTheHouse3 Koszt z trzema domkami.
+     * @param costWithTheHouse4 Koszt z czterema domkami.
+     * @param costWithTheHotel  Koszt z hotelem.
+     * @param mortgage          Wartość hipoteki.
      */
     // Konstruktor klasy Card, inicjalizuje atrybuty karty na podstawie przekazanych wartości
     public Card(String nameCity, int costOfPurchase, int costPerCottage, int costForHotel, int parkingCost,
@@ -45,6 +50,11 @@ public class Card {
         this.costWithTheHotel = costWithTheHotel;
         this.mortgage = mortgage;
     }
+
+    public Card() {
+
+    }
+
     /**
      * Metoda zwracająca nazwę miasta karty.
      *
@@ -159,6 +169,7 @@ public class Card {
     public void setMortgage(int mortgage) {
         this.mortgage = mortgage;
     }
+
     /**
      * Metoda przesłaniająca toString() dla reprezentacji tekstowej obiektu Card.
      *
@@ -179,5 +190,43 @@ public class Card {
                 ", costWithTheHotel=" + costWithTheHotel +
                 ", mortgage=" + mortgage +
                 '}';
+    }
+    public void readCardFromFile() {
+        String filePath = "assets/kartyMiast.txt";
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String line;
+
+            // Odczytujemy linie z pliku
+            while ((line = reader.readLine()) != null) {
+                // Dzielimy linię na poszczególne części (pola karty) - zakładamy, że są oddzielone spacją
+                String[] parts = line.split(" ");
+
+                // Sprawdzamy, czy mamy wystarczającą liczbę pól
+                if (parts.length == 11) {
+                    // Tworzymy nową kartę i dodajemy ją do listy
+                    Card card = new Card(
+                            parts[0], // Nazwa miasta
+                            Integer.parseInt(parts[1]), // Koszt zakupu
+                            Integer.parseInt(parts[2]), // Koszt za domek
+                            Integer.parseInt(parts[3]), // Koszt za hotel
+                            Integer.parseInt(parts[4]), // Koszt parkowania
+                            Integer.parseInt(parts[5]), // Koszt z jednym domkiem
+                            Integer.parseInt(parts[6]), // Koszt z dwoma domkami
+                            Integer.parseInt(parts[7]), // Koszt z trzema domkami
+                            Integer.parseInt(parts[8]), // Koszt z czterema domkami
+                            Integer.parseInt(parts[9]), // Koszt z hotelem
+                            Integer.parseInt(parts[10]) // Wartość hipoteki
+                    );
+
+                    // Wyświetlamy informacje na konsoli (możesz dostosować to według swoich potrzeb)
+                    System.out.println("Wczytano kartę: " + card.toString());
+                } else {
+                    // W przypadku nieprawidłowego formatu linii ignorujemy ją
+                    System.out.println("Nieprawidłowy format linii: " + line);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

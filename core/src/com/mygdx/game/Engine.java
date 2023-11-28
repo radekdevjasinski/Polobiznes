@@ -15,6 +15,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.DiceRoll;
 import java.util.Random;
 
+
 public class Engine extends ApplicationAdapter {
 	SpriteBatch batch;
 	Texture background;
@@ -32,6 +33,8 @@ public class Engine extends ApplicationAdapter {
 	private Player player;
 	private Card card;
 	private CardDisplay cardDisplay;
+	private BitmapFont font;
+	private Card readCardFromFile;
 	@Override
 	public void create() {
 		batch = new SpriteBatch();
@@ -58,6 +61,7 @@ public class Engine extends ApplicationAdapter {
 
 		card = new Card("Bialystok", 200, 50, 100, 20, 150, 200, 250, 300, 400, 50);
 		cardDisplay = new CardDisplay(batch, new BitmapFont(), card);
+
 
 	}
 	@Override
