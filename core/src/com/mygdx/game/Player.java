@@ -8,6 +8,7 @@ public class Player extends SpriteObject{
 
     String imagePath;
     float moveSpeed;
+    private int currentCircleId;
 
 
     /**
@@ -19,6 +20,7 @@ public class Player extends SpriteObject{
         super(imagePath, 9);
         this.imagePath = imagePath;
         moveSpeed = 2.5f;
+        currentCircleId = 0;
     }
 
     /**
@@ -66,4 +68,14 @@ public class Player extends SpriteObject{
     public void moveDown() {
         y -= moveSpeed;
     }
+
+    public void setCurrentCircleId(int circleId) {
+        this.currentCircleId = circleId;
+    }
+
+    public int getCurrentCircleId() {
+        return currentCircleId;
+    }
+
+
 }
