@@ -7,7 +7,41 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
  * Klasa reprezentująca obiekt koła.
  */
 public class CircleObject extends ShapeObject {
-    private float x, y;
+    private float x;
+
+    public float getX() {
+        return x;
+    }
+
+    public void setX(float x) {
+        this.x = x;
+    }
+
+    public float getY() {
+        return y;
+    }
+
+    public void setY(float y) {
+        this.y = y;
+    }
+
+    public float getRadius() {
+        return radius;
+    }
+
+    public void setRadius(float radius) {
+        this.radius = radius;
+    }
+
+    public float getRotation() {
+        return rotation;
+    }
+
+    public void setRotation(float rotation) {
+        this.rotation = rotation;
+    }
+
+    private float y;
     private float radius;
     private float rotation;
 
@@ -59,6 +93,13 @@ public class CircleObject extends ShapeObject {
     public void rotate(float degrees) {
         rotation += degrees;
     }
+
+    /*
+    public float getDistanceTo(float targetX, float targetY) {
+        float deltaX = targetX - x;
+        float deltaY = targetY - y;
+        return (float) Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+    }*/
 
     /**
      * Metoda skalująca obiekt koła o zadany czynnik.
