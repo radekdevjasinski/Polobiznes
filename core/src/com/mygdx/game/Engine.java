@@ -1,6 +1,7 @@
 package com.mygdx.game;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -99,15 +100,51 @@ public class Engine extends ApplicationAdapter {
 
 		batch.draw(background, 0, 0);
 		batch.draw(player.getBitmap(),player.getX(), player.getY());
-		batch.draw(diceRoll1.textures[diceRoll1.value], 550, 50);
-		batch.draw(diceRoll1.textures[diceRoll2.value], 700, 50);
+		batch.draw(diceRoll1.textures[diceRoll1.value], 790, 30);
+		batch.draw(diceRoll1.textures[diceRoll2.value], 890, 30);
 
 		batch.end();
 
 
 		shapeRenderer.setProjectionMatrix(camera.combined);
 		shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+		float x = 100;
+		float y = 400;
+		float sizeX = 200;
+		float sizeY = 350;
+		PrimitiveRenderer.drawRectangle(shapeRenderer, 890, 400, 200,350, 0,Color.WHITE);//prawa strona, karta
+		PrimitiveRenderer.drawRectangle(shapeRenderer, x,y,sizeX,sizeY, 0,Color.BLUE);//lewa strona, szansa
 
+
+		shapeRenderer.end();
+		shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+		PrimitiveRenderer.drawRectangle(shapeRenderer, 890, 400, 200,350, 0,Color.BLACK);//prawa strona, karta
+		PrimitiveRenderer.drawRectangle(shapeRenderer, x,y,sizeX,sizeY, 0,Color.BLACK);//lewa strona, szansa
+		shapeRenderer.end();
+	}
+
+
+	/**
+	 * Metoda odpowiedzialna za dostosowanie widoku do zmiany rozmiaru ekranu.
+	 *
+	 * @param width  Nowa szerokość ekranu.
+	 * @param height Nowa wysokość ekranu.
+	 */
+	@Override
+	public void resize(int width, int height) {
+		viewport.update(width, height, true);
+	}
+
+	/**
+	 * Metoda zwalniająca zasoby po zakończeniu działania gry.
+	 */
+	@Override
+	public void dispose() {
+		batch.dispose();
+		background.dispose();
+	}
+	void engineDemo()
+	{
 		//<editor-fold desc="Prymitywy">
 		int x = 70;
 		PrimitiveRenderer.drawCircle(shapeRenderer,x,50,20,0, Color.RED);
@@ -161,28 +198,5 @@ public class Engine extends ApplicationAdapter {
 		//</editor-fold>
 
 		//PrimitiveRenderer.floodFill(shapeRenderer, 220, Color.WHITE, Color.BLUE);
-
-		shapeRenderer.end();
-	}
-
-
-	/**
-	 * Metoda odpowiedzialna za dostosowanie widoku do zmiany rozmiaru ekranu.
-	 *
-	 * @param width  Nowa szerokość ekranu.
-	 * @param height Nowa wysokość ekranu.
-	 */
-	@Override
-	public void resize(int width, int height) {
-		viewport.update(width, height, true);
-	}
-
-	/**
-	 * Metoda zwalniająca zasoby po zakończeniu działania gry.
-	 */
-	@Override
-	public void dispose() {
-		batch.dispose();
-		background.dispose();
 	}
 }
