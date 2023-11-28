@@ -66,6 +66,10 @@ public class PrimitiveRenderer {
         shapeRenderer.rotate(0, 0, 1, rotation);
         shapeRenderer.circle(x, y, radius);
     }
+    public static void drawElipse(ShapeRenderer shapeRenderer, float centerX, float centerY, float radiusX, float radiusY, Color color) {
+        shapeRenderer.setColor(color);
+        shapeRenderer.ellipse(centerX - radiusX, centerY - radiusY, 2 * radiusX, 2 * radiusY);
+    }
 
     /**
      * Rysuje linię algorytmem Bresenhama.
