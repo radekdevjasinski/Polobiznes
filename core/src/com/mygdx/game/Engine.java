@@ -166,15 +166,17 @@ public class Engine extends ApplicationAdapter {
 		cardDisplay.displayCardInfo(batch);
 		chanceDisplay.displayChance(batch,font);
 		batch.end();
-	}
-
-		//circleSquareDrawer.drawCircles();
-		shapeRenderer.end();
-
 		batch.begin();
 		closestCircleInfo.drawClosestCircleInfo(batch, player.getX(), player.getY());
 
 		batch.end();
+		shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+		circleSquareDrawer.drawCircles();
+		shapeRenderer.end();
+
+	}
+
+
 
 
 	void engineDemo()
