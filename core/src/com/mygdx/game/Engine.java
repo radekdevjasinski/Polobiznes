@@ -1,7 +1,9 @@
 package com.mygdx.game;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.*;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.Array;
@@ -12,6 +14,8 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.DiceRoll;
+
+import java.io.IOException;
 import java.util.Random;
 
 
@@ -39,6 +43,11 @@ public class Engine extends ApplicationAdapter {
 	private SquareObject squareObject;
 	//private Players player;
 	private Player player;
+	private Card card;
+	private CardDisplay cardDisplay;
+	private Chance chance;
+	private ChanceDisplay chanceDisplay;
+	private BitmapFont font;
 
 	/**
 	 * Metoda inicjalizująca obiekty i parametry gry.
@@ -69,6 +78,18 @@ public class Engine extends ApplicationAdapter {
 
 		circleSquareDrawer = new CircleSquareDrawer(viewport);
 		closestCircleInfo = new ClosestCircleInfo(circleSquareDrawer);
+    
+		card = new Card("Bialystok", 200, 50, 100, 20, 150, 200, 250, 300, 400, 50);
+		cardDisplay = new CardDisplay(new BitmapFont(), card);
+		try {
+			chance = new Chance();
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+		chanceDisplay = new ChanceDisplay(chance);
+
+		font = new BitmapFont();
+
 	}
 
 	/**
@@ -79,7 +100,25 @@ public class Engine extends ApplicationAdapter {
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-		/*
+		batch.begin();
+		batch.draw(background, 0, 0);
+		batch.end();
+		shapeRenderer.setProjectionMatrix(camera.combined);
+		shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+		float x = 100;
+		float y = 400;
+		float sizeX = 200;
+		float sizeY = 350;
+		cardDisplay.drawCardBackground(shapeRenderer);
+
+		chanceDisplay.drawChanceBackground(shapeRenderer);
+
+		shapeRenderer.end();
+		shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+		cardDisplay.drawCardBorder(shapeRenderer);
+		chanceDisplay.drawChanceBorder(shapeRenderer);
+		shapeRenderer.end();
+  /*
 		//Texture playerImg = new Texture(player.getImagePath());
 		if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
 			player.moveLeft();
@@ -120,12 +159,14 @@ public class Engine extends ApplicationAdapter {
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
 
-		batch.draw(background, 0, 0);
 		batch.draw(player.getBitmap(),player.getX(), player.getY());
-		batch.draw(diceRoll1.textures[diceRoll1.value], 550, 50);
-		batch.draw(diceRoll1.textures[diceRoll2.value], 700, 50);
+		batch.draw(diceRoll1.textures[diceRoll1.value], 790, 30);
+		batch.draw(diceRoll1.textures[diceRoll2.value], 890, 30);
 
+		cardDisplay.displayCardInfo(batch);
+		chanceDisplay.displayChance(batch,font);
 		batch.end();
+	}
 
 		//circleSquareDrawer.drawCircles();
 		shapeRenderer.end();
@@ -135,9 +176,9 @@ public class Engine extends ApplicationAdapter {
 
 		batch.end();
 
-		shapeRenderer.setProjectionMatrix(camera.combined);
-		shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
 
+	void engineDemo()
+	{
 		//<editor-fold desc="Prymitywy">
 		int x = 70;
 		//PrimitiveRenderer.drawCircle(shapeRenderer,x,50,20,0, Color.RED);
@@ -194,8 +235,6 @@ public class Engine extends ApplicationAdapter {
 
 		shapeRenderer.end();
 	}
-
-
 	/**
 	 * Metoda odpowiedzialna za dostosowanie widoku do zmiany rozmiaru ekranu.
 	 *
@@ -207,9 +246,6 @@ public class Engine extends ApplicationAdapter {
 		viewport.update(width, height, true);
 	}
 
-	/**
-	 * Metoda zwalniająca zasoby po zakończeniu działania gry.
-	 */
 	@Override
 	public void dispose() {
 		batch.dispose();
