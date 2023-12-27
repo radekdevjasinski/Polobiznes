@@ -6,25 +6,23 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 public class CardDisplay {
-    private BitmapFont font;
     private Card card;
 
-    public CardDisplay(BitmapFont font, Card card) {
-        this.font = font;
+    public CardDisplay(Card card) {
         this.card = card;
     }
 
     public void displayCardInfo(SpriteBatch batch) {
-        // Ustawienie koloru tekstu na czarny
+        BitmapFont font = Font.getFontInstance().getFont(0);
         font.setColor(Color.BLACK);
-        font.getData().setScale(1);
+        // Ustawienie koloru tekstu na czarny
         // Wyświetlanie informacji o karcie na ekranie wewnątrz prostokąta
         int x = 800;
         int y = 560;
         font.draw(batch, "AKT ", x+80, y);
         font.draw(batch, "WLASNOSCI ", x+50, y-30);
         font.draw(batch, card.getNameCity().toUpperCase(), x+57, y-60);
-        font.draw(batch, "SWIETOKRZYSKIE ", x+30, y-90);
+        font.draw(batch, "ŚWIĘTOKRZYSKIE ", x+30, y-90);
         font.getData().setScale(0.75f);
         y -= 20;
         font.draw(batch, "Cena zakupu: " + card.getCostOfPurchase(), x, y-120);

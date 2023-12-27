@@ -28,6 +28,7 @@ public class CircleSquareDrawer {
         float startY = viewport.getWorldHeight() / 2 - squareSize / 2;
 
         float step = squareSize / (circleCount / 4); // Zwiększamy krok między okręgami
+        System.out.println(step);
 
         for (int i = 0; i < circleCount; i++) {
             float x, y;
@@ -45,18 +46,15 @@ public class CircleSquareDrawer {
                 x = startX + (i - circleCount * 3 / 4) * step; // Zmieniamy kierunek rysowania dla czwartej ćwiartki
                 y = startY;
             }
-
             // Odwracamy kolejność id zgodnie z kierunkiem zegara
             int reversedId = (circleCount - i) % circleCount;
 
             CircleObject circle = new CircleObject(x, y, 5); // Przykładowy promień 10
             String circleId = "Circle_" + reversedId;
+
             circleMap.put(circleId, circle);
         }
     }
-
-
-
 
     public void drawCircles() {
         shapeRenderer.setProjectionMatrix(viewport.getCamera().combined);
