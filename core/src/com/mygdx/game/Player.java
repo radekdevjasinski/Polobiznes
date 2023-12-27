@@ -5,11 +5,9 @@ package com.mygdx.game;
  * Klasa reprezentująca gracza w grze.
  */
 public class Player extends SpriteObject{
-
     String imagePath;
     float moveSpeed;
     private int currentCircleId;
-
 
     /**
      * Konstruktor klasy Player.

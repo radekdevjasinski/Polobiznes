@@ -27,7 +27,6 @@ public class SquareObject extends ShapeObject {
     /**
      * Metoda odpowiedzialna za rysowanie kwadratu.
      */
-    @Override
     public void draw() {
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         shapeRenderer.identity();

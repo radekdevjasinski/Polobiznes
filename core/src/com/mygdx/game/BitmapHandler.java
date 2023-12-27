@@ -11,7 +11,6 @@ import com.badlogic.gdx.utils.ScreenUtils;
  * Klasa obsługująca manipulacje bitmapami w grze.
  */
 public class BitmapHandler {
-
     private Texture bitmap;
     private String fileName;
 

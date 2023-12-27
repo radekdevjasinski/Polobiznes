@@ -62,7 +62,6 @@ public class CircleObject extends ShapeObject {
     /**
      * Metoda odpowiedzialna za rysowanie koła.
      */
-    @Override
     public void draw() {
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         shapeRenderer.identity();

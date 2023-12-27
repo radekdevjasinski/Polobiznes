@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 /**
  * Klasa abstrakcyjna reprezentująca ogólny kształt.
  */
-public abstract class ShapeObject extends GameObject implements DrawableObject, TransformableObject {
+public abstract class ShapeObject implements TransformableObject {
     protected ShapeRenderer shapeRenderer;
 
     /**
