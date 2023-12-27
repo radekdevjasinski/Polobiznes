@@ -73,4 +73,8 @@ public class DiceRoll extends AnimatedObject {
             Roll(); // Wykonuje rzut podczas trwania animacji
         }
     }
+
+    public int getValue() {
+        return value;
+    }
 }
