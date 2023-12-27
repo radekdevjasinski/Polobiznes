@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -28,8 +29,6 @@ public class Engine extends ApplicationAdapter {
 	private ClosestCircleInfo closestCircleInfo;
 	private boolean leftKeyProcessed = false;
 	private boolean rightKeyProcessed = false;
-
-	private Board board;
 
 	SpriteBatch batch;
 	Texture background;
@@ -62,13 +61,6 @@ public class Engine extends ApplicationAdapter {
 		viewport = new FitViewport(background.getWidth(), background.getHeight(), camera);
 		viewport.apply();
 
-		/* //test rysowania stołu
-		float boardWidth = 800;
-		float boardHeight = 800;
-		viewport = new FitViewport(boardWidth, boardHeight, camera);
-		viewport.apply();
-		board = new Board(viewport);
-*/
 
 		player = new Player("pionek");
 		player.setPosition(500, 400); // Ustawienie pozycji pionka
@@ -265,17 +257,23 @@ public class Engine extends ApplicationAdapter {
 	private void movePlayerToAdjacentCircle(int direction) {
 		int liczbaKolek = 40; // Ilość okręgów
 
-		// Ustalamy nowe ID kropki na podstawie aktualnego ID i kierunku
+		circleSquareDrawer.updateCircleInfo();
+
 		int noweIdKolka = (player.getCurrentCircleId() + direction + liczbaKolek) % liczbaKolek;
 
-		// Ustawiamy nowe ID dla gracza
 		player.setCurrentCircleId(noweIdKolka);
 
-		// Pobieramy współrzędne nowej kropki na podstawie jej ID
 		CircleObject noweKolko = circleSquareDrawer.getCircleMap().get("Circle_" + noweIdKolka);
 		if (noweKolko != null) {
-			// Ustaw pozycję gracza na środku koła, uwzględniając szerokość i wysokość pionka
-			player.setPosition((int) (noweKolko.getX() - (40 / 2)), (int) (noweKolko.getY() - (40 / 2)));
+			float randomAngle = MathUtils.random(360);
+			float randomRadius = MathUtils.random(0, 10);
+
+			float playerX = noweKolko.getX() + MathUtils.cosDeg(randomAngle) * randomRadius;
+			float playerY = noweKolko.getY() + MathUtils.sinDeg(randomAngle) * randomRadius;
+
+			player.setPosition(Math.round(playerX - (40 / 2)), Math.round(playerY - (40 / 2)));
 		}
 	}
+
+
 }

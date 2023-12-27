@@ -69,6 +69,9 @@ public class CircleSquareDrawer {
 
         shapeRenderer.end();
     }
+    public void updateCircleInfo() {
+        drawCirclesInSquare(); // Aktualizujemy informacje o kółkach
+    }
 
     public HashMap<String, CircleObject> getCircleMap() {
         return circleMap;
