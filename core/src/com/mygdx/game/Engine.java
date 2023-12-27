@@ -33,8 +33,6 @@ public class Engine extends ApplicationAdapter {
 	Texture background;
 	DiceRoll diceRoll1;
 	DiceRoll diceRoll2;
-	float diceRoll1Timer;
-	float diceRoll2Timer;
     private Game game;
 	private OrthographicCamera camera;
 	private ShapeRenderer shapeRenderer;
