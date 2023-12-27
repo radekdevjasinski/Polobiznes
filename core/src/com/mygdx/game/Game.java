@@ -19,14 +19,11 @@ public class Game {
      * @param args Argumenty wiersza poleceń (nie używane w tym przypadku).
      */
     public static void main(String[] args) {
-        // Ścieżka do pliku z danymi kart miast
         String filePath = "assets/kartyMiast.txt";
         try {
-            // Odczytaj zawartość pliku
             String fileContent = readFile(filePath);
             System.out.println(fileContent);
         } catch (IOException e) {
-            // Obsługa błędu odczytu pliku
             System.err.println("Wystąpił błąd podczas odczytu pliku: " + e.getMessage());
         }
     }
@@ -39,11 +36,9 @@ public class Game {
      * @throws IOException Wyjątek rzucany w przypadku błędu odczytu pliku.
      */
     public static String readFile(String filePath) throws IOException {
-        // Zmienna przechowująca zawartość pliku
         StringBuilder content = new StringBuilder();
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
-            // Odczytaj linie z pliku i dodaj do zawartości
             while ((line = br.readLine()) != null) {
                 content.append(line).append("\n");
             }
@@ -56,7 +51,6 @@ public class Game {
      * Metoda do listowania kart miast.
      */
     public void listCard() {
-        // Lista przechowująca obiekty Card
         ArrayList<Card> listCard = new ArrayList<Card>();
         String filePath = "assets/kartyMiast.txt";
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {

@@ -1,8 +1,10 @@
 package com.mygdx.game;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import com.badlogic.gdx.Gdx;
+
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,15 +27,15 @@ public class Chance {
      * @throws IOException Wyjątek w przypadku problemów z odczytem pliku
      */
     public static List<String> readFile(String filePath) throws IOException {
-
         List<String> chances = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-            // Odczytaj plik linia po linii
+
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(filePath), "UTF-8"))) {
             String line;
             while ((line = br.readLine()) != null) {
                 chances.add(line);
             }
         }
+
         return chances;
     }
 }

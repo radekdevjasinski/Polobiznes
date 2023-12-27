@@ -1,6 +1,4 @@
 package com.mygdx.game;
-
-
 /**
  * Klasa reprezentująca gracza w grze.
  */

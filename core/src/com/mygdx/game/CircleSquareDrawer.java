@@ -28,6 +28,7 @@ public class CircleSquareDrawer {
         float startY = viewport.getWorldHeight() / 2 - squareSize / 2;
 
         float step = squareSize / (circleCount / 4); // Zwiększamy krok między okręgami
+        System.out.println(step);
 
         for (int i = 0; i < circleCount; i++) {
             float x, y;
@@ -46,7 +47,7 @@ public class CircleSquareDrawer {
                 y = startY + squareSize - (i - circleCount * 3 / 4) * step;
             }
 
-            CircleObject circle = new CircleObject(x, y, 5); // Przykładowy promień 10
+            CircleObject circle = new CircleObject(x, y, 20); // Przykładowy promień 10
             String circleId = "Circle_" + i;
             circleMap.put(circleId, circle);
         }
