@@ -1,5 +1,6 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -11,28 +12,34 @@ import com.badlogic.gdx.utils.Align;
 
 public class ChanceDisplay {
     private Chance chance;
+    private final int x,y;
+    private final Texture background;
 
     public ChanceDisplay(Chance chance) {
         this.chance = chance;
+        x = Gdx.graphics.getWidth() / 2;
+        y = Gdx.graphics.getHeight() / 2;
+        background = new Texture("chanceBackground.png");
     }
 
-    public void displayChance(SpriteBatch batch, BitmapFont font) {
-        // Ustawienie koloru tekstu na czarny
+    public void displayChance(SpriteBatch batch) {
+        BitmapFont font = Font.getFontInstance().getFont(1);
         font.setColor(Color.BLACK);
-        font.getData().setScale(1.5f);
-        int x = 20;
-        int y = 460;
-
-        font.draw(batch, chance.chances.get(0), x,y,150,0,true);
+        String string = chance.chances.get(11);
+        font.draw(batch, string, x-150,y+30,300,1,true);
     }
-    public void drawChanceBackground(ShapeRenderer shapeRenderer)
+    public void drawChanceBackground(SpriteBatch batch)
     {
-        PrimitiveRenderer.drawRectangle(shapeRenderer, 100,400,200,350, 0,Color.valueOf("#1826c9"));//lewa strona, szansa
+        batch.draw(background, x-250, y-150);
+    }
+    public void drawChanceBackgroundCircle(ShapeRenderer shapeRenderer)
+    {
+        PrimitiveRenderer.drawElipse(shapeRenderer, x,y,200,100,Color.WHITE);
 
     }
     public void drawChanceBorder(ShapeRenderer shapeRenderer)
     {
-        PrimitiveRenderer.drawRectangle(shapeRenderer, 100,400,200,350, 0,Color.BLACK);//lewa strona, szansa
+        PrimitiveRenderer.drawRectangle(shapeRenderer, x,y,500,300, 0,Color.BLACK);//lewa strona, szansa
 
     }
 }
