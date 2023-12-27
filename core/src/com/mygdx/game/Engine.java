@@ -29,6 +29,8 @@ public class Engine extends ApplicationAdapter {
 	private boolean leftKeyProcessed = false;
 	private boolean rightKeyProcessed = false;
 
+	private Board board;
+
 	SpriteBatch batch;
 	Texture background;
 	DiceRoll diceRoll1;
@@ -53,12 +55,20 @@ public class Engine extends ApplicationAdapter {
 	@Override
 	public void create() {
 		batch = new SpriteBatch();
-		background = new Texture("planszaPoloTlo.png");
     	//player = new Players("Player1", 1000, "pawn3.png");
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		background = new Texture("planszaPoloTlo.png");
 		viewport = new FitViewport(background.getWidth(), background.getHeight(), camera);
 		viewport.apply();
+
+		/* //test rysowania stołu
+		float boardWidth = 800;
+		float boardHeight = 800;
+		viewport = new FitViewport(boardWidth, boardHeight, camera);
+		viewport.apply();
+		board = new Board(viewport);
+*/
 
 		player = new Player("pionek");
 		player.setPosition(500, 400); // Ustawienie pozycji pionka
@@ -253,18 +263,19 @@ public class Engine extends ApplicationAdapter {
 	}
 
 	private void movePlayerToAdjacentCircle(int direction) {
-		int circleCount = 40; // Ilość okręgów
+		int liczbaKolek = 40; // Ilość okręgów
 
 		// Ustalamy nowe ID kropki na podstawie aktualnego ID i kierunku
-		int newCircleId = (player.getCurrentCircleId() + direction + circleCount) % circleCount;
+		int noweIdKolka = (player.getCurrentCircleId() + direction + liczbaKolek) % liczbaKolek;
 
 		// Ustawiamy nowe ID dla gracza
-		player.setCurrentCircleId(newCircleId);
+		player.setCurrentCircleId(noweIdKolka);
 
 		// Pobieramy współrzędne nowej kropki na podstawie jej ID
-		CircleObject newCircle = circleSquareDrawer.getCircleMap().get("Circle_" + newCircleId);
-		if (newCircle != null) {
-			player.setPosition((int) newCircle.getX(), (int) newCircle.getY());
+		CircleObject noweKolko = circleSquareDrawer.getCircleMap().get("Circle_" + noweIdKolka);
+		if (noweKolko != null) {
+			// Ustaw pozycję gracza na środku koła, uwzględniając szerokość i wysokość pionka
+			player.setPosition((int) (noweKolko.getX() - (40 / 2)), (int) (noweKolko.getY() - (40 / 2)));
 		}
 	}
 }
