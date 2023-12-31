@@ -1,12 +1,14 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 
 public class Font {
     private final BitmapFont defaultFont;
     private final BitmapFont chanceFont;
+    private final BitmapFont boardFont;
     private static Font instance;
     private Font()
     {
@@ -19,6 +21,10 @@ public class Font {
         parameter.size = 20;
         this.chanceFont = generator.generateFont(parameter);
 
+        parameter.borderColor = Color.BLACK;
+        parameter.borderWidth = 1.5f;
+        parameter.size = 10;
+        this.boardFont = generator.generateFont(parameter);
         generator.dispose();
     }
     public static Font getFontInstance()
@@ -33,6 +39,10 @@ public class Font {
     {
         if (index == 1) {
             return chanceFont;
+        }
+        else if(index == 2)
+        {
+            return boardFont;
         }
         return defaultFont;
     }

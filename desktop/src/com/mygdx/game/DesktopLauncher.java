@@ -9,9 +9,10 @@ public class DesktopLauncher {
 	public static void main (String[] arg) {
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
 		config.setForegroundFPS(60);
-		config.setTitle("Polobiznes");
+		config.setTitle("POLBIZNES");
 		config.setWindowedMode(1000,600);
 		//config.setResizable(false);
+		config.setWindowIcon("logoPNG.png");
 		new Lwjgl3Application(new Engine(), config);
 	}
 }
