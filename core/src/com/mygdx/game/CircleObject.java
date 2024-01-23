@@ -44,6 +44,7 @@ public class CircleObject extends ShapeObject {
     private float y;
     private float radius;
     private float rotation;
+    private Card cityCard;
 
     /**
      * Konstruktor obiektu koła.
@@ -108,5 +109,12 @@ public class CircleObject extends ShapeObject {
     @Override
     public void scale(float factor) {
         radius *= factor;
+    }
+    public Card getCityCard() {
+        return cityCard;
+    }
+
+    public void setCityCard(Card cityCard) {
+        this.cityCard = cityCard;
     }
 }
