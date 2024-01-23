@@ -110,27 +110,33 @@ public class Engine extends ApplicationAdapter {
 			if (circle != null) {
 				float width = 40;
 				float height = 40;
-				if (specialField == 15) {
+				if (specialField == 25) {
 					batch.draw(pkpTexture, circle.getX() - 19, circle.getY(), width / 2, height / 2, width, height, 1, 1, 180, 0, 0, pkpTexture.getWidth(), pkpTexture.getHeight(), false, false);
-				} else if (specialField == 25) {
+				} else if (specialField == 15) {
 					batch.draw(pkpTexture, circle.getX() - 35, circle.getY() - 20, width / 2, height / 2, width, height, 1, 1, 270, 0, 0, pkpTexture.getWidth(), pkpTexture.getHeight(), false, false);
-				} else if (specialField == 5) {
-					batch.draw(pkpTexture, circle.getX(), circle.getY() - 20, width / 2, height / 2, width, height, 1, 1, 90, 0, 0, pkpTexture.getWidth(), pkpTexture.getHeight(), false, false);
 				} else if (specialField == 35) {
+					batch.draw(pkpTexture, circle.getX() - 5, circle.getY() - 20, width / 2, height / 2, width, height, 1, 1, 90, 0, 0, pkpTexture.getWidth(), pkpTexture.getHeight(), false, false);
+				} else if (specialField == 5) {
 					batch.draw(pkpTexture, circle.getX() - 20, circle.getY() - 37, width / 2, height / 2, width, height, 1, 1, 0, 0, 0, pkpTexture.getWidth(), pkpTexture.getHeight(), false, false);
 				}
 			}
 		}
 		batch.end();
 		batch.begin();
-		int[] specialFieldsQuestionMarkRed = {4, 12, 23, 33};
+		int[] specialFieldsQuestionMarkRed = {4, 12, 22, 33};
 		for (int specialField : specialFieldsQuestionMarkRed) {
 			CircleObject circle = circleSquareDrawer.getCircleMap().get("Circle_" + specialField);
 			if (circle != null) {
 				float width = 40;
 				float height = 40;
-				if (specialField == 4) {
+				if (specialField == 33) {
 					batch.draw(QuestionMarkRed, circle.getX() - 5, circle.getY() - 20, width / 2, height / 2, width, height, 1, 1, 90, 0, 0, QuestionMarkRed.getWidth(), QuestionMarkRed.getHeight(), false, false);
+				} else if (specialField == 22) {
+					batch.draw(QuestionMarkRed, circle.getX() - 19, circle.getY(), width / 2, height / 2, width, height, 1, 1, 180, 0, 0, QuestionMarkRed.getWidth(), QuestionMarkRed.getHeight(), false, false);
+				}else if (specialField == 12) {
+					batch.draw(QuestionMarkRed, circle.getX() - 35, circle.getY() - 20, width / 2, height / 2, width, height, 1, 1, 270, 0, 0, QuestionMarkRed.getWidth(), QuestionMarkRed.getHeight(), false, false);
+				} else if (specialField == 4) {
+					batch.draw(QuestionMarkRed, circle.getX() - 20, circle.getY() - 37, width / 2, height / 2, width, height, 1, 1, 0, 0, 0, QuestionMarkRed.getWidth(), QuestionMarkRed.getHeight(), false, false);
 				}
 			}
 		}
