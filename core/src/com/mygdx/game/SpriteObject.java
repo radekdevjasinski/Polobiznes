@@ -25,7 +25,7 @@ public class SpriteObject extends BitmapHandler implements TransformableObject, 
      * @param frameCount   Liczba klatek animacji.
      */
     public SpriteObject(String baseFileName, int frameCount) {
-        super(baseFileName + "_0.bmp");
+        super(baseFileName);
         stateTime = 0.1f;
         timeSeconds = 0;
         currentFrame = 0;
@@ -42,7 +42,7 @@ public class SpriteObject extends BitmapHandler implements TransformableObject, 
      */
     private void loadFrames(String baseFileName) {
         frames = new ArrayList<>();
-        for (int i = 0; i <= frameCount; i++) {
+        for (int i = 0; i < frameCount; i++) {
             String fileName = baseFileName + "_" + i + ".bmp";
             BitmapHandler frameBitmap = new BitmapHandler(fileName);
             frames.add(frameBitmap);
