@@ -1,46 +1,116 @@
 Bank wypłaca ci dewidentę w wysokości 50zł
+p +50
 Przejdź na pole Kielce
+t 9
 Przejdź na start
-Przejdź na plac Wilsona. jeśli miniesz start pobierz 200zł
-Cofnij się o trzy pola
+t 0
+Przejdź na Lomza.
+t 1
 Otrzymałeś kredyt budowlany pobierz 150zł
-WYJDŹ BEZPŁATNIE Z WIĘZIENIA (tę kartę możesz zatrzymać do późniejszego wykorzystania)
-Przejdź na dworzec Gdański jeśli miniesz start pobierz 200zł
+p +150
+Przejdź na dworzec Gdański
+t 5
 Zapłać za szkołe 150 zł
+p -150
 Wygrałeś konkurs krzyżówkowy pobierz 100 zł
-Przejdź na ulice płowiecką jeśli miniesz start pobierz 200 zł
-Zostałeś obciążony kosztami naprawy
-Zapłać 40zł za każdy dom
-Zapłać 115zł a każdy hotel
+p +100
+Przejdź do Lublina
+t 14
+Zostałeś obciążony kosztami naprawy 100 zł
+p -100
 Mandat za przekroczenie prędkości zapłać 150 zł
+p -150
 Idź do wiezienia (przejdź prosto do więzienia nie przechodź przez start)
+aw
 Grzywna zapłać 20 zł
+p -20
 Mandat za złe parkowanie 40 zł
-Wymieniasz elektrykę w swoich nieruchomościach. Zapłać: M 40 za każdy dom M 115 za każdy hotel
+p -40
 Zająłeś 2 miejsce w konkursie piękności. Pobierz 10 zł
+p +10
 Błąd bankowy na twoim koncie! Pobierz 200 zł
+p +200
 Idź do więzienia. Nie przechodź przez START. Nie pobieraj 200 zł
-Masz urodziny! Pobierz 10 zł od każdego gracza.
+aw
 Fundusz Zdrowotny. Pobierz 100 zł
+p +100
 Zapłać za wizytę u dentysty 100 zł
+p -100
 Zapłać czesne 50 zł
-Przejdź na START ( Pobierz 200 zł)
+p -50
+Przejdź na START
+t 0
 Wyprzedaż! Pobierz 50 zł
+p +50
 Zapłać za wizytę Lekarską 50 zł
+p -50
 Zwrot podatku. Pobierz 20 zł
+p +20
 Otrzymujesz 25 zł za porady finansowe
+p +25
 Odziedziczyłeś spadek. Pobierz 100 zł
+p +100
 Dostałeś premię! Pobierz 100 zł
-Idż na pole Lublin, jeśli przejdziesz przez START pobierz M 200
-Idź na pole Warszawa. Jeśli przejdziesz przez START pobierz 200 zł
-Zrobiłeś błąd w kalkulacjach podatkowych. Zapłać każdemu graczowi 50 zł
-Przeprowadź remont generalny wszystkich swoich nieruchomości:Zapłać za każdy dom 25zł
-Zapłać za każdy hotel 100 zł
+p +100
+Idż na pole Wrocław
+t 34
+Idź na pole Warszawa.
+t 39
 Idź do więzienia. Nie przechodź przez START. Nie pobieraj 200 zł
-Idź na Bydgoszczy. Jeśli przejdziesz przez START pobierz 200 zł
+aw
+Idź do Krakowa.
+t 24
 Bank wypłaca Ci dywidwndę. Pobierz 50 zł
+p +50
 Zwrot podatku.Pobierz 150 zł
-Przejdź na START. (Pobierz 200 zł)
+p +150
+Przejdź na START.
+t 1
 Zapłać grzywne 15 zł
-Cofnij się o trzy pola.
+p -15
 Pomyliłeś pociągi i jedziesz do Krakowa, zapłać 10 zł
+p -10
+Otrzymujesz zwrot VAT. Pobierz 30 zł
+p +30
+Przejdź na pole Chelm
+t 13
+Wygrana w loterii! Pobierz 50 zł
+p +50
+Zgubiłeś portfel. Zapłać karę 30 zł
+p -30
+Idź do więzienia. Nie przechodź przez START. Nie pobieraj 200 zł
+aw
+Wpadłeś w długi. Zapłać 50 zł
+p -50
+Otrzymałeś premię świąteczną. Pobierz 25 zł
+p +25
+Zgubiłeś klucze. Zapłać za ich odtworzenie 20 zł
+p -20
+Otrzymałeś zwrot kosztów leczenia. Pobierz 80 zł
+p +80
+Zorganizujesz imprezę charytatywną. Pobierz 40 zł
+p +40
+Otrzymałeś nagrodę za pracownika miesiąca. Pobierz 75 zł
+p +75
+Idź do więzienia. Nie przechodź przez START. Nie pobieraj 200 zł
+aw
+Znalezienie portfela na ulicy. Pobierz nagrodę 10 zł
+p +10
+Otrzymujesz dodatek do pensji. Pobierz 50 zł
+p +50
+Przejdź na pole Gniezno
+t 18
+Zapłać za przegląd samochodu 30 zł
+p -30
+Otrzymałeś zaproszenie na urodziny. Koszt prezentu 15 zł
+p -15
+Idź na pole Kalisz
+t 16
+Bank anuluje opłaty za prowadzenie konta. Pobierz 10 zł
+p +10
+Przejdź na pole Nowy Targ
+t 21
+Wypadek samochodowy. Zapłać odszkodowanie 100 zł
+p -100
+Otrzymujesz bonus za oszczędzanie. Pobierz 20 zł
+p +20
