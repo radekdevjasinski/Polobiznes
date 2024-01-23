@@ -20,10 +20,9 @@ public class ClosestCircleInfo {
         CircleObject closestCircle = findClosestCircle(mouseX, mouseY);
         if (closestCircle != null) {
             String closestCircleId = getClosestCircleId(closestCircle);
-            Gdx.app.log("Debug", "Closest Circle ID: " + closestCircleId);
+            //Gdx.app.log("Debug", "Closest Circle ID: " + closestCircleId);
         }
     }
-
     public void drawClosestCircleInfo(SpriteBatch spriteBatch, float touchX, float touchY) {
         CircleObject closestCircle = findClosestCircle(touchX, touchY);
         if (closestCircle != null) {

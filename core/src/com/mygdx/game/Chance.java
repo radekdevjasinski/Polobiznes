@@ -12,7 +12,7 @@ import java.util.List;
  * Klasa Chance reprezentuje objekt szans w grze.
  */
 public class Chance {
-    private  final String filePath = "D:\\PoloBiznesNew\\assets\\kartySzansy.txt";
+    private  final String filePath = "kartySzansy.txt";
     public List<String> chances;
 
     public Chance() throws IOException {
