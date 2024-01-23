@@ -9,6 +9,8 @@ public class Font {
     private final BitmapFont defaultFont;
     private final BitmapFont chanceFont;
     private final BitmapFont boardFont;
+    private final BitmapFont cashFont;
+    private final BitmapFont infoFont;
     private static Font instance;
     private Font()
     {
@@ -21,10 +23,21 @@ public class Font {
         parameter.size = 20;
         this.chanceFont = generator.generateFont(parameter);
 
+        parameter.size = 22;
+        this.infoFont = generator.generateFont(parameter);
+
         parameter.borderColor = Color.BLACK;
         parameter.borderWidth = 1.5f;
         parameter.size = 10;
         this.boardFont = generator.generateFont(parameter);
+
+        parameter.borderColor = Color.BLACK;
+        parameter.borderWidth = 1.5f;
+        parameter.size = 16;
+        this.cashFont = generator.generateFont(parameter);
+
+
+
         generator.dispose();
     }
     public static Font getFontInstance()
@@ -43,6 +56,14 @@ public class Font {
         else if(index == 2)
         {
             return boardFont;
+        }
+        else if (index == 3)
+        {
+            return cashFont;
+        }
+        else if (index == 4)
+        {
+            return infoFont;
         }
         return defaultFont;
     }
