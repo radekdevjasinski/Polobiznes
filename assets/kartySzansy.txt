@@ -8,7 +8,7 @@ Przejdź na Lomza.
 t 1
 Otrzymałeś kredyt budowlany pobierz 150zł
 p +150
-Przejdź na dworzec Gdański
+Przejdź na dworzec Kielecki
 t 5
 Zapłać za szkołe 150 zł
 p -150
