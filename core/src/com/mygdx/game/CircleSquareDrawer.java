@@ -33,25 +33,26 @@ public class CircleSquareDrawer {
             float x, y;
 
             if (i < circleCount / 4) {
-                x = startX + i * step;
-                y = startY;
+                x = startX + squareSize; // Zmieniamy kierunek rysowania dla pierwszej ćwiartki
+                y = startY + i * step;
             } else if (i < circleCount / 2) {
-                x = startX + squareSize;
-                y = startY + (i - circleCount / 4) * step;
-            } else if (i < circleCount * 3 / 4) {
-                x = startX + squareSize - (i - circleCount / 2) * step;
+                x = startX + squareSize - ((i - circleCount / 4) * step); // Zmieniamy kierunek rysowania dla drugiej ćwiartki
                 y = startY + squareSize;
+            } else if (i < circleCount * 3 / 4) {
+                x = startX; // Zmieniamy kierunek rysowania dla trzeciej ćwiartki
+                y = startY + squareSize - (i - circleCount / 2) * step;
             } else {
-                x = startX;
-                y = startY + squareSize - (i - circleCount * 3 / 4) * step;
+                x = startX + (i - circleCount * 3 / 4) * step; // Zmieniamy kierunek rysowania dla czwartej ćwiartki
+                y = startY;
             }
+            // Odwracamy kolejność id zgodnie z kierunkiem zegara
+            int reversedId = (circleCount - i) % circleCount;
 
             CircleObject circle = new CircleObject(x, y, 0); // Przykładowy promień 10
             String circleId = "Circle_" + i;
             circleMap.put(circleId, circle);
         }
     }
-
 
     public void drawCircles() {
         shapeRenderer.setProjectionMatrix(viewport.getCamera().combined);
@@ -63,6 +64,9 @@ public class CircleSquareDrawer {
         }
 
         shapeRenderer.end();
+    }
+    public void updateCircleInfo() {
+        drawCirclesInSquare(); // Aktualizujemy informacje o kółkach
     }
 
     public static HashMap<String, CircleObject> getCircleMap() {
