@@ -41,6 +41,8 @@ public class Engine extends ApplicationAdapter {
 	private Card card;
 	private Chance chance;
 	private ChanceDisplay chanceDisplay;
+	Texture pkpTexture;
+	Texture QuestionMarkRed;
 	private Vector3 mousePosition = new Vector3();
 
 	/**
@@ -75,6 +77,8 @@ public class Engine extends ApplicationAdapter {
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
+		pkpTexture = new Texture(Gdx.files.internal("pkp.png"));
+		QuestionMarkRed = new Texture(Gdx.files.internal("znak_zapytania_czerwony.png"));
 		circleSquareDrawer = new CircleSquareDrawer(viewport, shapeRenderer);
 		cardDisplay = new CardDisplay(new Card());
 
@@ -97,7 +101,45 @@ public class Engine extends ApplicationAdapter {
 		board.drawHouseAreas(shapeRenderer, viewport);
 		board.drawBoardText(batch, viewport);
 
-		/*
+		batch.begin();
+		int[] specialFieldsTrain = {5, 15, 25, 35};
+		for (int specialField : specialFieldsTrain) {
+			CircleObject circle = circleSquareDrawer.getCircleMap().get("Circle_" + specialField);
+			if (circle != null) {
+				float width = 40;
+				float height = 40;
+				if (specialField == 25) {
+					batch.draw(pkpTexture, circle.getX() - 19, circle.getY(), width / 2, height / 2, width, height, 1, 1, 180, 0, 0, pkpTexture.getWidth(), pkpTexture.getHeight(), false, false);
+				} else if (specialField == 15) {
+					batch.draw(pkpTexture, circle.getX() - 35, circle.getY() - 20, width / 2, height / 2, width, height, 1, 1, 270, 0, 0, pkpTexture.getWidth(), pkpTexture.getHeight(), false, false);
+				} else if (specialField == 35) {
+					batch.draw(pkpTexture, circle.getX() - 5, circle.getY() - 20, width / 2, height / 2, width, height, 1, 1, 90, 0, 0, pkpTexture.getWidth(), pkpTexture.getHeight(), false, false);
+				} else if (specialField == 5) {
+					batch.draw(pkpTexture, circle.getX() - 20, circle.getY() - 37, width / 2, height / 2, width, height, 1, 1, 0, 0, 0, pkpTexture.getWidth(), pkpTexture.getHeight(), false, false);
+				}
+			}
+		}
+		batch.end();
+		batch.begin();
+		int[] specialFieldsQuestionMarkRed = {4, 12, 22, 33};
+		for (int specialField : specialFieldsQuestionMarkRed) {
+			CircleObject circle = circleSquareDrawer.getCircleMap().get("Circle_" + specialField);
+			if (circle != null) {
+				float width = 40;
+				float height = 40;
+				if (specialField == 33) {
+					batch.draw(QuestionMarkRed, circle.getX() - 5, circle.getY() - 20, width / 2, height / 2, width, height, 1, 1, 90, 0, 0, QuestionMarkRed.getWidth(), QuestionMarkRed.getHeight(), false, false);
+				} else if (specialField == 22) {
+					batch.draw(QuestionMarkRed, circle.getX() - 19, circle.getY(), width / 2, height / 2, width, height, 1, 1, 180, 0, 0, QuestionMarkRed.getWidth(), QuestionMarkRed.getHeight(), false, false);
+				}else if (specialField == 12) {
+					batch.draw(QuestionMarkRed, circle.getX() - 35, circle.getY() - 20, width / 2, height / 2, width, height, 1, 1, 270, 0, 0, QuestionMarkRed.getWidth(), QuestionMarkRed.getHeight(), false, false);
+				} else if (specialField == 4) {
+					batch.draw(QuestionMarkRed, circle.getX() - 20, circle.getY() - 37, width / 2, height / 2, width, height, 1, 1, 0, 0, 0, QuestionMarkRed.getWidth(), QuestionMarkRed.getHeight(), false, false);
+				}
+			}
+		}
+		batch.end();
+
 		if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && !leftKeyProcessed) {
 			leftKeyProcessed = true;
 			movePlayerToAdjacentCircle(-1);
@@ -117,7 +159,6 @@ public class Engine extends ApplicationAdapter {
 			diceRoll2.RollingAnimation();
 		}
 		*/
-
 
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
@@ -155,6 +196,13 @@ public class Engine extends ApplicationAdapter {
 
 		if (!circleSquareDrawer.isMouseNearCircle((int) mousePosition.x, (int) mousePosition.y, maxDistance)) {
 			//Gdx.app.log("Debug", "Myszka jest za daleko od kółek.");
+		} else {
+			CircleObject closestCircle = closestCircleInfo.findClosestCircle(mousePosition.x, mousePosition.y);
+
+			if (closestCircle != null && closestCircle.getCityCard() != null) {
+				UserInterface.drawCard(new CardDisplay(closestCircle.getCityCard()), shapeRenderer, batch, camera);
+				//closestCircle.setCityCard(null); //czyszczenie (nie trzeba bo samo sie czysci ale moze sie przydac)
+			}
 		}
 
 		UserInterface.drawPlayerPanel(game, shapeRenderer, batch, camera);
@@ -181,5 +229,4 @@ public class Engine extends ApplicationAdapter {
 		batch.dispose();
 		shapeRenderer.dispose();
 	}
-
 }
