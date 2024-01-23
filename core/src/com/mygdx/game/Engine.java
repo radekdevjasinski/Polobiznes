@@ -78,7 +78,6 @@ public class Engine extends ApplicationAdapter {
 
 		circleSquareDrawer = new CircleSquareDrawer(viewport);
 		closestCircleInfo = new ClosestCircleInfo(circleSquareDrawer);
-		card = new Card("Bialystok", 200, 50, 100, 20, 150, 200, 250, 300, 400, 50);
 		try {
 			chance = new Chance();
 		} catch (IOException e) {
@@ -185,11 +184,11 @@ public class Engine extends ApplicationAdapter {
 
 		mousePosition.set(Gdx.input.getX(), Gdx.input.getY(), 0);
 		camera.unproject(mousePosition);
-		Gdx.app.log("Debug", "Mouse Position: " + mousePosition.x + ", " + mousePosition.y);
+		//Gdx.app.log("Debug", "Mouse Position: " + mousePosition.x + ", " + mousePosition.y);
 
 		closestCircleInfo.updateClosestCircleInfo(mousePosition.x, mousePosition.y);
 
-		float maxDistance = 50; // Maksymalna odległość od kółka, którą uznasz za akceptowalną
+		float maxDistance = 50;
 
 		if (!circleSquareDrawer.isMouseNearCircle((int) mousePosition.x, (int) mousePosition.y, maxDistance)) {
 			//Gdx.app.log("Debug", "Myszka jest za daleko od kółek.");
@@ -223,7 +222,7 @@ public class Engine extends ApplicationAdapter {
 	}
 
 	private void movePlayerToAdjacentCircle(int direction) {
-		int liczbaKolek = 40; // Ilość okręgów
+		int liczbaKolek = 40;
 
 		circleSquareDrawer.updateCircleInfo();
 		for (Player player : game.getPlayerList()) {

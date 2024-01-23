@@ -14,7 +14,7 @@ public class CircleSquareDrawer {
 
     private ShapeRenderer shapeRenderer;
     private Viewport viewport;
-    private static HashMap<String, CircleObject> circleMap;
+    private static HashMap<Integer, CircleObject> circleMap;
 
     public CircleSquareDrawer(Viewport viewport) {
         this.viewport = viewport;
@@ -58,8 +58,7 @@ public class CircleSquareDrawer {
             }
 
             CircleObject circle = new CircleObject(x, y, 0);
-            String circleId = "Circle_" + i;
-            circleMap.put(circleId, circle);
+            circleMap.put(i, circle);
         }
     }
 
@@ -79,7 +78,7 @@ public class CircleSquareDrawer {
         drawCirclesInSquare(); // Aktualizujemy informacje o kółkach
     }
 
-    public static HashMap<String, CircleObject> getCircleMap() {
+    public static HashMap<Integer, CircleObject> getCircleMap() {
         return circleMap;
     }
 
@@ -108,8 +107,7 @@ public class CircleSquareDrawer {
                 if (currentCircleId < circleMap.size()) {
                     if (!cardInfo[0].equals("-")) {
                         Card cityCard = readCityCardFromLine(cardInfo);
-                        String circleId = "Circle_" + currentCircleId;
-                        circleMap.get(circleId).setCityCard(cityCard);
+                        circleMap.get(currentCircleId).setCityCard(cityCard);
                     }
                 }
 
@@ -121,20 +119,22 @@ public class CircleSquareDrawer {
     }
     private Card readCityCardFromLine(String[] cardInfo) {
         String nameCity = cardInfo[0];
-        int costOfPurchase = Integer.parseInt(cardInfo[1]);
-        int costPerCottage = Integer.parseInt(cardInfo[2]);
-        int costForHotel = Integer.parseInt(cardInfo[3]);
-        int parkingCost = Integer.parseInt(cardInfo[4]);
-        int costWithTheHouse1 = Integer.parseInt(cardInfo[5]);
-        int costWithTheHouse2 = Integer.parseInt(cardInfo[6]);
-        int costWithTheHouse3 = Integer.parseInt(cardInfo[7]);
-        int costWithTheHouse4 = Integer.parseInt(cardInfo[8]);
-        int costWithTheHotel = Integer.parseInt(cardInfo[9]);
-        int mortgage = Integer.parseInt(cardInfo[10]);
+        String nameState = cardInfo[1];
+        int costOfPurchase = Integer.parseInt(cardInfo[2]);
+        int costPerCottage = Integer.parseInt(cardInfo[3]);
+        int costForHotel = Integer.parseInt(cardInfo[4]);
+        int parkingCost = Integer.parseInt(cardInfo[5]);
+        int costWithTheHouse1 = Integer.parseInt(cardInfo[6]);
+        int costWithTheHouse2 = Integer.parseInt(cardInfo[7]);
+        int costWithTheHouse3 = Integer.parseInt(cardInfo[8]);
+        int costWithTheHouse4 = Integer.parseInt(cardInfo[9]);
+        int costWithTheHotel = Integer.parseInt(cardInfo[10]);
+        int mortgage = Integer.parseInt(cardInfo[11]);
+        int color = Integer.parseInt(cardInfo[12]);
 
-        return new Card(nameCity, costOfPurchase, costPerCottage, costForHotel, parkingCost,
+        return new Card(nameCity, nameState, costOfPurchase, costPerCottage, costForHotel, parkingCost,
                 costWithTheHouse1, costWithTheHouse2, costWithTheHouse3, costWithTheHouse4,
-                costWithTheHotel, mortgage);
+                costWithTheHotel, mortgage, color);
     }
 
 
