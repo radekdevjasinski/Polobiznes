@@ -9,6 +9,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -29,7 +31,7 @@ public class Engine extends ApplicationAdapter {
 	private boolean rightKeyProcessed = false;
 
 	SpriteBatch batch;
-	Texture background;
+	Texture logo;
 	DiceRoll diceRoll1;
 	DiceRoll diceRoll2;
     private Game game;
@@ -88,12 +90,10 @@ public class Engine extends ApplicationAdapter {
 	public void render() {
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-		batch.begin();
-		//batch.draw(background, 0, 0);
-		batch.end();
-
-		Board.drawBoard(shapeRenderer);
+		Board board = new Board();
+		board.drawBoard(shapeRenderer, viewport);
+		board.drawHouseAreas(shapeRenderer, viewport);
+		board.drawBoardText(batch, viewport);
 
 		if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && !leftKeyProcessed) {
 			leftKeyProcessed = true;
@@ -128,7 +128,7 @@ public class Engine extends ApplicationAdapter {
 
 		batch.end();
 		batch.begin();
-		closestCircleInfo.drawClosestCircleInfo(batch, player.getX(), player.getY());
+		//closestCircleInfo.drawClosestCircleInfo(batch, player.getX(), player.getY());
 
 		batch.end();
 		shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
@@ -137,7 +137,9 @@ public class Engine extends ApplicationAdapter {
 
 		UserInterface.drawCard(new CardDisplay(card), shapeRenderer, batch, camera);
 
-		//UserInterface.drawChance(new ChanceDisplay(chance), shapeRenderer, batch, camera);
+
+
+		UserInterface.drawChance(new ChanceDisplay(chance), shapeRenderer, batch, camera);
 
 
 	}
@@ -155,7 +157,6 @@ public class Engine extends ApplicationAdapter {
 	@Override
 	public void dispose() {
 		batch.dispose();
-		background.dispose();
 	}
 
 	private void movePlayerToAdjacentCircle(int direction) {

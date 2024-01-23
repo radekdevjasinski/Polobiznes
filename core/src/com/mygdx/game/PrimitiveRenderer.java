@@ -33,6 +33,7 @@ public class PrimitiveRenderer {
         shapeRenderer.setColor(color);
         shapeRenderer.rotate(0, 0, 1, rotation);
         shapeRenderer.rect(x - sizeX / 2, y - sizeY / 2, sizeX, sizeY);
+        //shapeRenderer.rect(x - 5, y - 5, sizeX+10, sizeY+10);
     }
 
 

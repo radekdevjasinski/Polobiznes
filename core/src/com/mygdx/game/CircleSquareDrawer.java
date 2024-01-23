@@ -11,12 +11,12 @@ public class CircleSquareDrawer {
 
     private ShapeRenderer shapeRenderer;
     private Viewport viewport;
-    private HashMap<String, CircleObject> circleMap;
+    private static HashMap<String, CircleObject> circleMap;
 
     public CircleSquareDrawer(Viewport viewport) {
         this.viewport = viewport;
         this.shapeRenderer = new ShapeRenderer();
-        this.circleMap = new HashMap<>();
+        circleMap = new HashMap<>();
         drawCirclesInSquare();
     }
 
@@ -28,7 +28,6 @@ public class CircleSquareDrawer {
         float startY = viewport.getWorldHeight() / 2 - squareSize / 2;
 
         float step = squareSize / (circleCount / 4); // Zwiększamy krok między okręgami
-        System.out.println(step);
 
         for (int i = 0; i < circleCount; i++) {
             float x, y;
@@ -49,9 +48,8 @@ public class CircleSquareDrawer {
             // Odwracamy kolejność id zgodnie z kierunkiem zegara
             int reversedId = (circleCount - i) % circleCount;
 
-            CircleObject circle = new CircleObject(x, y, 5); // Przykładowy promień 10
-            String circleId = "Circle_" + reversedId;
-
+            CircleObject circle = new CircleObject(x, y, 0); // Przykładowy promień 10
+            String circleId = "Circle_" + i;
             circleMap.put(circleId, circle);
         }
     }
@@ -71,7 +69,7 @@ public class CircleSquareDrawer {
         drawCirclesInSquare(); // Aktualizujemy informacje o kółkach
     }
 
-    public HashMap<String, CircleObject> getCircleMap() {
+    public static HashMap<String, CircleObject> getCircleMap() {
         return circleMap;
     }
 
