@@ -57,7 +57,7 @@ public class CircleSquareDrawer {
                 y = startY + squareSize - (i - circleCount * 3 / 4) * step;
             }
 
-            CircleObject circle = new CircleObject(x, y, 10);
+            CircleObject circle = new CircleObject(x, y, 0);
             String circleId = "Circle_" + i;
             circleMap.put(circleId, circle);
         }
