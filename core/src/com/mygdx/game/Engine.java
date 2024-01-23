@@ -92,6 +92,7 @@ public class Engine extends ApplicationAdapter {
 		board.drawHouseAreas(shapeRenderer, viewport);
 		board.drawBoardText(batch, viewport);
 
+		/*
 		if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && !leftKeyProcessed) {
 			leftKeyProcessed = true;
 			movePlayerToAdjacentCircle(-1);
@@ -110,7 +111,7 @@ public class Engine extends ApplicationAdapter {
 			diceRoll1.RollingAnimation();
 			diceRoll2.RollingAnimation();
 		}
-
+		*/
 		diceRoll1.animate();
 		diceRoll2.animate();
 
@@ -141,9 +142,6 @@ public class Engine extends ApplicationAdapter {
 
 		UserInterface.drawPlayerPanel(game, shapeRenderer, batch, camera);
 
-
-
-
 	}
 	/**
 	 * Metoda odpowiedzialna za dostosowanie widoku do zmiany rozmiaru ekranu.
@@ -159,6 +157,7 @@ public class Engine extends ApplicationAdapter {
 	@Override
 	public void dispose() {
 		batch.dispose();
+		shapeRenderer.dispose();
 	}
 
 	private void movePlayerToAdjacentCircle(int direction) {
@@ -180,11 +179,6 @@ public class Engine extends ApplicationAdapter {
 
 				player.sprite.setPosition(Math.round(playerX - (40 / 2)), Math.round(playerY - (40 / 2)));
 			}
-
 		}
-
-
 	}
-
-
 }

@@ -92,7 +92,7 @@ public class UserInterface {
 
         BitmapFont font3 = Font.getFontInstance().getFont(4);
         font3.setColor(Color.BLACK);
-        font3.draw(batch, "GRACZ1 MOŻE ZAKOŃCZYĆ TURĘ...", x-485, y+260,190,1,true);
+        font3.draw(batch, game.gameMessage().toUpperCase(), x-485, y+260,190,1,true);
 
         batch.end();
 
