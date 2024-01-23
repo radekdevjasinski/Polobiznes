@@ -1,5 +1,6 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -15,6 +16,13 @@ public class ClosestCircleInfo {
         this.font = new BitmapFont();
         this.font.setColor(Color.BLACK);
     }
+    public void updateClosestCircleInfo(float mouseX, float mouseY) {
+        CircleObject closestCircle = findClosestCircle(mouseX, mouseY);
+        if (closestCircle != null) {
+            String closestCircleId = getClosestCircleId(closestCircle);
+            Gdx.app.log("Debug", "Closest Circle ID: " + closestCircleId);
+        }
+    }
 
     public void drawClosestCircleInfo(SpriteBatch spriteBatch, float touchX, float touchY) {
         CircleObject closestCircle = findClosestCircle(touchX, touchY);
@@ -24,7 +32,7 @@ public class ClosestCircleInfo {
         }
     }
 
-    private CircleObject findClosestCircle(float touchX, float touchY) {
+    public CircleObject findClosestCircle(float touchX, float touchY) {
         // Logika znalezienia najbliższego okręgu w circleSquareDrawer.getCircleMap()
         // Zaimplementuj to zgodnie z Twoimi potrzebami.
         // Poniżej znajduje się przykładowa implementacja.

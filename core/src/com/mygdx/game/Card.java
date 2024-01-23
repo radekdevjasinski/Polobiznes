@@ -47,6 +47,7 @@ public class Card {
         this.costWithTheHotel = costWithTheHotel;
         this.mortgage = mortgage;
     }
+    public Card(){}
     /**
      * Metoda zwracająca nazwę miasta karty.
      *
