@@ -36,7 +36,6 @@ public class ClosestCircleInfo {
         // Logika znalezienia najbliższego okręgu w circleSquareDrawer.getCircleMap()
         // Zaimplementuj to zgodnie z Twoimi potrzebami.
         // Poniżej znajduje się przykładowa implementacja.
-
         CircleObject closestCircle = null;
         float closestDistance = Float.MAX_VALUE;
 

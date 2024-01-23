@@ -32,34 +32,32 @@ public class CircleSquareDrawer {
     }
 
     private void drawCirclesInSquare() {
-        float squareSize = 450f; // Zwiększamy rozmiar kwadratu
-        int circleCount = 40; // Ilość okręgów
+        float squareSize = 450f;
+        int circleCount = 40;
 
-        float startX = viewport.getWorldWidth() / 2 - squareSize / 2;
+        float startX = viewport.getWorldWidth() / 2 + squareSize / 2;
         float startY = viewport.getWorldHeight() / 2 - squareSize / 2;
 
-        float step = squareSize / (circleCount / 4); // Zwiększamy krok między okręgami
+        float step = squareSize / (circleCount / 4);
 
         for (int i = 0; i < circleCount; i++) {
             float x, y;
 
             if (i < circleCount / 4) {
-                x = startX + squareSize; // Zmieniamy kierunek rysowania dla pierwszej ćwiartki
-                y = startY + i * step;
-            } else if (i < circleCount / 2) {
-                x = startX + squareSize - ((i - circleCount / 4) * step); // Zmieniamy kierunek rysowania dla drugiej ćwiartki
-                y = startY + squareSize;
-            } else if (i < circleCount * 3 / 4) {
-                x = startX; // Zmieniamy kierunek rysowania dla trzeciej ćwiartki
-                y = startY + squareSize - (i - circleCount / 2) * step;
-            } else {
-                x = startX + (i - circleCount * 3 / 4) * step; // Zmieniamy kierunek rysowania dla czwartej ćwiartki
+                x = startX - i * step;
                 y = startY;
+            } else if (i < circleCount / 2) {
+                x = startX - squareSize;
+                y = startY + (i - circleCount / 4) * step;
+            } else if (i < circleCount * 3 / 4) {
+                x = startX - squareSize + (i - circleCount / 2) * step;
+                y = startY + squareSize;
+            } else {
+                x = startX;
+                y = startY + squareSize - (i - circleCount * 3 / 4) * step;
             }
-            // Odwracamy kolejność id zgodnie z kierunkiem zegara
-            int reversedId = (circleCount - i) % circleCount;
 
-            CircleObject circle = new CircleObject(x, y, 0); // Przykładowy promień 10
+            CircleObject circle = new CircleObject(x, y, 10);
             String circleId = "Circle_" + i;
             circleMap.put(circleId, circle);
         }
@@ -103,19 +101,16 @@ public class CircleSquareDrawer {
     public void loadCityCardsFromFile(String filePath) {
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
-            int currentCircleId = 1;
+            int currentCircleId = 0;
 
             while ((line = br.readLine()) != null) {
                 String[] cardInfo = line.split(";");
-                if (currentCircleId == 1 || currentCircleId == 3 || currentCircleId == 6 || currentCircleId == 8 ||
-                        currentCircleId == 9 || currentCircleId == 11 || currentCircleId == 13 || currentCircleId == 14 ||
-                        currentCircleId == 16 || currentCircleId == 17 || currentCircleId == 19 || currentCircleId == 21 ||
-                        currentCircleId == 22 || currentCircleId == 24 || currentCircleId == 26 || currentCircleId == 27 ||
-                        currentCircleId == 29 || currentCircleId == 31 || currentCircleId == 32 || currentCircleId == 34 ||
-                        currentCircleId == 37 || currentCircleId == 39) {
-                    Card cityCard = readCityCardFromLine(cardInfo);
-                    String circleId = "Circle_" + currentCircleId;
-                    circleMap.get(circleId).setCityCard(cityCard);
+                if (currentCircleId < circleMap.size()) {
+                    if (!cardInfo[0].equals("-")) {
+                        Card cityCard = readCityCardFromLine(cardInfo);
+                        String circleId = "Circle_" + currentCircleId;
+                        circleMap.get(circleId).setCityCard(cityCard);
+                    }
                 }
 
                 currentCircleId++;
