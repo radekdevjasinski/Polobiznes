@@ -71,7 +71,6 @@ public class Engine extends ApplicationAdapter {
 
 
 		closestCircleInfo = new ClosestCircleInfo(circleSquareDrawer);
-		card = new Card("Bialystok", 200, 50, 100, 20, 150, 200, 250, 300, 400, 50);
 		try {
 			chance = new Chance();
 		} catch (IOException e) {
@@ -192,7 +191,7 @@ public class Engine extends ApplicationAdapter {
 
 		closestCircleInfo.updateClosestCircleInfo(mousePosition.x, mousePosition.y);
 
-		float maxDistance = 50; // Maksymalna odległość od kółka, którą uznasz za akceptowalną
+		float maxDistance = 50;
 
 		if (!circleSquareDrawer.isMouseNearCircle((int) mousePosition.x, (int) mousePosition.y, maxDistance)) {
 			//Gdx.app.log("Debug", "Myszka jest za daleko od kółek.");

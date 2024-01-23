@@ -6,6 +6,7 @@ package com.mygdx.game;
 public class Card {
     // Atrybuty karty miasta
     String nameCity;
+    String nameState;
     int costOfPurchase;
     int costPerCottage;
     int costForHotel;
@@ -16,6 +17,7 @@ public class Card {
     int costWithTheHouse4;
     int costWithTheHotel;
     int mortgage;
+    int color;
     /**
      * Konstruktor klasy Card, inicjalizuje atrybuty karty na podstawie przekazanych wartości.
      *
@@ -32,10 +34,11 @@ public class Card {
      * @param mortgage           Wartość hipoteki.
      */
     // Konstruktor klasy Card, inicjalizuje atrybuty karty na podstawie przekazanych wartości
-    public Card(String nameCity, int costOfPurchase, int costPerCottage, int costForHotel, int parkingCost,
+    public Card(String nameCity, String nameState, int costOfPurchase, int costPerCottage, int costForHotel, int parkingCost,
                 int costWithTheHouse1, int costWithTheHouse2, int costWithTheHouse3, int costWithTheHouse4,
-                int costWithTheHotel, int mortgage) {
+                int costWithTheHotel, int mortgage, int color) {
         this.nameCity = nameCity;
+        this.nameState = nameState;
         this.costOfPurchase = costOfPurchase;
         this.costPerCottage = costPerCottage;
         this.costForHotel = costForHotel;
@@ -46,6 +49,7 @@ public class Card {
         this.costWithTheHouse4 = costWithTheHouse4;
         this.costWithTheHotel = costWithTheHotel;
         this.mortgage = mortgage;
+        this.color = color;
     }
     public Card(){}
     /**
@@ -156,6 +160,20 @@ public class Card {
     // Metoda zwracająca wartość hipoteki
     public int getMortgage() {
         return mortgage;
+    }
+    public String getNameState() {
+        return nameState;
+    }
+    public int getColor() {
+        return color;
+    }
+
+    public void setColor(int color) {
+        this.color = color;
+    }
+
+    public void setNameState(String nameState) {
+        this.nameState = nameState;
     }
 
     // Metoda ustawiająca wartość hipoteki
