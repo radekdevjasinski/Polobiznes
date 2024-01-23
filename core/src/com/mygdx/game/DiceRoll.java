@@ -36,14 +36,16 @@ public class DiceRoll extends AnimatedObject {
         rolling = true;
         textures = new Texture[6];
 
+        timeSeconds = 0;
+        animationTimer = 0;
+
         // Ładuje tekstury dla każdej ściany kostki i zmienia ich rozmiar
         for (int i = 0; i < 6; i++) {
             value = i + 1;
-            String path = "dice_" + Integer.toString(value) + ".png";
+            String path = "dice_" + value + ".png";
+            System.out.println(path);
             textures[i] = BitmapHandler.resizeTexture(path, 100, 100);
         }
-
-        Roll(); // Wykonuje początkowy rzut kostką
     }
 
     /**

@@ -30,8 +30,7 @@ public class Engine extends ApplicationAdapter {
 
 	SpriteBatch batch;
 	Texture logo;
-	DiceRoll diceRoll1;
-	DiceRoll diceRoll2;
+	DiceControl diceControl;
     private Game game;
 	private OrthographicCamera camera;
 	private ShapeRenderer shapeRenderer;
@@ -60,12 +59,8 @@ public class Engine extends ApplicationAdapter {
 		viewport.apply();
 
 
-		game = new Game();
 
-		for (Player player : game.getPlayerList())
-		{
-			player.sprite.setPosition(500, 400);
-		}
+
 
 		//primitiveRenderer = new PrimitiveRenderer();
 		shapeRenderer = new ShapeRenderer();
@@ -73,10 +68,8 @@ public class Engine extends ApplicationAdapter {
 		circleObject = new CircleObject(500, 200, 50);
 		squareObject = new SquareObject(300, 100, 50);
 
-		diceRoll1 = new DiceRoll();
-		diceRoll2 = new DiceRoll();
 
-		circleSquareDrawer = new CircleSquareDrawer(viewport);
+
 		closestCircleInfo = new ClosestCircleInfo(circleSquareDrawer);
 		try {
 			chance = new Chance();
@@ -87,6 +80,12 @@ public class Engine extends ApplicationAdapter {
 		QuestionMarkRed = new Texture(Gdx.files.internal("znak_zapytania_czerwony.png"));
 		circleSquareDrawer = new CircleSquareDrawer(viewport, shapeRenderer);
 		cardDisplay = new CardDisplay(new Card());
+
+		diceControl = new DiceControl();
+
+		game = new Game(circleSquareDrawer);
+		game.inicialization();
+
 	}
 
 	/**
@@ -108,27 +107,33 @@ public class Engine extends ApplicationAdapter {
 			if (circle != null) {
 				float width = 40;
 				float height = 40;
-				if (specialField == 15) {
+				if (specialField == 25) {
 					batch.draw(pkpTexture, circle.getX() - 19, circle.getY(), width / 2, height / 2, width, height, 1, 1, 180, 0, 0, pkpTexture.getWidth(), pkpTexture.getHeight(), false, false);
-				} else if (specialField == 25) {
+				} else if (specialField == 15) {
 					batch.draw(pkpTexture, circle.getX() - 35, circle.getY() - 20, width / 2, height / 2, width, height, 1, 1, 270, 0, 0, pkpTexture.getWidth(), pkpTexture.getHeight(), false, false);
-				} else if (specialField == 5) {
-					batch.draw(pkpTexture, circle.getX(), circle.getY() - 20, width / 2, height / 2, width, height, 1, 1, 90, 0, 0, pkpTexture.getWidth(), pkpTexture.getHeight(), false, false);
 				} else if (specialField == 35) {
+					batch.draw(pkpTexture, circle.getX() - 5, circle.getY() - 20, width / 2, height / 2, width, height, 1, 1, 90, 0, 0, pkpTexture.getWidth(), pkpTexture.getHeight(), false, false);
+				} else if (specialField == 5) {
 					batch.draw(pkpTexture, circle.getX() - 20, circle.getY() - 37, width / 2, height / 2, width, height, 1, 1, 0, 0, 0, pkpTexture.getWidth(), pkpTexture.getHeight(), false, false);
 				}
 			}
 		}
 		batch.end();
 		batch.begin();
-		int[] specialFieldsQuestionMarkRed = {4, 12, 23, 33};
+		int[] specialFieldsQuestionMarkRed = {4, 12, 22, 33};
 		for (int specialField : specialFieldsQuestionMarkRed) {
 			CircleObject circle = circleSquareDrawer.getCircleMap().get("Circle_" + specialField);
 			if (circle != null) {
 				float width = 40;
 				float height = 40;
-				if (specialField == 4) {
+				if (specialField == 33) {
 					batch.draw(QuestionMarkRed, circle.getX() - 5, circle.getY() - 20, width / 2, height / 2, width, height, 1, 1, 90, 0, 0, QuestionMarkRed.getWidth(), QuestionMarkRed.getHeight(), false, false);
+				} else if (specialField == 22) {
+					batch.draw(QuestionMarkRed, circle.getX() - 19, circle.getY(), width / 2, height / 2, width, height, 1, 1, 180, 0, 0, QuestionMarkRed.getWidth(), QuestionMarkRed.getHeight(), false, false);
+				}else if (specialField == 12) {
+					batch.draw(QuestionMarkRed, circle.getX() - 35, circle.getY() - 20, width / 2, height / 2, width, height, 1, 1, 270, 0, 0, QuestionMarkRed.getWidth(), QuestionMarkRed.getHeight(), false, false);
+				} else if (specialField == 4) {
+					batch.draw(QuestionMarkRed, circle.getX() - 20, circle.getY() - 37, width / 2, height / 2, width, height, 1, 1, 0, 0, 0, QuestionMarkRed.getWidth(), QuestionMarkRed.getHeight(), false, false);
 				}
 			}
 		}
@@ -152,9 +157,7 @@ public class Engine extends ApplicationAdapter {
 			diceRoll1.RollingAnimation();
 			diceRoll2.RollingAnimation();
 		}
-
-		diceRoll1.animate();
-		diceRoll2.animate();
+		*/
 
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
@@ -165,8 +168,8 @@ public class Engine extends ApplicationAdapter {
 
 		}
 
-		batch.draw(diceRoll1.textures[diceRoll1.value], 790, 30);
-		batch.draw(diceRoll1.textures[diceRoll2.value], 890, 30);
+		diceControl.draw(batch);
+		diceControl.animate();
 
 
 		batch.end();
@@ -203,6 +206,11 @@ public class Engine extends ApplicationAdapter {
 
 		UserInterface.drawPlayerPanel(game, shapeRenderer, batch, camera);
 
+		if (Gdx.input.isKeyPressed(Input.Keys.ANY_KEY) || Gdx.input.isButtonPressed(Input.Buttons.LEFT))
+		{
+			game.gameLoop(diceControl);
+		}
+
 	}
 	/**
 	 * Metoda odpowiedzialna za dostosowanie widoku do zmiany rozmiaru ekranu.
@@ -219,36 +227,5 @@ public class Engine extends ApplicationAdapter {
 	public void dispose() {
 		batch.dispose();
 		shapeRenderer.dispose();
-	}
-
-	private void movePlayerToAdjacentCircle(int direction) {
-		int liczbaKolek = 40;
-
-		circleSquareDrawer.updateCircleInfo();
-		for (Player player : game.getPlayerList()) {
-			int noweIdKolka = (player.getCurrentCircleId() + direction + liczbaKolek) % liczbaKolek;
-			player.setCurrentCircleId(noweIdKolka);
-			CircleObject noweKolko = circleSquareDrawer.getCircleMap().get("Circle_" + noweIdKolka);
-			if (noweKolko != null) {
-				float randomAngle = MathUtils.random(360);
-				float randomRadius = MathUtils.random(0, 6);
-				float playerX = 0;
-				float playerY = 0;
-				if (player.getCurrentCircleId() >= 1 && player.getCurrentCircleId() <= 10) {
-					playerX = noweKolko.getX()  + MathUtils.cosDeg(randomAngle) * randomRadius;
-					playerY = noweKolko.getY() -20  + MathUtils.sinDeg(randomAngle) * randomRadius;
-				} else if (player.getCurrentCircleId() >= 11 && player.getCurrentCircleId() <= 20) {
-					playerX = noweKolko.getX()  - 25+ MathUtils.cosDeg(randomAngle) * randomRadius;
-					playerY = noweKolko.getY() + 5 + MathUtils.sinDeg(randomAngle) * randomRadius;
-				} else if (player.getCurrentCircleId() >= 21 && player.getCurrentCircleId() <= 30) {
-					playerX = noweKolko.getX() -5 + MathUtils.cosDeg(randomAngle) * randomRadius;
-					playerY = noweKolko.getY() +20 + MathUtils.sinDeg(randomAngle) * randomRadius;
-				} else {
-					playerX = noweKolko.getX() + 20 + MathUtils.cosDeg(randomAngle) * randomRadius;
-					playerY = noweKolko.getY() + 5 + MathUtils.sinDeg(randomAngle) * randomRadius;
-				}
-				player.sprite.setPosition(Math.round(playerX - (40 / 2)), Math.round(playerY - (40 / 2)));
-			}
-		}
 	}
 }
