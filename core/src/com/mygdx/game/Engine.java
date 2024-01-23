@@ -6,14 +6,9 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Matrix4;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
@@ -43,7 +38,6 @@ public class Engine extends ApplicationAdapter {
 	private CircleObject circleObject;
 	private SquareObject squareObject;
 	//private Players player;
-	private Player player;
 	private Card card;
 	private Chance chance;
 	private ChanceDisplay chanceDisplay;
@@ -62,16 +56,20 @@ public class Engine extends ApplicationAdapter {
 		viewport = new FitViewport(1000, 600, camera);
 		viewport.apply();
 
-		player = new Player("pionek");
-		player.setPosition(500, 400); // Ustawienie pozycji pionka
+
+		game = new Game();
+
+		for (Player player : game.getPlayerList())
+		{
+			player.sprite.setPosition(500, 400);
+		}
 
 		//primitiveRenderer = new PrimitiveRenderer();
 		shapeRenderer = new ShapeRenderer();
 		shapeRenderer.setProjectionMatrix(camera.combined);
 		circleObject = new CircleObject(500, 200, 50);
 		squareObject = new SquareObject(300, 100, 50);
-		game = new Game();
-		game.setPlayers();
+
 		diceRoll1 = new DiceRoll();
 		diceRoll2 = new DiceRoll();
 
@@ -99,6 +97,7 @@ public class Engine extends ApplicationAdapter {
 		board.drawHouseAreas(shapeRenderer, viewport);
 		board.drawBoardText(batch, viewport);
 
+		/*
 		if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && !leftKeyProcessed) {
 			leftKeyProcessed = true;
 			movePlayerToAdjacentCircle(-1);
@@ -117,15 +116,19 @@ public class Engine extends ApplicationAdapter {
 			diceRoll1.RollingAnimation();
 			diceRoll2.RollingAnimation();
 		}
-
+		*/
 		diceRoll1.animate();
 		diceRoll2.animate();
-		player.animate();
 
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
 
-		batch.draw(player.getBitmap(),player.getX(), player.getY());
+		for(Player player : game.getPlayerList())
+		{
+			batch.draw(player.sprite.getBitmap(), player.sprite.getX(), player.sprite.getY());
+
+		}
+
 		batch.draw(diceRoll1.textures[diceRoll1.value], 790, 30);
 		batch.draw(diceRoll1.textures[diceRoll2.value], 890, 30);
 
@@ -155,6 +158,8 @@ public class Engine extends ApplicationAdapter {
 			Gdx.app.log("Debug", "Myszka jest za daleko od kółek.");
 		}
 
+		UserInterface.drawPlayerPanel(game, shapeRenderer, batch, camera);
+
 	}
 	/**
 	 * Metoda odpowiedzialna za dostosowanie widoku do zmiany rozmiaru ekranu.
@@ -170,17 +175,17 @@ public class Engine extends ApplicationAdapter {
 	@Override
 	public void dispose() {
 		batch.dispose();
+		shapeRenderer.dispose();
 	}
 
 	private void movePlayerToAdjacentCircle(int direction) {
 		int liczbaKolek = 40; // Ilość okręgów
 
 		circleSquareDrawer.updateCircleInfo();
-
-		int noweIdKolka = (player.getCurrentCircleId() + direction + liczbaKolek) % liczbaKolek;
-
-		player.setCurrentCircleId(noweIdKolka);
-
+		for (Player player : game.getPlayerList())
+		{
+			int noweIdKolka = (player.getCurrentCircleId() + direction + liczbaKolek) % liczbaKolek;
+			player.setCurrentCircleId(noweIdKolka);
 		CircleObject noweKolko = circleSquareDrawer.getCircleMap().get("Circle_" + noweIdKolka);
 		if (noweKolko != null) {
 			float randomAngle = MathUtils.random(360);
@@ -200,10 +205,7 @@ public class Engine extends ApplicationAdapter {
 				playerX = noweKolko.getX() + MathUtils.cosDeg(randomAngle) * randomRadius;
 				playerY = noweKolko.getY() - 20 + MathUtils.sinDeg(randomAngle) * randomRadius;
 			}
-
-
 			player.setPosition(Math.round(playerX - (40 / 2)), Math.round(playerY - (40 / 2)));
 		}
 	}
-
 }

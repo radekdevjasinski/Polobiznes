@@ -19,8 +19,7 @@ public class DiceRoll extends AnimatedObject {
     /** Aktualna wartość kostki (od 1 do 6). */
     public int value;
 
-    /** Wskazuje, czy kostka jest obecnie aktywna. */
-    public boolean active;
+    public boolean rolling;
 
     /** Tablica tekstur reprezentujących każdą ścianę kostki. */
     public Texture[] textures;
@@ -34,7 +33,7 @@ public class DiceRoll extends AnimatedObject {
         super(); // Wywołuje konstruktor klasy AnimatedObject
         posX = 0;
         posY = 0;
-        active = true;
+        rolling = true;
         textures = new Texture[6];
 
         // Ładuje tekstury dla każdej ściany kostki i zmienia ich rozmiar
@@ -53,6 +52,7 @@ public class DiceRoll extends AnimatedObject {
     public void Roll() {
         Random rand = new Random();
         value = 1 + rand.nextInt(5);
+        rolling = true;
     }
 
     /**
@@ -72,6 +72,7 @@ public class DiceRoll extends AnimatedObject {
             timeSeconds += Gdx.graphics.getDeltaTime();
             Roll(); // Wykonuje rzut podczas trwania animacji
         }
+        rolling = false;
     }
 
     public int getValue() {
