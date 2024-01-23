@@ -2,69 +2,22 @@ package com.mygdx.game;
 /**
  * Klasa reprezentująca gracza w grze.
  */
-public class Player extends SpriteObject{
-    String imagePath;
-    float moveSpeed;
-    private int currentCircleId;
+public class Player{
 
-    /**
-     * Konstruktor klasy Player.
-     *
-     * @param imagePath Ścieżka do obrazka reprezentującego gracza.
-     */
-    public Player(String imagePath){
-        super(imagePath, 9);
-        this.imagePath = imagePath;
-        moveSpeed = 2.5f;
-        currentCircleId = 0;
+    int id;
+    int cash;
+    String name;
+    int currentCircleId;
+    SpriteObject sprite;
+
+    public Player(int id, int cash, String name) {
+        this.id = id;
+        this.cash = cash;
+        this.name = name;
+        this.currentCircleId = 0;
+
+        sprite = new SpriteObject("pionek_" + this.id + ".bmp", 0);
     }
-
-    /**
-     * Metoda zwracająca ścieżkę do obrazka gracza.
-     *
-     * @return Ścieżka do obrazka gracza.
-     */
-    public String getImagePath() {
-        return imagePath;
-    }
-
-    /**
-     * Metoda ustawiająca ścieżkę do obrazka gracza.
-     *
-     * @param imagePath Nowa ścieżka do obrazka gracza.
-     */
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
-    }
-
-    /**
-     * Metoda przemieszczająca gracza w lewo.
-     */
-    public void moveLeft() {
-        x -= moveSpeed;
-    }
-
-    /**
-     * Metoda przemieszczająca gracza w prawo.
-     */
-    public void moveRight() {
-        x += moveSpeed;
-    }
-
-    /**
-     * Metoda przemieszczająca gracza w górę.
-     */
-    public void moveUp() {
-        y += moveSpeed;
-    }
-
-    /**
-     * Metoda przemieszczająca gracza w dół.
-     */
-    public void moveDown() {
-        y -= moveSpeed;
-    }
-
     public void setCurrentCircleId(int circleId) {
         this.currentCircleId = circleId;
     }
@@ -73,5 +26,43 @@ public class Player extends SpriteObject{
         return currentCircleId;
     }
 
+    public int getId() {
+        return id;
+    }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getCash() {
+        return cash;
+    }
+
+    public void setCash(int cash) {
+        this.cash = cash;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+    public void changeMoney(int amount)
+    {
+        this.cash += amount;
+    }
+    public void teleport(int id)
+    {
+        this.currentCircleId = id;
+    }
+
+    public SpriteObject getSprite() {
+        return sprite;
+    }
+
+    public void setSprite(SpriteObject sprite) {
+        this.sprite = sprite;
+    }
 }
