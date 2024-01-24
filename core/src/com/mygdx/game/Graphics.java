@@ -67,15 +67,13 @@ public void Graphic() {
     }
     batch.end();
     batch.begin();
-    int[] specialFieldsQuestionMarkBlue = {7, 28, 38};
+    int[] specialFieldsQuestionMarkBlue = {7, 28};
     for (int specialField : specialFieldsQuestionMarkBlue) {
         CircleObject circle = circleSquareDrawer.getCircleMap().get(specialField);
         if (circle != null) {
             float width = 40;
             float height = 40;
-            if (specialField == 38) {
-                batch.draw(QuestionMarkBlue, circle.getX() - 5, circle.getY() - 20, width / 2, height / 2, width, height, 1, 1, 90, 0, 0, QuestionMarkBlue.getWidth(), QuestionMarkBlue.getHeight(), false, false);
-            } else if (specialField == 28) {
+             if (specialField == 28) {
                 batch.draw(QuestionMarkBlue, circle.getX() - 19, circle.getY(), width / 2, height / 2, width, height, 1, 1, 180, 0, 0, QuestionMarkBlue.getWidth(), QuestionMarkBlue.getHeight(), false, false);
             } else if (specialField == 7) {
                 batch.draw(QuestionMarkBlue, circle.getX() - 20, circle.getY() - 37, width / 2, height / 2, width, height, 1, 1, 0, 0, 0, QuestionMarkBlue.getWidth(), QuestionMarkBlue.getHeight(), false, false);
@@ -149,13 +147,15 @@ public void Graphic() {
     }
     batch.end();
     batch.begin();
-    int[] specialFieldsTax = {2};
+    int[] specialFieldsTax = {2, 38};
     for (int specialField : specialFieldsTax) {
         CircleObject circle = circleSquareDrawer.getCircleMap().get(specialField);
         if (circle != null) {
             float width = 45;
             float height = 45;
-            if (specialField == 2) {
+            if (specialField == 38) {
+                batch.draw(Tax, circle.getX() - 5, circle.getY() - 22, width / 2, height / 2, width, height, 1, 1, 90, 0, 0, Tax.getWidth(), Tax.getHeight(), false, false);
+            } else if (specialField == 2) {
                 batch.draw(Tax, circle.getX() - 20, circle.getY() - 37, width / 2, height / 2, width, height, 1, 1, 0, 0, 0, Tax.getWidth(), Tax.getHeight(), false, false);
             }
         }
