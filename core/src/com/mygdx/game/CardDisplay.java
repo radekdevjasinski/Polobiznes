@@ -16,28 +16,20 @@ public class CardDisplay {
         BitmapFont font = Font.getFontInstance().getFont(0);
         switch (card.getColor()) {
             case 1:
+            case 4:
+            case 7:
                 font.setColor(Color.BLACK);
                 break;
             case 2:
-                font.setColor(Color.WHITE);
-                break;
             case 3:
+            case 8:
                 font.setColor(Color.WHITE);
-                break;
-            case 4:
-                font.setColor(Color.BLACK);
                 break;
             case 5:
                 font.setColor(Color.YELLOW);
                 break;
             case 6:
                 font.setColor(Color.PINK);
-                break;
-            case 7:
-                font.setColor(Color.BLACK);
-                break;
-            case 8:
-                font.setColor(Color.WHITE);
                 break;
         }
         int x = 800;
@@ -47,10 +39,10 @@ public class CardDisplay {
         font.draw(batch, "WLASNOSCI ", x+50, y-30);
         font.draw(batch, card.getNameCity(), x+35, y-52, 115, 1, true);
         font.draw(batch, card.getNameState(), x+31, y-80, 120, 1,true);
-        font.draw(batch, card.getOwner(), x+66, y-320);
         font.getData().setScale(0.75f);
         y -= 20;
         font.setColor(Color.BLACK);
+        font.draw(batch, card.getOwner(), x+66, y-300);
         font.draw(batch, "Cena zakupu: " + card.getCostOfPurchase(), x, y-120);
         font.draw(batch, "Oplaty za postoj: ", x, y-135);
         font.draw(batch, "-niezabudowany: " + card.getParkingCost(), x, y-150);

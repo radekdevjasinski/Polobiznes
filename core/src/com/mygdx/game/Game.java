@@ -26,13 +26,8 @@ public class Game {
     }
     public void gameLoop(DiceControl diceControl)
     {
-        if (!gameOver)
+        if (!isGameOver())
         {
-            System.out.println(playerList.get(turnOf).name);
-            for (Card cardOwn : playerList.get(turnOf).cards)
-            {
-                System.out.print(cardOwn.nameCity + " ");
-            }
             switch (gameState)
             {
                 case START:
@@ -56,41 +51,11 @@ public class Game {
                     gameState = GameState.MOVING;
                     break;
                 case MOVING:
-
-
                     gameState = GameState.BUYING;
                     break;
                 case BUYING:
-                    Card card = CircleSquareDrawer.circleMap.get(playerList.get(turnOf).currentCircleId).getCityCard();
-                    int[] chanceSpaces = {4, 17, 22, 33, 7, 28};
-                    int[] prisonSpaces = {30};
-                    int[] paySpaces = {2,38};
-                    if (card != null)
-                    {
-                        if (isCardFree(card))
-                        {
-                            playerList.get(turnOf).changeMoney(card.costOfPurchase * (-1));
-                            playerList.get(turnOf).cards.add(card);
-                        }
-                        else
-                        {
-                            playerList.get(turnOf).changeMoney(card.parkingCost * (-1));
-                            cardOwner(card).changeMoney(card.parkingCost);
-                        }
-                    }
-                    else if (isOnThePlace(chanceSpaces))
-                    {
-                        chanceController.RandomizeChance();
-                        chanceController.ExecuteChance(this);
-                    }
-                    else if (isOnThePlace(prisonSpaces))
-                    {
-                        playerList.get(turnOf).turnsInPrison = 2;
-                    }
-                    else if (isOnThePlace(paySpaces))
-                    {
-                        playerList.get(turnOf).changeMoney(-200);
-                    }
+
+                    handleBuying();
                     gameState = GameState.FREE;
                     break;
                 case FREE:
@@ -104,11 +69,82 @@ public class Game {
                     break;
             }
         }
+        else
+        {
+            System.out.println("GAME OVER");
+        }
     }
     void nextTurn()
     {
         turnOf = (turnOf + 1) % 4;
     }
+    void handleBuying()
+    {
+        Card card = CircleSquareDrawer.circleMap.get(playerList.get(turnOf).currentCircleId).getCityCard();
+        Train train = CircleSquareDrawer.circleMap.get(playerList.get(turnOf).currentCircleId).getTrainCard();
+        Shop shop = CircleSquareDrawer.circleMap.get(playerList.get(turnOf).currentCircleId).getShopCard();
+        int[] chanceSpaces = {4, 17, 22, 33, 7, 28};
+        int[] prisonSpaces = {30};
+        int[] paySpaces = {2,38};
+        if (card != null)
+        {
+            if (isCardFree(card.getNameCity()))
+            {
+                playerList.get(turnOf).changeMoney(card.costOfPurchase * (-1));
+                playerList.get(turnOf).cards.add(card);
+                card.owner = playerList.get(turnOf).name;
+            }
+            else if (playerList.get(turnOf).id != cardOwner(card.getNameCity()).id)
+            {
+                playerList.get(turnOf).changeMoney(card.parkingCost * (-1));
+                cardOwner(card.getNameCity()).changeMoney(card.parkingCost);
+            }
+        }
+        else if(train != null)
+        {
+            if (isCardFree(train.getNameTrain()))
+            {
+                playerList.get(turnOf).changeMoney(train.costOfPurchase * (-1));
+                playerList.get(turnOf).trains.add(train);
+                train.owner = playerList.get(turnOf).name;
+            }
+            else if (playerList.get(turnOf).id != cardOwner(train.getNameTrain()).id)
+            {
+                playerList.get(turnOf).changeMoney(train.earningOneStation* (-1));
+                cardOwner(train.getNameTrain()).changeMoney(train.earningOneStation);
+            }
+        }
+        else if(shop != null)
+        {
+            if (isCardFree(shop.shopName))
+            {
+                playerList.get(turnOf).changeMoney(shop.costOfPurchase * (-1));
+                playerList.get(turnOf).shops.add(shop);
+                shop.owner = playerList.get(turnOf).name;
+            }
+            else if (playerList.get(turnOf).id != cardOwner(shop.shopName).id)
+            {
+                playerList.get(turnOf).changeMoney(shop.earningFromAnotherPlayer* (-1));
+                cardOwner(shop.shopName).changeMoney(shop.earningFromAnotherPlayer);
+            }
+        }
+        else if (isOnThePlace(chanceSpaces))
+        {
+            chanceController.RandomizeChance();
+            chanceController.ExecuteChance(this);
+        }
+        else if (isOnThePlace(prisonSpaces))
+        {
+            playerList.get(turnOf).turnsInPrison = 2;
+            movePlayer(playerList.get(turnOf), 10);
+
+        }
+        else if (isOnThePlace(paySpaces))
+        {
+            playerList.get(turnOf).changeMoney(-200);
+        }
+    }
+
     public void inicialization()
     {
         for (Player player : playerList)
@@ -144,7 +180,7 @@ public class Game {
                 return "";
         }
     }
-    public boolean isCardFree(Card cardToCheck)
+    public boolean isCardFree(String cardName)
     {
         for (Player player : getPlayerList())
         {
@@ -152,17 +188,25 @@ public class Game {
             {
                 for (Card card : player.cards)
                 {
-                    if (Objects.equals(cardToCheck.getNameCity(), card.getNameCity()))
-                    {
+                    if (Objects.equals(cardName, card.getNameCity()))
                         return false;
-                    }
+                }
+                for (Train train : player.trains)
+                {
+                    if (Objects.equals(cardName, train.getNameTrain()))
+                        return false;
+                }
+                for (Shop shop : player.shops)
+                {
+                    if (Objects.equals(cardName, shop.getShopName()))
+                        return false;
                 }
 
             }
         }
         return true;
     }
-    public Player cardOwner(Card card)
+    public Player cardOwner(String cardName)
     {
         for (Player player : getPlayerList())
         {
@@ -170,7 +214,21 @@ public class Game {
             {
                 for (Card cards : player.cards)
                 {
-                    if (Objects.equals(card.getNameCity(), cards.getNameCity()))
+                    if (Objects.equals(cardName, cards.getNameCity()))
+                    {
+                        return player;
+                    }
+                }
+                for (Train train : player.trains)
+                {
+                    if (Objects.equals(cardName, train.getNameTrain()))
+                    {
+                        return player;
+                    }
+                }
+                for (Shop shop : player.shops)
+                {
+                    if (Objects.equals(cardName, shop.getShopName()))
                     {
                         return player;
                     }
@@ -189,4 +247,16 @@ public class Game {
         }
         return false;
     }
+    public boolean isGameOver()
+    {
+        for (Player player : playerList)
+        {
+            if (player.cash <= 0)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

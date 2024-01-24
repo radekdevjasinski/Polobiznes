@@ -88,8 +88,6 @@ public class UserInterface {
             font2.setColor(Color.GREEN);
             font2.draw(batch, player.getCash() + "$", x-420, posY+25);
 
-            font2.setColor(Color.GOLD);
-            font2.draw(batch, player.cards.size() + "", x-350, posY+25);
         }
 
         BitmapFont font3 = Font.getFontInstance().getFont(4);

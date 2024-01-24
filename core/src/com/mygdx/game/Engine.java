@@ -194,14 +194,12 @@ public class Engine extends ApplicationAdapter {
 
 	}
 	private void setCooldown() {
-		// Ustawienie timera na opóźnienie 1 sekundy
 		Timer.schedule(new Timer.Task() {
 			@Override
 			public void run() {
-				// Kod do wykonania po upływie 1 sekundy
-				commandReady = true; // Zmiana wartości boolean
+				commandReady = true;
 			}
-		}, cooldown); // Opóźnienie w sekundach
+		}, cooldown);
 	}
 	/**
 	 * Metoda odpowiedzialna za dostosowanie widoku do zmiany rozmiaru ekranu.
