@@ -26,6 +26,7 @@ public class Engine extends ApplicationAdapter {
 	private CardDisplay cardDisplay;
 	private CircleSquareDrawer circleSquareDrawer;
 	private ClosestCircleInfo closestCircleInfo;
+	ChanceController chanceController;
 	private boolean leftKeyProcessed = false;
 	private boolean rightKeyProcessed = false;
 	private Graphics graphics;
@@ -67,14 +68,7 @@ public class Engine extends ApplicationAdapter {
 		circleObject = new CircleObject(500, 200, 50);
 		squareObject = new SquareObject(300, 100, 50);
 
-
-
 		closestCircleInfo = new ClosestCircleInfo(circleSquareDrawer);
-		try {
-			chance = new Chance();
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
 
 
 		circleSquareDrawer = new CircleSquareDrawer(viewport, shapeRenderer);
