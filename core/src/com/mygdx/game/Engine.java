@@ -68,9 +68,6 @@ public class Engine extends ApplicationAdapter {
 		viewport.apply();
 
 
-
-
-
 		//primitiveRenderer = new PrimitiveRenderer();
 		shapeRenderer = new ShapeRenderer();
 		shapeRenderer.setProjectionMatrix(camera.combined);
@@ -157,7 +154,7 @@ public class Engine extends ApplicationAdapter {
 		batch.begin();
 		int[] specialFieldsQuestionMarkBlue = {7, 28, 38};
 		for (int specialField : specialFieldsQuestionMarkBlue) {
-			CircleObject circle = circleSquareDrawer.getCircleMap().get("Circle_" + specialField);
+			CircleObject circle = circleSquareDrawer.getCircleMap().get(specialField);
 			if (circle != null) {
 				float width = 40;
 				float height = 40;
@@ -174,7 +171,7 @@ public class Engine extends ApplicationAdapter {
 		batch.begin();
 		int[] specialFieldsMonkey = {36};
 		for (int specialField : specialFieldsMonkey) {
-			CircleObject circle = circleSquareDrawer.getCircleMap().get("Circle_" + specialField);
+			CircleObject circle = circleSquareDrawer.getCircleMap().get(specialField);
 			if (circle != null) {
 				float width = 40;
 				float height = 40;
@@ -187,7 +184,7 @@ public class Engine extends ApplicationAdapter {
 		batch.begin();
 		int[] specialFieldsFrog = {12};
 		for (int specialField : specialFieldsFrog) {
-			CircleObject circle = circleSquareDrawer.getCircleMap().get("Circle_" + specialField);
+			CircleObject circle = circleSquareDrawer.getCircleMap().get(specialField);
 			if (circle != null) {
 				float width = 40;
 				float height = 40;
@@ -200,7 +197,7 @@ public class Engine extends ApplicationAdapter {
 		batch.begin();
 		int[] specialFieldsPoliceman = {30};
 		for (int specialField : specialFieldsPoliceman) {
-			CircleObject circle = circleSquareDrawer.getCircleMap().get("Circle_" + specialField);
+			CircleObject circle = circleSquareDrawer.getCircleMap().get(specialField);
 			if (circle != null) {
 				float width = 40;
 				float height = 40;
@@ -213,7 +210,7 @@ public class Engine extends ApplicationAdapter {
 		batch.begin();
 		int[] specialFieldsParking = {20};
 		for (int specialField : specialFieldsParking) {
-			CircleObject circle = circleSquareDrawer.getCircleMap().get("Circle_" + specialField);
+			CircleObject circle = circleSquareDrawer.getCircleMap().get(specialField);
 			if (circle != null) {
 				float width = 40;
 				float height = 40;
@@ -226,7 +223,7 @@ public class Engine extends ApplicationAdapter {
 		batch.begin();
 		int[] specialFieldsPrison = {10};
 		for (int specialField : specialFieldsPrison) {
-			CircleObject circle = circleSquareDrawer.getCircleMap().get("Circle_" + specialField);
+			CircleObject circle = circleSquareDrawer.getCircleMap().get(specialField);
 			if (circle != null) {
 				float width = 60;
 				float height = 60;
