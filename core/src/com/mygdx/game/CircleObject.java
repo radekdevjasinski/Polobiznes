@@ -45,6 +45,8 @@ public class CircleObject extends ShapeObject {
     private float radius;
     private float rotation;
     private Card cityCard;
+    private Shop shopCard;
+    private Train trainCard;
 
     /**
      * Konstruktor obiektu koła.
@@ -116,5 +118,20 @@ public class CircleObject extends ShapeObject {
 
     public void setCityCard(Card cityCard) {
         this.cityCard = cityCard;
+    }
+    public Shop getShopCard() {
+        return shopCard;
+    }
+
+    public void setShopCard(Shop shopCard) {
+        this.shopCard = shopCard;
+    }
+
+    public Train getTrainCard() {
+        return trainCard;
+    }
+
+    public void setTrainCard(Train trainCard) {
+        this.trainCard = trainCard;
     }
 }

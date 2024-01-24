@@ -18,6 +18,7 @@ public class Card {
     int costWithTheHotel;
     int mortgage;
     int color;
+    String owner;
     /**
      * Konstruktor klasy Card, inicjalizuje atrybuty karty na podstawie przekazanych wartości.
      *
@@ -50,6 +51,7 @@ public class Card {
         this.costWithTheHotel = costWithTheHotel;
         this.mortgage = mortgage;
         this.color = color;
+        this.owner = "";
     }
     public Card(){}
     /**
@@ -170,6 +172,13 @@ public class Card {
 
     public void setColor(int color) {
         this.color = color;
+    }
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
     }
 
     public void setNameState(String nameState) {

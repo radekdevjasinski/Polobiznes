@@ -21,7 +21,7 @@ p -100
 Mandat za przekroczenie prędkości zapłać 150 zł
 p -150
 Idź do wiezienia (przejdź prosto do więzienia nie przechodź przez start)
-aw
+a
 Grzywna zapłać 20 zł
 p -20
 Mandat za złe parkowanie 40 zł
@@ -31,7 +31,7 @@ p 10
 Błąd bankowy na twoim koncie! Pobierz 200 zł
 p 200
 Idź do więzienia. Nie przechodź przez START. Nie pobieraj 200 zł
-aw
+a
 Fundusz Zdrowotny. Pobierz 100 zł
 p 100
 Zapłać za wizytę u dentysty 100 zł
@@ -57,7 +57,7 @@ t 34
 Idź na pole Warszawa.
 t 39
 Idź do więzienia. Nie przechodź przez START. Nie pobieraj 200 zł
-aw
+a
 Idź do Krakowa.
 t 24
 Bank wypłaca Ci dywidwndę. Pobierz 50 zł
@@ -79,7 +79,7 @@ p 50
 Zgubiłeś portfel. Zapłać karę 30 zł
 p -30
 Idź do więzienia. Nie przechodź przez START. Nie pobieraj 200 zł
-aw
+a
 Wpadłeś w długi. Zapłać 50 zł
 p -50
 Otrzymałeś premię świąteczną. Pobierz 25 zł
@@ -93,7 +93,7 @@ p 40
 Otrzymałeś nagrodę za pracownika miesiąca. Pobierz 75 zł
 p 75
 Idź do więzienia. Nie przechodź przez START. Nie pobieraj 200 zł
-aw
+a
 Znalezienie portfela na ulicy. Pobierz nagrodę 10 zł
 p 10
 Otrzymujesz dodatek do pensji. Pobierz 50 zł

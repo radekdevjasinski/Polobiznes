@@ -4,11 +4,13 @@ public class Shop {
     String shopName;
     int costOfPurchase;
     int earningFromAnotherPlayer;
+    String owner;
 
     public Shop(String shopName, int costOfPurchase, int earningFromAnotherPlayer) {
         this.shopName = shopName;
         this.costOfPurchase = costOfPurchase;
         this.earningFromAnotherPlayer = earningFromAnotherPlayer;
+        this.owner = "";
     }
 
     public String getShopName() {
@@ -33,6 +35,13 @@ public class Shop {
 
     public void setEarningFromAnotherPlayer(int earningFromAnotherPlayer) {
         this.earningFromAnotherPlayer = earningFromAnotherPlayer;
+    }
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
     }
 
     @Override

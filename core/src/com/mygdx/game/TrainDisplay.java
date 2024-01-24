@@ -19,8 +19,9 @@ public class TrainDisplay {
 
         font.setColor(Color.BLACK);
         font.draw(batch, "AKT ", x + 75, y);
-        font.draw(batch, "POCIAGI ", x + 50, y - 30);
-        font.draw(batch, train.getNameTrain(), x + 35, y - 52, 115, 1, true);
+        font.draw(batch, "POCIAGI ", x + 60, y - 30);
+        font.draw(batch, train.getNameTrain(), x + 31, y - 52, 115, 1, true);
+        font.draw(batch, train.getOwner(), x+66, y-320);
 
         font.getData().setScale(0.75f);
         y -= 20;

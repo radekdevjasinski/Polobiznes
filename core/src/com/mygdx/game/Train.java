@@ -7,6 +7,7 @@ public class Train {
     int earningTwoStations;
     int earningThreeStations;
     int earningFourStations;
+    String owner;
 
     public Train(String nameTrain, int costOfPurchase, int earningOneStation, int earningTwoStations,
                  int earningThreeStations, int earningFourStations) {
@@ -16,6 +17,7 @@ public class Train {
         this.earningTwoStations = earningTwoStations;
         this.earningThreeStations = earningThreeStations;
         this.earningFourStations = earningFourStations;
+        this.owner = "";
     }
 
     public String getNameTrain() {
@@ -64,6 +66,13 @@ public class Train {
 
     public void setEarningFourStations(int earningFourStations) {
         this.earningFourStations = earningFourStations;
+    }
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
     }
 
     @Override

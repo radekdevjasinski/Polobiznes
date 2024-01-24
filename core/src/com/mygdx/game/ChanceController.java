@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Random;
 
 public class ChanceController {
-    private  final String filePath = "kartySzansy.txt"; //D:\PoloBiznesNew\assets\kartySzansy.txt
+    private  final String filePath = "D:\\PoloBiznesNew\\assets\\kartySzansy.txt"; //D:\PoloBiznesNew\assets\kartySzansy.txt
     public List<Chance> chances;
     public Chance randomChance = null;
     public ChanceController() throws IOException {
@@ -52,6 +52,9 @@ public class ChanceController {
                 System.out.println(amountOfMoney);
                 game.playerList.get(game.turnOf).changeMoney(amountOfMoney);
                 break;
+            case 'a':
+                game.playerList.get(game.turnOf).turnsInPrison = 2;
+                game.movePlayer(game.playerList.get(game.turnOf), 10);
             default:
                 break;
         }

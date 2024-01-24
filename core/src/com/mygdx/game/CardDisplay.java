@@ -46,7 +46,8 @@ public class CardDisplay {
         font.draw(batch, "AKT ", x+75, y);
         font.draw(batch, "WLASNOSCI ", x+50, y-30);
         font.draw(batch, card.getNameCity(), x+35, y-52, 115, 1, true);
-        font.draw(batch, card.getNameState(), x+31, y-90, 120, 1,true);
+        font.draw(batch, card.getNameState(), x+31, y-80, 120, 1,true);
+        font.draw(batch, card.getOwner(), x+66, y-320);
         font.getData().setScale(0.75f);
         y -= 20;
         font.setColor(Color.BLACK);
