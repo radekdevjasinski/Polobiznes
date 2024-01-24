@@ -76,12 +76,19 @@ public class Engine extends ApplicationAdapter {
 			throw new RuntimeException(e);
 		}
 
+
 		circleSquareDrawer = new CircleSquareDrawer(viewport, shapeRenderer);
 		cardDisplay = new CardDisplay(new Card());
 
 		diceControl = new DiceControl();
 
-		game = new Game(circleSquareDrawer);
+		try {
+			chanceController = new ChanceController();
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+
+		game = new Game(circleSquareDrawer, chanceController);
 		game.inicialization();
 
 	}
@@ -144,7 +151,7 @@ public class Engine extends ApplicationAdapter {
 
 		//testowe wyświetlanie kart
 		//UserInterface.drawCard(new CardDisplay(card), shapeRenderer, batch, camera);
-		//UserInterface.drawChance(new ChanceDisplay(chance), shapeRenderer, batch, camera);
+
 
 		mousePosition.set(Gdx.input.getX(), Gdx.input.getY(), 0);
 		camera.unproject(mousePosition);
@@ -157,14 +164,15 @@ public class Engine extends ApplicationAdapter {
 		if (!circleSquareDrawer.isMouseNearCircle((int) mousePosition.x, (int) mousePosition.y, maxDistance)) {
 			//Gdx.app.log("Debug", "Myszka jest za daleko od kółek.");
 		} else {
-			CircleObject closestCircle = closestCircleInfo.findClosestCircle(mousePosition.x, mousePosition.y);
-
+			CircleObject closestCircle = closestCircleInfo.findClosestCircleForMouse(mousePosition.x, mousePosition.y);
+			//System.out.println("najblizsze kolo: " + closestCircle.getCityCard());
 			if (closestCircle != null && closestCircle.getCityCard() != null) {
+				//System.out.println("Circle Map: " + circleSquareDrawer.getCircleMap());
 				UserInterface.drawCard(new CardDisplay(closestCircle.getCityCard()), shapeRenderer, batch, camera);
 				//closestCircle.setCityCard(null); //czyszczenie (nie trzeba bo samo sie czysci ale moze sie przydac)
 			}
 		}
-
+		//System.out.println("Circle Map: " + circleSquareDrawer.getCircleMap());
 		UserInterface.drawPlayerPanel(game, shapeRenderer, batch, camera);
 
 		if (Gdx.input.isKeyPressed(Input.Keys.ANY_KEY) || Gdx.input.isButtonPressed(Input.Buttons.LEFT))
@@ -175,6 +183,10 @@ public class Engine extends ApplicationAdapter {
 				commandReady = false;
 				setCooldown();
 			}
+		}
+		if (chanceController.randomChance != null)
+		{
+			UserInterface.drawChance(new ChanceDisplay(chanceController.randomChance), shapeRenderer, batch, camera);
 		}
 
 

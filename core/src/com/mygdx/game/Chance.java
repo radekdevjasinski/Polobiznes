@@ -12,30 +12,26 @@ import java.util.List;
  * Klasa Chance reprezentuje objekt szans w grze.
  */
 public class Chance {
-    private  final String filePath = "kartySzansy.txt"; //D:\PoloBiznesNew\assets\kartySzansy.txt
-    public List<String> chances;
-
-    public Chance() throws IOException {
-        chances = readFile(filePath);
+    String desc;
+    String code;
+    public Chance(String desc, String code) {
+        this.desc = desc;
+        this.code = code;
     }
 
-    /**
-     * Metoda do odczytu zawartości pliku tekstowego.
-     *
-     * @param filePath Ścieżka do pliku tekstowego
-     * @return Zawartość pliku jako ciąg znaków
-     * @throws IOException Wyjątek w przypadku problemów z odczytem pliku
-     */
-    public static List<String> readFile(String filePath) throws IOException {
-        List<String> chances = new ArrayList<>();
+    public String getDesc() {
+        return desc;
+    }
 
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(filePath), "UTF-8"))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                chances.add(line);
-            }
-        }
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
 
-        return chances;
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 }

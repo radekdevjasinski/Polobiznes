@@ -14,7 +14,7 @@ public class CircleSquareDrawer {
 
     private ShapeRenderer shapeRenderer;
     private Viewport viewport;
-    private static HashMap<Integer, CircleObject> circleMap;
+    public static HashMap<Integer, CircleObject> circleMap;
 
     public CircleSquareDrawer(Viewport viewport, ShapeRenderer shapeRenderer) {
         this.viewport = viewport;
@@ -128,6 +128,23 @@ public class CircleSquareDrawer {
         return new Card(nameCity, nameState, costOfPurchase, costPerCottage, costForHotel, parkingCost,
                 costWithTheHouse1, costWithTheHouse2, costWithTheHouse3, costWithTheHouse4,
                 costWithTheHotel, mortgage, color);
+    }
+    public Train readTrainFromLine(String[] trainInfo) {
+        String trainName = trainInfo[0];
+        int costOfPurchase = Integer.parseInt(trainInfo[1]);
+        int earningOneStation = Integer.parseInt(trainInfo[2]);
+        int earningTwoStations = Integer.parseInt(trainInfo[3]);
+        int earningThreeStations = Integer.parseInt(trainInfo[4]);
+        int earningFourStations = Integer.parseInt(trainInfo[5]);
+
+        return new Train(trainName, costOfPurchase, earningOneStation, earningTwoStations, earningThreeStations, earningFourStations);
+    }
+    public Shop readShopFromLine(String[] shopInfo) {
+        String shopName = shopInfo[0];
+        int costOfPurchase = Integer.parseInt(shopInfo[1]);
+        int earningsFromAnotherPlayer = Integer.parseInt(shopInfo[2]);
+
+        return new Shop(shopName, costOfPurchase, earningsFromAnotherPlayer);
     }
 
 
