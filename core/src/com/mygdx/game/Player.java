@@ -2,6 +2,9 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.math.MathUtils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Klasa reprezentująca gracza w grze.
  */
@@ -12,12 +15,14 @@ public class Player{
     String name;
     int currentCircleId;
     SpriteObject sprite;
+    List<Card> cards;
 
     public Player(int id, int cash, String name) {
         this.id = id;
         this.cash = cash;
         this.name = name;
         this.currentCircleId = 0;
+        cards = new ArrayList<>();
 
         sprite = new SpriteObject("pionek_" + this.id + ".bmp", 0);
     }
@@ -69,33 +74,27 @@ public class Player{
         this.sprite = sprite;
     }
 
-    public static void movePlayerToAdjacentCircle(Player player, int direction, CircleSquareDrawer circleSquareDrawer) {
-        int liczbaKolek = 40; // Ilość okręgów
-
-        circleSquareDrawer.updateCircleInfo();
-        int noweIdKolka = (player.getCurrentCircleId() + direction + liczbaKolek) % liczbaKolek;
-        player.setCurrentCircleId(noweIdKolka);
-        CircleObject noweKolko = circleSquareDrawer.getCircleMap().get(noweIdKolka);
-        if (noweKolko != null) {
+    public static void movePlayer(Player player, int id, CircleSquareDrawer circleSquareDrawer) {
+        float circleX = CircleSquareDrawer.circleMap.get(id).getX();
+        float circleY = CircleSquareDrawer.circleMap.get(id).getY();
             float randomAngle = MathUtils.random(360);
             float randomRadius = MathUtils.random(0, 6);
             float playerX = 0;
             float playerY = 0;
             if (player.getCurrentCircleId() >= 1 && player.getCurrentCircleId() <= 10) {
-                playerX = noweKolko.getX() + 20 + MathUtils.cosDeg(randomAngle) * randomRadius;
-                playerY = noweKolko.getY() + 5 + MathUtils.sinDeg(randomAngle) * randomRadius;
+                playerX = circleX + 20 + MathUtils.cosDeg(randomAngle) * randomRadius;
+                playerY = circleY + 5 + MathUtils.sinDeg(randomAngle) * randomRadius;
             } else if (player.getCurrentCircleId() >= 11 && player.getCurrentCircleId() <= 20) {
-                playerX = noweKolko.getX() + MathUtils.cosDeg(randomAngle) * randomRadius;
-                playerY = noweKolko.getY() + 25 + MathUtils.sinDeg(randomAngle) * randomRadius;
+                playerX = circleX + MathUtils.cosDeg(randomAngle) * randomRadius;
+                playerY = circleY + 25 + MathUtils.sinDeg(randomAngle) * randomRadius;
             } else if (player.getCurrentCircleId() >= 21 && player.getCurrentCircleId() <= 30) {
-                playerX = noweKolko.getX() - 20 + MathUtils.cosDeg(randomAngle) * randomRadius;
-                playerY = noweKolko.getY() + 5 + MathUtils.sinDeg(randomAngle) * randomRadius;
+                playerX = circleX - 20 + MathUtils.cosDeg(randomAngle) * randomRadius;
+                playerY = circleY + 5 + MathUtils.sinDeg(randomAngle) * randomRadius;
             } else {
-                playerX = noweKolko.getX() + MathUtils.cosDeg(randomAngle) * randomRadius;
-                playerY = noweKolko.getY() - 20 + MathUtils.sinDeg(randomAngle) * randomRadius;
+                playerX = circleX + MathUtils.cosDeg(randomAngle) * randomRadius;
+                playerY = circleY - 20 + MathUtils.sinDeg(randomAngle) * randomRadius;
             }
             player.sprite.setPosition(Math.round(playerX - (40 / 2)), Math.round(playerY - (40 / 2)));
         }
-    }
 
 }

@@ -42,6 +42,7 @@ public class Engine extends ApplicationAdapter {
 	private Card card;
 	private Chance chance;
 	private ChanceDisplay chanceDisplay;
+	private ChanceController chanceController;
 	Texture pkpTexture;
 	Texture QuestionMarkRed;
 	Texture QuestionMarkBlue;
@@ -77,11 +78,7 @@ public class Engine extends ApplicationAdapter {
 
 
 		closestCircleInfo = new ClosestCircleInfo(circleSquareDrawer);
-		try {
-			chance = new Chance();
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
+
 		pkpTexture = new Texture(Gdx.files.internal("pkp.png"));
 		QuestionMarkRed = new Texture(Gdx.files.internal("znakZapytaniaCzerwony.png"));
 		QuestionMarkBlue = new Texture(Gdx.files.internal("znakZapytaniaNiebieski.png"));
@@ -96,7 +93,13 @@ public class Engine extends ApplicationAdapter {
 
 		diceControl = new DiceControl();
 
-		game = new Game(circleSquareDrawer);
+		try {
+			chanceController = new ChanceController();
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+
+		game = new Game(circleSquareDrawer, chanceController);
 		game.inicialization();
 
 	}
@@ -280,7 +283,7 @@ public class Engine extends ApplicationAdapter {
 
 		//testowe wyświetlanie kart
 		//UserInterface.drawCard(new CardDisplay(card), shapeRenderer, batch, camera);
-		//UserInterface.drawChance(new ChanceDisplay(chance), shapeRenderer, batch, camera);
+
 
 		mousePosition.set(Gdx.input.getX(), Gdx.input.getY(), 0);
 		camera.unproject(mousePosition);
@@ -311,6 +314,10 @@ public class Engine extends ApplicationAdapter {
 				commandReady = false;
 				setCooldown();
 			}
+		}
+		if (chanceController.randomChance != null)
+		{
+			UserInterface.drawChance(new ChanceDisplay(chanceController.randomChance), shapeRenderer, batch, camera);
 		}
 
 
