@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
@@ -30,8 +31,7 @@ public class Engine extends ApplicationAdapter {
 
 	SpriteBatch batch;
 	Texture logo;
-	DiceRoll diceRoll1;
-	DiceRoll diceRoll2;
+	DiceControl diceControl;
     private Game game;
 	private OrthographicCamera camera;
 	private ShapeRenderer shapeRenderer;
@@ -42,9 +42,18 @@ public class Engine extends ApplicationAdapter {
 	private Card card;
 	private Chance chance;
 	private ChanceDisplay chanceDisplay;
+	private ChanceController chanceController;
 	Texture pkpTexture;
 	Texture QuestionMarkRed;
+	Texture QuestionMarkBlue;
+	Texture Monkey;
+	Texture Frog;
+	Texture Policeman;
+	Texture Parking;
+	Texture Prison;
 	private Vector3 mousePosition = new Vector3();
+	final int cooldown = 2;
+	boolean commandReady = true;
 
 	/**
 	 * Metoda inicjalizująca obiekty i parametry gry.
@@ -60,33 +69,39 @@ public class Engine extends ApplicationAdapter {
 		viewport.apply();
 
 
-		game = new Game();
-
-		for (Player player : game.getPlayerList())
-		{
-			player.sprite.setPosition(500, 400);
-		}
-
 		//primitiveRenderer = new PrimitiveRenderer();
 		shapeRenderer = new ShapeRenderer();
 		shapeRenderer.setProjectionMatrix(camera.combined);
 		circleObject = new CircleObject(500, 200, 50);
 		squareObject = new SquareObject(300, 100, 50);
 
-		diceRoll1 = new DiceRoll();
-		diceRoll2 = new DiceRoll();
 
-		circleSquareDrawer = new CircleSquareDrawer(viewport);
+
 		closestCircleInfo = new ClosestCircleInfo(circleSquareDrawer);
+
+		pkpTexture = new Texture(Gdx.files.internal("pkp.png"));
+		QuestionMarkRed = new Texture(Gdx.files.internal("znakZapytaniaCzerwony.png"));
+		QuestionMarkBlue = new Texture(Gdx.files.internal("znakZapytaniaNiebieski.png"));
+		Monkey = new Texture(Gdx.files.internal("malpa.png"));
+		Frog = new Texture(Gdx.files.internal("zabka.png"));
+		Policeman = new Texture(Gdx.files.internal("policjant.png"));
+		Parking = new Texture(Gdx.files.internal("parking.png"));
+		Prison = new Texture(Gdx.files.internal("wiezienie.png"));
+
+		circleSquareDrawer = new CircleSquareDrawer(viewport, shapeRenderer);
+		cardDisplay = new CardDisplay(new Card());
+
+		diceControl = new DiceControl();
+
 		try {
-			chance = new Chance();
+			chanceController = new ChanceController();
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
-		pkpTexture = new Texture(Gdx.files.internal("pkp.png"));
-		QuestionMarkRed = new Texture(Gdx.files.internal("znak_zapytania_czerwony.png"));
-		circleSquareDrawer = new CircleSquareDrawer(viewport, shapeRenderer);
-		cardDisplay = new CardDisplay(new Card());
+
+		game = new Game(circleSquareDrawer, chanceController);
+		game.inicialization();
+
 	}
 
 	/**
@@ -108,32 +123,122 @@ public class Engine extends ApplicationAdapter {
 			if (circle != null) {
 				float width = 40;
 				float height = 40;
-				if (specialField == 15) {
+				if (specialField == 25) {
 					batch.draw(pkpTexture, circle.getX() - 19, circle.getY(), width / 2, height / 2, width, height, 1, 1, 180, 0, 0, pkpTexture.getWidth(), pkpTexture.getHeight(), false, false);
-				} else if (specialField == 25) {
+				} else if (specialField == 15) {
 					batch.draw(pkpTexture, circle.getX() - 35, circle.getY() - 20, width / 2, height / 2, width, height, 1, 1, 270, 0, 0, pkpTexture.getWidth(), pkpTexture.getHeight(), false, false);
-				} else if (specialField == 5) {
-					batch.draw(pkpTexture, circle.getX(), circle.getY() - 20, width / 2, height / 2, width, height, 1, 1, 90, 0, 0, pkpTexture.getWidth(), pkpTexture.getHeight(), false, false);
 				} else if (specialField == 35) {
+					batch.draw(pkpTexture, circle.getX() - 5, circle.getY() - 20, width / 2, height / 2, width, height, 1, 1, 90, 0, 0, pkpTexture.getWidth(), pkpTexture.getHeight(), false, false);
+				} else if (specialField == 5) {
 					batch.draw(pkpTexture, circle.getX() - 20, circle.getY() - 37, width / 2, height / 2, width, height, 1, 1, 0, 0, 0, pkpTexture.getWidth(), pkpTexture.getHeight(), false, false);
 				}
 			}
 		}
 		batch.end();
 		batch.begin();
-		int[] specialFieldsQuestionMarkRed = {4, 12, 23, 33};
+		int[] specialFieldsQuestionMarkRed = {4, 17, 22, 33};
 		for (int specialField : specialFieldsQuestionMarkRed) {
 			CircleObject circle = circleSquareDrawer.getCircleMap().get(specialField);
 			if (circle != null) {
 				float width = 40;
 				float height = 40;
-				if (specialField == 4) {
+				if (specialField == 33) {
 					batch.draw(QuestionMarkRed, circle.getX() - 5, circle.getY() - 20, width / 2, height / 2, width, height, 1, 1, 90, 0, 0, QuestionMarkRed.getWidth(), QuestionMarkRed.getHeight(), false, false);
+				} else if (specialField == 22) {
+					batch.draw(QuestionMarkRed, circle.getX() - 19, circle.getY(), width / 2, height / 2, width, height, 1, 1, 180, 0, 0, QuestionMarkRed.getWidth(), QuestionMarkRed.getHeight(), false, false);
+				}else if (specialField == 17) {
+					batch.draw(QuestionMarkRed, circle.getX() - 35, circle.getY() - 20, width / 2, height / 2, width, height, 1, 1, 270, 0, 0, QuestionMarkRed.getWidth(), QuestionMarkRed.getHeight(), false, false);
+				} else if (specialField == 4) {
+					batch.draw(QuestionMarkRed, circle.getX() - 20, circle.getY() - 37, width / 2, height / 2, width, height, 1, 1, 0, 0, 0, QuestionMarkRed.getWidth(), QuestionMarkRed.getHeight(), false, false);
+				}
+			}
+		}
+		batch.end();
+		batch.begin();
+		int[] specialFieldsQuestionMarkBlue = {7, 28, 38};
+		for (int specialField : specialFieldsQuestionMarkBlue) {
+			CircleObject circle = circleSquareDrawer.getCircleMap().get(specialField);
+			if (circle != null) {
+				float width = 40;
+				float height = 40;
+				if (specialField == 38) {
+					batch.draw(QuestionMarkBlue, circle.getX() - 5, circle.getY() - 20, width / 2, height / 2, width, height, 1, 1, 90, 0, 0, QuestionMarkBlue.getWidth(), QuestionMarkBlue.getHeight(), false, false);
+				} else if (specialField == 28) {
+					batch.draw(QuestionMarkBlue, circle.getX() - 19, circle.getY(), width / 2, height / 2, width, height, 1, 1, 180, 0, 0, QuestionMarkBlue.getWidth(), QuestionMarkBlue.getHeight(), false, false);
+				}else if (specialField == 7) {
+					batch.draw(QuestionMarkBlue, circle.getX() - 20, circle.getY() - 37, width / 2, height / 2, width, height, 1, 1, 0, 0, 0, QuestionMarkBlue.getWidth(), QuestionMarkBlue.getHeight(), false, false);
+				}
+			}
+		}
+		batch.end();
+		batch.begin();
+		int[] specialFieldsMonkey = {36};
+		for (int specialField : specialFieldsMonkey) {
+			CircleObject circle = circleSquareDrawer.getCircleMap().get(specialField);
+			if (circle != null) {
+				float width = 40;
+				float height = 40;
+				if (specialField == 36) {
+					batch.draw(Monkey, circle.getX() - 5, circle.getY() - 20, width / 2, height / 2, width, height, 1, 1, 90, 0, 0, Monkey.getWidth(), Monkey.getHeight(), false, false);
+				}
+			}
+		}
+		batch.end();
+		batch.begin();
+		int[] specialFieldsFrog = {12};
+		for (int specialField : specialFieldsFrog) {
+			CircleObject circle = circleSquareDrawer.getCircleMap().get(specialField);
+			if (circle != null) {
+				float width = 40;
+				float height = 40;
+				if (specialField == 12) {
+					batch.draw(Frog, circle.getX() - 35, circle.getY() - 20, width / 2, height / 2, width, height, 1, 1, 270, 0, 0, Frog.getWidth(), Frog.getHeight(), false, false);
+				}
+			}
+		}
+		batch.end();
+		batch.begin();
+		int[] specialFieldsPoliceman = {30};
+		for (int specialField : specialFieldsPoliceman) {
+			CircleObject circle = circleSquareDrawer.getCircleMap().get(specialField);
+			if (circle != null) {
+				float width = 40;
+				float height = 40;
+				if (specialField == 30) {
+					batch.draw(Policeman, circle.getX() - 5, circle.getY()-5 , width / 2, height / 2, width, height, 1, 1, 130, 0, 0,  Policeman.getWidth(), Policeman.getHeight(), false, false);
+				}
+			}
+		}
+		batch.end();
+		batch.begin();
+		int[] specialFieldsParking = {20};
+		for (int specialField : specialFieldsParking) {
+			CircleObject circle = circleSquareDrawer.getCircleMap().get(specialField);
+			if (circle != null) {
+				float width = 40;
+				float height = 40;
+				if (specialField == 20) {
+					batch.draw(Parking, circle.getX() - 35, circle.getY()-5 , width / 2, height / 2, width, height, 1, 1, 230, 0, 0, Parking.getWidth(), Parking.getHeight(), false, false);
+				}
+			}
+		}
+		batch.end();
+		batch.begin();
+		int[] specialFieldsPrison = {10};
+		for (int specialField : specialFieldsPrison) {
+			CircleObject circle = circleSquareDrawer.getCircleMap().get(specialField);
+			if (circle != null) {
+				float width = 60;
+				float height = 60;
+				if (specialField == 10) {
+					batch.draw(Prison, circle.getX() - 35, circle.getY() - 40, width / 2, height / 2, width, height, 1, 1, 320, 0, 0, Prison.getWidth(), Prison.getHeight(), false, false);
 				}
 			}
 		}
 		batch.end();
 
+
+		/*
 		if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && !leftKeyProcessed) {
 			leftKeyProcessed = true;
 			movePlayerToAdjacentCircle(-1);
@@ -152,9 +257,7 @@ public class Engine extends ApplicationAdapter {
 			diceRoll1.RollingAnimation();
 			diceRoll2.RollingAnimation();
 		}
-
-		diceRoll1.animate();
-		diceRoll2.animate();
+		*/
 
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
@@ -165,8 +268,8 @@ public class Engine extends ApplicationAdapter {
 
 		}
 
-		batch.draw(diceRoll1.textures[diceRoll1.value], 790, 30);
-		batch.draw(diceRoll1.textures[diceRoll2.value], 890, 30);
+		diceControl.draw(batch);
+		diceControl.animate();
 
 
 		batch.end();
@@ -180,7 +283,7 @@ public class Engine extends ApplicationAdapter {
 
 		//testowe wyświetlanie kart
 		//UserInterface.drawCard(new CardDisplay(card), shapeRenderer, batch, camera);
-		//UserInterface.drawChance(new ChanceDisplay(chance), shapeRenderer, batch, camera);
+
 
 		mousePosition.set(Gdx.input.getX(), Gdx.input.getY(), 0);
 		camera.unproject(mousePosition);
@@ -204,6 +307,31 @@ public class Engine extends ApplicationAdapter {
 		//System.out.println("Circle Map: " + circleSquareDrawer.getCircleMap());
 		UserInterface.drawPlayerPanel(game, shapeRenderer, batch, camera);
 
+		if (Gdx.input.isKeyPressed(Input.Keys.ANY_KEY) || Gdx.input.isButtonPressed(Input.Buttons.LEFT))
+		{
+			if (commandReady)
+			{
+				game.gameLoop(diceControl);
+				commandReady = false;
+				setCooldown();
+			}
+		}
+		if (chanceController.randomChance != null)
+		{
+			UserInterface.drawChance(new ChanceDisplay(chanceController.randomChance), shapeRenderer, batch, camera);
+		}
+
+
+	}
+	private void setCooldown() {
+		// Ustawienie timera na opóźnienie 1 sekundy
+		Timer.schedule(new Timer.Task() {
+			@Override
+			public void run() {
+				// Kod do wykonania po upływie 1 sekundy
+				commandReady = true; // Zmiana wartości boolean
+			}
+		}, cooldown); // Opóźnienie w sekundach
 	}
 	/**
 	 * Metoda odpowiedzialna za dostosowanie widoku do zmiany rozmiaru ekranu.
@@ -220,35 +348,5 @@ public class Engine extends ApplicationAdapter {
 	public void dispose() {
 		batch.dispose();
 		shapeRenderer.dispose();
-	}
-
-	private void movePlayerToAdjacentCircle(int direction) {
-		int liczbaKolek = 40;
-
-		for (Player player : game.getPlayerList()) {
-			Integer noweIdKolka = (player.getCurrentCircleId() + direction + liczbaKolek) % liczbaKolek;
-			player.setCurrentCircleId(noweIdKolka);
-			CircleObject noweKolko = circleSquareDrawer.getCircleMap().get(noweIdKolka);
-			if (noweKolko != null) {
-				float randomAngle = MathUtils.random(360);
-				float randomRadius = MathUtils.random(0, 6);
-				float playerX = 0;
-				float playerY = 0;
-				if (player.getCurrentCircleId() >= 1 && player.getCurrentCircleId() <= 10) {
-					playerX = noweKolko.getX()  + MathUtils.cosDeg(randomAngle) * randomRadius;
-					playerY = noweKolko.getY() -20  + MathUtils.sinDeg(randomAngle) * randomRadius;
-				} else if (player.getCurrentCircleId() >= 11 && player.getCurrentCircleId() <= 20) {
-					playerX = noweKolko.getX()  - 25+ MathUtils.cosDeg(randomAngle) * randomRadius;
-					playerY = noweKolko.getY() + 5 + MathUtils.sinDeg(randomAngle) * randomRadius;
-				} else if (player.getCurrentCircleId() >= 21 && player.getCurrentCircleId() <= 30) {
-					playerX = noweKolko.getX() -5 + MathUtils.cosDeg(randomAngle) * randomRadius;
-					playerY = noweKolko.getY() +20 + MathUtils.sinDeg(randomAngle) * randomRadius;
-				} else {
-					playerX = noweKolko.getX() + 20 + MathUtils.cosDeg(randomAngle) * randomRadius;
-					playerY = noweKolko.getY() + 5 + MathUtils.sinDeg(randomAngle) * randomRadius;
-				}
-				player.sprite.setPosition(Math.round(playerX - (40 / 2)), Math.round(playerY - (40 / 2)));
-			}
-		}
 	}
 }

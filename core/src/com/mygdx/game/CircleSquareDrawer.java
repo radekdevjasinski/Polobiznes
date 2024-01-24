@@ -14,21 +14,14 @@ public class CircleSquareDrawer {
 
     private ShapeRenderer shapeRenderer;
     private Viewport viewport;
-    private static HashMap<Integer, CircleObject> circleMap;
+    public static HashMap<Integer, CircleObject> circleMap;
 
-    public CircleSquareDrawer(Viewport viewport) {
-        this.viewport = viewport;
-        this.shapeRenderer = new ShapeRenderer();
-        circleMap = new HashMap<>();
-        drawCirclesInSquare();
-        loadCityCardsFromFile("D:/PoloBiznesNew/assets/kartyMiast.txt");
-    }
     public CircleSquareDrawer(Viewport viewport, ShapeRenderer shapeRenderer) {
         this.viewport = viewport;
         this.shapeRenderer = shapeRenderer;
         circleMap = new HashMap<>();
         drawCirclesInSquare();
-        loadCityCardsFromFile("D:/PoloBiznesNew/assets/kartyMiast.txt");
+        loadCityCardsFromFile("kartyMiast.txt");
     }
 
     private void drawCirclesInSquare() {
