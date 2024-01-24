@@ -162,10 +162,18 @@ public class Engine extends ApplicationAdapter {
 			//System.out.println("najblizsze kolo: " + closestCircle.getCityCard());
 			if (closestCircle != null && closestCircle.getCityCard() != null) {
 				//System.out.println("Circle Map: " + circleSquareDrawer.getCircleMap());
+				//Gdx.app.log("Debug", "Najbliższe kółko to miasto");
 				UserInterface.drawCard(new CardDisplay(closestCircle.getCityCard()), shapeRenderer, batch, camera);
 				//closestCircle.setCityCard(null); //czyszczenie (nie trzeba bo samo sie czysci ale moze sie przydac)
+			} else if (closestCircle != null && closestCircle.getShopCard() != null) {
+				//Gdx.app.log("Debug", "Najbliższe kółko to sklep");
+				UserInterface.drawShop(new ShopDisplay(closestCircle.getShopCard()), shapeRenderer, batch, camera);
+			} else if (closestCircle != null && closestCircle.getTrainCard() != null) {
+				//Gdx.app.log("Debug", "Najbliższe kółko to pociąg");
+				UserInterface.drawTrain(new TrainDisplay(closestCircle.getTrainCard()), shapeRenderer, batch, camera);
 			}
 		}
+
 		//System.out.println("Circle Map: " + circleSquareDrawer.getCircleMap());
 		UserInterface.drawPlayerPanel(game, shapeRenderer, batch, camera);
 

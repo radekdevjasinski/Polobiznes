@@ -19,13 +19,13 @@ public class ShopDisplay {
 
         font.setColor(Color.BLACK);
         font.draw(batch, "SKLEP ", x + 70, y);
-        font.draw(batch, shop.getShopName(), x + 35, y - 52, 115, 1, true);
+        font.draw(batch, shop.getShopName(), x + 31, y - 52, 115, 1, true);
 
         font.getData().setScale(0.75f);
         y -= 20;
         font.setColor(Color.BLACK);
         font.draw(batch, "Cena zakupu: " + shop.getCostOfPurchase(), x, y - 120);
-        font.draw(batch, "Zarobki od innego gracza: " + shop.getEarningFromAnotherPlayer(), x, y - 135);
+        font.draw(batch, "Oplata za wejscie: " + shop.getEarningFromAnotherPlayer(), x, y - 135);
     }
 
     public void drawShopBackground(ShapeRenderer shapeRenderer) {
