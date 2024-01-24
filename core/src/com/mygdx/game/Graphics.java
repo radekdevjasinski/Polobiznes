@@ -14,7 +14,7 @@ public class Graphics {
     private Texture Prison;
     private SpriteBatch batch;
     private CircleSquareDrawer circleSquareDrawer;
-
+    private Texture Tax;
     public Graphics() {
         pkpTexture = new Texture(Gdx.files.internal("pkp.png"));
         QuestionMarkRed = new Texture(Gdx.files.internal("znakZapytaniaCzerwony.png"));
@@ -24,6 +24,7 @@ public class Graphics {
         Policeman = new Texture(Gdx.files.internal("policjant.png"));
         Parking = new Texture(Gdx.files.internal("parking.png"));
         Prison = new Texture(Gdx.files.internal("wiezienie.png"));
+        Tax = new Texture(Gdx.files.internal("podatek.png"));
         batch = new SpriteBatch();
     }
 public void Graphic() {
@@ -143,6 +144,19 @@ public void Graphic() {
             float height = 60;
             if (specialField == 10) {
                 batch.draw(Prison, circle.getX() - 35, circle.getY() - 40, width / 2, height / 2, width, height, 1, 1, 320, 0, 0, Prison.getWidth(), Prison.getHeight(), false, false);
+            }
+        }
+    }
+    batch.end();
+    batch.begin();
+    int[] specialFieldsTax = {2};
+    for (int specialField : specialFieldsTax) {
+        CircleObject circle = circleSquareDrawer.getCircleMap().get(specialField);
+        if (circle != null) {
+            float width = 45;
+            float height = 45;
+            if (specialField == 2) {
+                batch.draw(Tax, circle.getX() - 20, circle.getY() - 37, width / 2, height / 2, width, height, 1, 1, 0, 0, 0, Tax.getWidth(), Tax.getHeight(), false, false);
             }
         }
     }
