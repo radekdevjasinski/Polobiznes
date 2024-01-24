@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Random;
 
 public class ChanceController {
-    private  final String filePath = "kartySzansy.txt"; //D:\PoloBiznesNew\assets\kartySzansy.txt
+    private  final String filePath = "D:\\PoloBiznesNew\\assets\\kartySzansy.txt"; //D:\PoloBiznesNew\assets\kartySzansy.txt
     public List<Chance> chances;
     public Chance randomChance = null;
     public ChanceController() throws IOException {

@@ -21,7 +21,9 @@ public class CircleSquareDrawer {
         this.shapeRenderer = shapeRenderer;
         circleMap = new HashMap<>();
         drawCirclesInSquare();
-        loadCityCardsFromFile("kartyMiast.txt");
+        loadCityCardsFromFile("kartyMiast.txt"); //D:\PoloBiznesNew\assets\kartyMiast.txt
+        //loadTrainCardsFromFile("D:\\PoloBiznesNew\\assets\\kartyPociagow.txt");
+        //loadShopCardsFromFile("D:\\PoloBiznesNew\\assets\\kartyDodatkowe.txt");
     }
 
     private void drawCirclesInSquare() {
@@ -99,8 +101,16 @@ public class CircleSquareDrawer {
                 String[] cardInfo = line.split(";");
                 if (currentCircleId < circleMap.size()) {
                     if (!cardInfo[0].equals("-")) {
-                        Card cityCard = readCityCardFromLine(cardInfo);
-                        circleMap.get(currentCircleId).setCityCard(cityCard);
+                        if (isShopCircleId(currentCircleId)) {
+                            Shop shopCard = readShopFromLine(cardInfo);
+                            circleMap.get(currentCircleId).setShopCard(shopCard);
+                        }else if (isTrainCircleId(currentCircleId)) {
+                            Train trainCard = readTrainFromLine(cardInfo);
+                            circleMap.get(currentCircleId).setTrainCard(trainCard);
+                        }else {
+                            Card cityCard = readCityCardFromLine(cardInfo);
+                            circleMap.get(currentCircleId).setCityCard(cityCard);
+                        }
                     }
                 }
 
@@ -129,6 +139,9 @@ public class CircleSquareDrawer {
                 costWithTheHouse1, costWithTheHouse2, costWithTheHouse3, costWithTheHouse4,
                 costWithTheHotel, mortgage, color);
     }
+    private boolean isTrainCircleId(int circleId) {
+        return circleId == 5 || circleId == 15 || circleId == 25 || circleId == 35;
+    }
     public Train readTrainFromLine(String[] trainInfo) {
         String trainName = trainInfo[0];
         int costOfPurchase = Integer.parseInt(trainInfo[1]);
@@ -138,6 +151,9 @@ public class CircleSquareDrawer {
         int earningFourStations = Integer.parseInt(trainInfo[5]);
 
         return new Train(trainName, costOfPurchase, earningOneStation, earningTwoStations, earningThreeStations, earningFourStations);
+    }
+    private boolean isShopCircleId(int circleId) {
+        return circleId == 12 || circleId == 36;
     }
     public Shop readShopFromLine(String[] shopInfo) {
         String shopName = shopInfo[0];

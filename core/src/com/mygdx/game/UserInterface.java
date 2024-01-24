@@ -100,4 +100,35 @@ public class UserInterface {
 
 
     }
+    public static void drawTrain(TrainDisplay trainDisplay, ShapeRenderer shapeRenderer, SpriteBatch batch, Camera camera)
+    {
+        shapeRenderer.setProjectionMatrix(camera.combined);
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        trainDisplay.drawTrainBackground(shapeRenderer);
+        shapeRenderer.end();
+
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+        trainDisplay.drawTrainBorder(shapeRenderer);
+        shapeRenderer.end();
+
+        batch.begin();
+        trainDisplay.displayTrainInfo(batch);
+        batch.end();
+    }
+
+    public static void drawShop(ShopDisplay shopDisplay, ShapeRenderer shapeRenderer, SpriteBatch batch, Camera camera)
+    {
+        shapeRenderer.setProjectionMatrix(camera.combined);
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        shopDisplay.drawShopBackground(shapeRenderer);
+        shapeRenderer.end();
+
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+        shopDisplay.drawShopBorder(shapeRenderer);
+        shapeRenderer.end();
+
+        batch.begin();
+        shopDisplay.displayShopInfo(batch);
+        batch.end();
+    }
 }
