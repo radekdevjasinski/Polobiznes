@@ -151,8 +151,8 @@ public void Graphic() {
     for (int specialField : specialFieldsTax) {
         CircleObject circle = circleSquareDrawer.getCircleMap().get(specialField);
         if (circle != null) {
-            float width = 45;
-            float height = 45;
+            float width = 40;
+            float height = 40;
             if (specialField == 38) {
                 batch.draw(Tax, circle.getX() - 5, circle.getY() - 22, width / 2, height / 2, width, height, 1, 1, 90, 0, 0, Tax.getWidth(), Tax.getHeight(), false, false);
             } else if (specialField == 2) {
