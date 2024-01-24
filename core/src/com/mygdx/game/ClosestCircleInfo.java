@@ -19,15 +19,14 @@ public class ClosestCircleInfo {
     public void updateClosestCircleInfo(float mouseX, float mouseY) {
         CircleObject closestCircle = findClosestCircle(mouseX, mouseY);
         if (closestCircle != null) {
-            String closestCircleId = getClosestCircleId(closestCircle);
-            Gdx.app.log("Debug", "Closest Circle ID: " + closestCircleId);
+            int closestCircleId = getClosestCircleId(closestCircle);
+            //Gdx.app.log("Debug", "Closest Circle ID: " + closestCircleId);
         }
     }
-
     public void drawClosestCircleInfo(SpriteBatch spriteBatch, float touchX, float touchY) {
         CircleObject closestCircle = findClosestCircle(touchX, touchY);
         if (closestCircle != null) {
-            String closestCircleId = getClosestCircleId(closestCircle);
+            int closestCircleId = getClosestCircleId(closestCircle);
             font.draw(spriteBatch, "Closest Circle ID: " + closestCircleId, 20, 20);
         }
     }
@@ -54,12 +53,12 @@ public class ClosestCircleInfo {
         return (float) Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
     }
 
-    private String getClosestCircleId(CircleObject closestCircle) {
-        for (HashMap.Entry<String, CircleObject> entry : circleSquareDrawer.getCircleMap().entrySet()) {
+    private int getClosestCircleId(CircleObject closestCircle) {
+        for (HashMap.Entry<Integer, CircleObject> entry : circleSquareDrawer.getCircleMap().entrySet()) {
             if (entry.getValue() == closestCircle) {
                 return entry.getKey();
             }
         }
-        return "";
+        return -1;
     }
 }
