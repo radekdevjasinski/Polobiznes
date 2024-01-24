@@ -75,7 +75,7 @@ public class Player{
         circleSquareDrawer.updateCircleInfo();
         int noweIdKolka = (player.getCurrentCircleId() + direction + liczbaKolek) % liczbaKolek;
         player.setCurrentCircleId(noweIdKolka);
-        CircleObject noweKolko = circleSquareDrawer.getCircleMap().get("Circle_" + noweIdKolka);
+        CircleObject noweKolko = circleSquareDrawer.getCircleMap().get(noweIdKolka);
         if (noweKolko != null) {
             float randomAngle = MathUtils.random(360);
             float randomRadius = MathUtils.random(0, 6);

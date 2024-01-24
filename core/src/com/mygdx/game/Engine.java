@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
@@ -44,6 +45,8 @@ public class Engine extends ApplicationAdapter {
 	Texture pkpTexture;
 	Texture QuestionMarkRed;
 	private Vector3 mousePosition = new Vector3();
+	final int cooldown = 2;
+	boolean commandReady = true;
 
 	/**
 	 * Metoda inicjalizująca obiekty i parametry gry.
@@ -103,7 +106,7 @@ public class Engine extends ApplicationAdapter {
 		batch.begin();
 		int[] specialFieldsTrain = {5, 15, 25, 35};
 		for (int specialField : specialFieldsTrain) {
-			CircleObject circle = circleSquareDrawer.getCircleMap().get("Circle_" + specialField);
+			CircleObject circle = circleSquareDrawer.getCircleMap().get(specialField);
 			if (circle != null) {
 				float width = 40;
 				float height = 40;
@@ -122,7 +125,7 @@ public class Engine extends ApplicationAdapter {
 		batch.begin();
 		int[] specialFieldsQuestionMarkRed = {4, 12, 22, 33};
 		for (int specialField : specialFieldsQuestionMarkRed) {
-			CircleObject circle = circleSquareDrawer.getCircleMap().get("Circle_" + specialField);
+			CircleObject circle = circleSquareDrawer.getCircleMap().get(specialField);
 			if (circle != null) {
 				float width = 40;
 				float height = 40;
@@ -139,6 +142,7 @@ public class Engine extends ApplicationAdapter {
 		}
 		batch.end();
 
+		/*
 		if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && !leftKeyProcessed) {
 			leftKeyProcessed = true;
 			movePlayerToAdjacentCircle(-1);
@@ -208,9 +212,25 @@ public class Engine extends ApplicationAdapter {
 
 		if (Gdx.input.isKeyPressed(Input.Keys.ANY_KEY) || Gdx.input.isButtonPressed(Input.Buttons.LEFT))
 		{
-			game.gameLoop(diceControl);
+			if (commandReady)
+			{
+				game.gameLoop(diceControl);
+				commandReady = false;
+				setCooldown();
+			}
 		}
 
+
+	}
+	private void setCooldown() {
+		// Ustawienie timera na opóźnienie 1 sekundy
+		Timer.schedule(new Timer.Task() {
+			@Override
+			public void run() {
+				// Kod do wykonania po upływie 1 sekundy
+				commandReady = true; // Zmiana wartości boolean
+			}
+		}, cooldown); // Opóźnienie w sekundach
 	}
 	/**
 	 * Metoda odpowiedzialna za dostosowanie widoku do zmiany rozmiaru ekranu.
