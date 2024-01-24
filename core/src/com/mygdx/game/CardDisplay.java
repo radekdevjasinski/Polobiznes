@@ -40,14 +40,13 @@ public class CardDisplay {
                 font.setColor(Color.WHITE);
                 break;
         }
-        // Ustawienie koloru tekstu na czarny
-        // Wyświetlanie informacji o karcie na ekranie wewnątrz prostokąta
         int x = 800;
         int y = 560;
-        font.draw(batch, "AKT ", x+80, y);
+
+        font.draw(batch, "AKT ", x+75, y);
         font.draw(batch, "WLASNOSCI ", x+50, y-30);
-        font.draw(batch, card.getNameCity().toUpperCase(), x+57, y-60);
-        font.draw(batch, card.getNameState(), x+30, y-90);
+        font.draw(batch, card.getNameCity(), x+35, y-52, 115, 1, true);
+        font.draw(batch, card.getNameState(), x+31, y-90, 120, 1,true);
         font.getData().setScale(0.75f);
         y -= 20;
         font.setColor(Color.BLACK);

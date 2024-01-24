@@ -104,7 +104,7 @@ public class Engine extends ApplicationAdapter {
 		batch.begin();
 		int[] specialFieldsTrain = {5, 15, 25, 35};
 		for (int specialField : specialFieldsTrain) {
-			CircleObject circle = circleSquareDrawer.getCircleMap().get("Circle_" + specialField);
+			CircleObject circle = circleSquareDrawer.getCircleMap().get(specialField);
 			if (circle != null) {
 				float width = 40;
 				float height = 40;
@@ -123,7 +123,7 @@ public class Engine extends ApplicationAdapter {
 		batch.begin();
 		int[] specialFieldsQuestionMarkRed = {4, 12, 23, 33};
 		for (int specialField : specialFieldsQuestionMarkRed) {
-			CircleObject circle = circleSquareDrawer.getCircleMap().get("Circle_" + specialField);
+			CircleObject circle = circleSquareDrawer.getCircleMap().get(specialField);
 			if (circle != null) {
 				float width = 40;
 				float height = 40;
@@ -193,14 +193,15 @@ public class Engine extends ApplicationAdapter {
 		if (!circleSquareDrawer.isMouseNearCircle((int) mousePosition.x, (int) mousePosition.y, maxDistance)) {
 			//Gdx.app.log("Debug", "Myszka jest za daleko od kółek.");
 		} else {
-			CircleObject closestCircle = closestCircleInfo.findClosestCircle(mousePosition.x, mousePosition.y);
-
+			CircleObject closestCircle = closestCircleInfo.findClosestCircleForMouse(mousePosition.x, mousePosition.y);
+			//System.out.println("najblizsze kolo: " + closestCircle.getCityCard());
 			if (closestCircle != null && closestCircle.getCityCard() != null) {
+				//System.out.println("Circle Map: " + circleSquareDrawer.getCircleMap());
 				UserInterface.drawCard(new CardDisplay(closestCircle.getCityCard()), shapeRenderer, batch, camera);
 				//closestCircle.setCityCard(null); //czyszczenie (nie trzeba bo samo sie czysci ale moze sie przydac)
 			}
 		}
-
+		//System.out.println("Circle Map: " + circleSquareDrawer.getCircleMap());
 		UserInterface.drawPlayerPanel(game, shapeRenderer, batch, camera);
 
 	}
@@ -224,11 +225,10 @@ public class Engine extends ApplicationAdapter {
 	private void movePlayerToAdjacentCircle(int direction) {
 		int liczbaKolek = 40;
 
-		circleSquareDrawer.updateCircleInfo();
 		for (Player player : game.getPlayerList()) {
-			int noweIdKolka = (player.getCurrentCircleId() + direction + liczbaKolek) % liczbaKolek;
+			Integer noweIdKolka = (player.getCurrentCircleId() + direction + liczbaKolek) % liczbaKolek;
 			player.setCurrentCircleId(noweIdKolka);
-			CircleObject noweKolko = circleSquareDrawer.getCircleMap().get("Circle_" + noweIdKolka);
+			CircleObject noweKolko = circleSquareDrawer.getCircleMap().get(noweIdKolka);
 			if (noweKolko != null) {
 				float randomAngle = MathUtils.random(360);
 				float randomRadius = MathUtils.random(0, 6);
