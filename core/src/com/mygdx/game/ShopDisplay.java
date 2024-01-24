@@ -20,7 +20,7 @@ public class ShopDisplay {
         font.setColor(Color.BLACK);
         font.draw(batch, "SKLEP ", x + 70, y);
         font.draw(batch, shop.getShopName(), x + 31, y - 52, 115, 1, true);
-
+        font.draw(batch, shop.getOwner(), x+66, y-320);
         font.getData().setScale(0.75f);
         y -= 20;
         font.setColor(Color.BLACK);

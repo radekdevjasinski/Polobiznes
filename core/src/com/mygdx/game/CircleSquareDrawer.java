@@ -22,6 +22,8 @@ public class CircleSquareDrawer {
         circleMap = new HashMap<>();
         drawCirclesInSquare();
         loadCityCardsFromFile("kartyMiast.txt"); //D:\PoloBiznesNew\assets\kartyMiast.txt
+        //loadTrainCardsFromFile("D:\\PoloBiznesNew\\assets\\kartyPociagow.txt");
+        //loadShopCardsFromFile("D:\\PoloBiznesNew\\assets\\kartyDodatkowe.txt");
     }
 
     private void drawCirclesInSquare() {
