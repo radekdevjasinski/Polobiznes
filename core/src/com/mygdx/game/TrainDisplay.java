@@ -17,7 +17,7 @@ public class TrainDisplay {
         int x = 800;
         int y = 560;
 
-        font.setColor(Color.BLACK);
+        font.setColor(Color.WHITE);
         font.draw(batch, "AKT ", x + 75, y);
         font.draw(batch, "POCIAGI ", x + 60, y - 30);
         font.draw(batch, train.getNameTrain(), x + 31, y - 52, 115, 1, true);

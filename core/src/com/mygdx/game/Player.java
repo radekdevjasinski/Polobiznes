@@ -84,23 +84,24 @@ public class Player{
         float circleX = CircleSquareDrawer.circleMap.get(id).getX();
         float circleY = CircleSquareDrawer.circleMap.get(id).getY();
             float randomAngle = MathUtils.random(360);
-            float randomRadius = MathUtils.random(0, 6);
+            float randomRadius = MathUtils.random(0, 5);
             float playerX = 0;
             float playerY = 0;
-            if (player.getCurrentCircleId() >= 1 && player.getCurrentCircleId() <= 10) {
+            if (player.getCurrentCircleId() > 0 && player.getCurrentCircleId() <= 10) {
                 playerX = circleX + 20 + MathUtils.cosDeg(randomAngle) * randomRadius;
                 playerY = circleY + 5 + MathUtils.sinDeg(randomAngle) * randomRadius;
             } else if (player.getCurrentCircleId() >= 11 && player.getCurrentCircleId() <= 20) {
-                playerX = circleX + MathUtils.cosDeg(randomAngle) * randomRadius;
+                playerX = circleX - 20 + MathUtils.cosDeg(randomAngle) * randomRadius;
                 playerY = circleY + 25 + MathUtils.sinDeg(randomAngle) * randomRadius;
             } else if (player.getCurrentCircleId() >= 21 && player.getCurrentCircleId() <= 30) {
                 playerX = circleX - 20 + MathUtils.cosDeg(randomAngle) * randomRadius;
                 playerY = circleY + 5 + MathUtils.sinDeg(randomAngle) * randomRadius;
             } else {
-                playerX = circleX + MathUtils.cosDeg(randomAngle) * randomRadius;
+                playerX = circleX + 20 + MathUtils.cosDeg(randomAngle) * randomRadius;
                 playerY = circleY - 20 + MathUtils.sinDeg(randomAngle) * randomRadius;
             }
             player.sprite.setPosition(Math.round(playerX - (40 / 2)), Math.round(playerY - (40 / 2)));
+
         }
 
 }

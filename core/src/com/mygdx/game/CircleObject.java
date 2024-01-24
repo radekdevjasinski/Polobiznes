@@ -68,7 +68,7 @@ public class CircleObject extends ShapeObject {
     public void draw() {
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         shapeRenderer.identity();
-        shapeRenderer.translate(x, y, 0);
+        shapeRenderer.translate(x, y, 5);
         PrimitiveRenderer.drawCircle(shapeRenderer, 0, 0, radius, rotation, Color.BLACK);
         shapeRenderer.end();
     }
