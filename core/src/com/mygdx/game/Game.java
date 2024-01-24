@@ -36,12 +36,23 @@ public class Game {
             switch (gameState)
             {
                 case START:
-                    diceControl.rollingSetup();
-                    gameState = GameState.DICE;
+                    if (playerList.get(turnOf).turnsInPrison == 0)
+                    {
+                        diceControl.rollingSetup();
+                        gameState = GameState.DICE;
+                    }
+                    else
+                    {
+                        gameState = GameState.FREE;
+                    }
                     break;
                 case DICE:
-                    movePlayer(playerList.get(turnOf), (playerList.get(turnOf).currentCircleId +
-                            diceControl.value()) % 40);
+                    int move = playerList.get(turnOf).currentCircleId +
+                            diceControl.value();
+                    if (move >= 40)
+                        playerList.get(turnOf).changeMoney(200);
+                    move = move % 40;
+                    movePlayer(playerList.get(turnOf), move);
                     gameState = GameState.MOVING;
                     break;
                 case MOVING:
@@ -51,6 +62,9 @@ public class Game {
                     break;
                 case BUYING:
                     Card card = CircleSquareDrawer.circleMap.get(playerList.get(turnOf).currentCircleId).getCityCard();
+                    int[] chanceSpaces = {4, 17, 22, 33, 7, 28};
+                    int[] prisonSpaces = {30};
+                    int[] paySpaces = {2,38};
                     if (card != null)
                     {
                         if (isCardFree(card))
@@ -58,15 +72,32 @@ public class Game {
                             playerList.get(turnOf).changeMoney(card.costOfPurchase * (-1));
                             playerList.get(turnOf).cards.add(card);
                         }
+                        else
+                        {
+                            playerList.get(turnOf).changeMoney(card.parkingCost * (-1));
+                            cardOwner(card).changeMoney(card.parkingCost);
+                        }
                     }
-                    else
+                    else if (isOnThePlace(chanceSpaces))
                     {
                         chanceController.RandomizeChance();
                         chanceController.ExecuteChance(this);
                     }
+                    else if (isOnThePlace(prisonSpaces))
+                    {
+                        playerList.get(turnOf).turnsInPrison = 2;
+                    }
+                    else if (isOnThePlace(paySpaces))
+                    {
+                        playerList.get(turnOf).changeMoney(-200);
+                    }
                     gameState = GameState.FREE;
                     break;
                 case FREE:
+                    if (playerList.get(turnOf).turnsInPrison > 0)
+                    {
+                        playerList.get(turnOf).turnsInPrison--;
+                    }
                     chanceController.randomChance = null;
                     nextTurn();
                     gameState = GameState.START;
@@ -131,5 +162,31 @@ public class Game {
         }
         return true;
     }
+    public Player cardOwner(Card card)
+    {
+        for (Player player : getPlayerList())
+        {
+            if (player.id != turnOf)
+            {
+                for (Card cards : player.cards)
+                {
+                    if (Objects.equals(card.getNameCity(), cards.getNameCity()))
+                    {
+                        return player;
+                    }
+                }
 
+            }
+        }
+        return null;
+    }
+    public boolean isOnThePlace(int[] ids)
+    {
+        for (int i=0; i < ids.length; i++)
+        {
+            if (playerList.get(turnOf).currentCircleId == ids[i])
+                return true;
+        }
+        return false;
+    }
 }
