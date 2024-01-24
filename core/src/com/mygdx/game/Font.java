@@ -11,6 +11,7 @@ public class Font {
     private final BitmapFont boardFont;
     private final BitmapFont cashFont;
     private final BitmapFont infoFont;
+    private final BitmapFont cityFont;
     private static Font instance;
     private Font()
     {
@@ -35,6 +36,11 @@ public class Font {
         parameter.borderWidth = 1.5f;
         parameter.size = 16;
         this.cashFont = generator.generateFont(parameter);
+
+        parameter.borderColor = Color.BLACK;
+        parameter.borderWidth = 1f;
+        parameter.size = 16;
+        this.cityFont = generator.generateFont(parameter);
 
 
 
@@ -64,6 +70,10 @@ public class Font {
         else if (index == 4)
         {
             return infoFont;
+        }
+        else if (index == 5)
+        {
+            return cityFont;
         }
         return defaultFont;
     }

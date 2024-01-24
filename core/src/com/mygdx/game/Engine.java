@@ -296,14 +296,15 @@ public class Engine extends ApplicationAdapter {
 		if (!circleSquareDrawer.isMouseNearCircle((int) mousePosition.x, (int) mousePosition.y, maxDistance)) {
 			//Gdx.app.log("Debug", "Myszka jest za daleko od kółek.");
 		} else {
-			CircleObject closestCircle = closestCircleInfo.findClosestCircle(mousePosition.x, mousePosition.y);
-
+			CircleObject closestCircle = closestCircleInfo.findClosestCircleForMouse(mousePosition.x, mousePosition.y);
+			//System.out.println("najblizsze kolo: " + closestCircle.getCityCard());
 			if (closestCircle != null && closestCircle.getCityCard() != null) {
+				//System.out.println("Circle Map: " + circleSquareDrawer.getCircleMap());
 				UserInterface.drawCard(new CardDisplay(closestCircle.getCityCard()), shapeRenderer, batch, camera);
 				//closestCircle.setCityCard(null); //czyszczenie (nie trzeba bo samo sie czysci ale moze sie przydac)
 			}
 		}
-
+		//System.out.println("Circle Map: " + circleSquareDrawer.getCircleMap());
 		UserInterface.drawPlayerPanel(game, shapeRenderer, batch, camera);
 
 		if (Gdx.input.isKeyPressed(Input.Keys.ANY_KEY) || Gdx.input.isButtonPressed(Input.Buttons.LEFT))

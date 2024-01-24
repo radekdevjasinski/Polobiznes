@@ -14,7 +14,6 @@ import java.util.List;
 public class Chance {
     String desc;
     String code;
-
     public Chance(String desc, String code) {
         this.desc = desc;
         this.code = code;
