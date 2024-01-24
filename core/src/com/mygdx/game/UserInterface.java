@@ -11,6 +11,8 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import java.util.List;
 
 public class UserInterface {
+    static float x = (float) Gdx.graphics.getWidth() / 2;
+    static float y = (float) Gdx.graphics.getHeight() / 2;
     public static void drawCard(CardDisplay cardDisplay, ShapeRenderer shapeRenderer, SpriteBatch batch, Camera camera)
     {
         shapeRenderer.setProjectionMatrix(camera.combined);
@@ -46,10 +48,7 @@ public class UserInterface {
     }
     public static void drawPlayerPanel(Game game, ShapeRenderer shapeRenderer, SpriteBatch batch, Camera camera)
     {
-        float x = (float) Gdx.graphics.getWidth() / 2;
-        float y = (float) Gdx.graphics.getHeight() / 2;
-        
-        
+
         
         shapeRenderer.setProjectionMatrix(camera.combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
