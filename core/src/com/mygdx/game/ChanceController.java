@@ -52,6 +52,9 @@ public class ChanceController {
                 System.out.println(amountOfMoney);
                 game.playerList.get(game.turnOf).changeMoney(amountOfMoney);
                 break;
+            case 'a':
+                game.playerList.get(game.turnOf).turnsInPrison = 2;
+                game.movePlayer(game.playerList.get(game.turnOf), 10);
             default:
                 break;
         }

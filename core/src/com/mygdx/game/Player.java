@@ -16,6 +16,7 @@ public class Player{
     int currentCircleId;
     SpriteObject sprite;
     List<Card> cards;
+    int turnsInPrison;
 
     public Player(int id, int cash, String name) {
         this.id = id;
@@ -23,6 +24,7 @@ public class Player{
         this.name = name;
         this.currentCircleId = 0;
         cards = new ArrayList<>();
+        turnsInPrison = 0;
 
         sprite = new SpriteObject("pionek_" + this.id + ".bmp", 0);
     }
