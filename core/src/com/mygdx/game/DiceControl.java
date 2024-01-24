@@ -32,10 +32,6 @@ public class DiceControl {
     }
     public int value()
     {
-        if (!diceRoll1.rolling)
-        {
-            return diceRoll1.value + diceRoll2.value;
-        }
-        return -1;
+        return diceRoll1.value + diceRoll2.value;
     }
 }

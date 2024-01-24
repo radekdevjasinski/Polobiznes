@@ -1,5 +1,5 @@
 Bank wypłaca ci dewidentę w wysokości 50zł
-p +50
+p 50
 Przejdź na pole Kielce
 t 9
 Przejdź na start
@@ -7,13 +7,13 @@ t 0
 Przejdź na Lomza.
 t 1
 Otrzymałeś kredyt budowlany pobierz 150zł
-p +150
+p 150
 Przejdź na dworzec Kielecki
 t 5
 Zapłać za szkołe 150 zł
 p -150
 Wygrałeś konkurs krzyżówkowy pobierz 100 zł
-p +100
+p 100
 Przejdź do Lublina
 t 14
 Zostałeś obciążony kosztami naprawy 100 zł
@@ -27,13 +27,13 @@ p -20
 Mandat za złe parkowanie 40 zł
 p -40
 Zająłeś 2 miejsce w konkursie piękności. Pobierz 10 zł
-p +10
+p 10
 Błąd bankowy na twoim koncie! Pobierz 200 zł
-p +200
+p 200
 Idź do więzienia. Nie przechodź przez START. Nie pobieraj 200 zł
 aw
 Fundusz Zdrowotny. Pobierz 100 zł
-p +100
+p 100
 Zapłać za wizytę u dentysty 100 zł
 p -100
 Zapłać czesne 50 zł
@@ -41,17 +41,17 @@ p -50
 Przejdź na START
 t 0
 Wyprzedaż! Pobierz 50 zł
-p +50
+p 50
 Zapłać za wizytę Lekarską 50 zł
 p -50
 Zwrot podatku. Pobierz 20 zł
-p +20
+p 20
 Otrzymujesz 25 zł za porady finansowe
-p +25
+p 25
 Odziedziczyłeś spadek. Pobierz 100 zł
-p +100
+p 100
 Dostałeś premię! Pobierz 100 zł
-p +100
+p 100
 Idż na pole Wrocław
 t 34
 Idź na pole Warszawa.
@@ -61,9 +61,9 @@ aw
 Idź do Krakowa.
 t 24
 Bank wypłaca Ci dywidwndę. Pobierz 50 zł
-p +50
+p 50
 Zwrot podatku.Pobierz 150 zł
-p +150
+p 150
 Przejdź na START.
 t 1
 Zapłać grzywne 15 zł
@@ -71,11 +71,11 @@ p -15
 Pomyliłeś pociągi i jedziesz do Krakowa, zapłać 10 zł
 p -10
 Otrzymujesz zwrot VAT. Pobierz 30 zł
-p +30
+p 30
 Przejdź na pole Chelm
 t 13
 Wygrana w loterii! Pobierz 50 zł
-p +50
+p 50
 Zgubiłeś portfel. Zapłać karę 30 zł
 p -30
 Idź do więzienia. Nie przechodź przez START. Nie pobieraj 200 zł
@@ -83,21 +83,21 @@ aw
 Wpadłeś w długi. Zapłać 50 zł
 p -50
 Otrzymałeś premię świąteczną. Pobierz 25 zł
-p +25
+p 25
 Zgubiłeś klucze. Zapłać za ich odtworzenie 20 zł
 p -20
 Otrzymałeś zwrot kosztów leczenia. Pobierz 80 zł
-p +80
+p 80
 Zorganizujesz imprezę charytatywną. Pobierz 40 zł
-p +40
+p 40
 Otrzymałeś nagrodę za pracownika miesiąca. Pobierz 75 zł
-p +75
+p 75
 Idź do więzienia. Nie przechodź przez START. Nie pobieraj 200 zł
 aw
 Znalezienie portfela na ulicy. Pobierz nagrodę 10 zł
-p +10
+p 10
 Otrzymujesz dodatek do pensji. Pobierz 50 zł
-p +50
+p 50
 Przejdź na pole Gniezno
 t 18
 Zapłać za przegląd samochodu 30 zł
@@ -107,10 +107,10 @@ p -15
 Idź na pole Kalisz
 t 16
 Bank anuluje opłaty za prowadzenie konta. Pobierz 10 zł
-p +10
+p 10
 Przejdź na pole Nowy Targ
 t 21
 Wypadek samochodowy. Zapłać odszkodowanie 100 zł
 p -100
 Otrzymujesz bonus za oszczędzanie. Pobierz 20 zł
-p +20
+p 20
