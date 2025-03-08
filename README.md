@@ -7,9 +7,9 @@
 
 ### Zrzuty ekranu (Screenshots)
 
-![Screen1](screens/0.png)
+![Screen1](0.png)
 
-![Screen2](screens/1.png)
+![Screen2](1.png)
 
-![Screen3](screens/2.png)
+![Screen3](2.png)
 
